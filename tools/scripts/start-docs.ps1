@@ -59,5 +59,5 @@ $process.Id | Out-File -FilePath $pidFile -Encoding ascii
 Write-Host "DocFX started with PID $($process.Id)."
 Write-Host "Site output: $siteDir"
 Write-Host "Logs:        $logDir"
-Write-Host "URL:         http://localhost:$Port/team-services/"
+Write-Host "URL:         http://localhost:$Port/"
 Write-Host "All group:   http://localhost:$Port/all/"
