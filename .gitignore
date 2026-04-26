@@ -14,3 +14,9 @@ requirements.txt
 
 # Doc-Kit overrides
 !.github/instructions/azure-devops-product.instructions.md
+
+# Local DocFX output and logs
+.vscode/logs/
+docs/_site/
+docs/all/
+docs/team-services/
