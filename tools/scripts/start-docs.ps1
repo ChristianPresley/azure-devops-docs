@@ -1,16 +1,24 @@
 # Starts DocFX outside the repository so generated files do not appear in git status.
 param(
     [int]$Port = 8080,
-    [string]$OutputRoot = $(if ($env:AZURE_DEVOPS_DOCS_LOCAL_ROOT) { $env:AZURE_DEVOPS_DOCS_LOCAL_ROOT } else { Join-Path $env:LOCALAPPDATA 'azure-devops-docs\docfx' })
+    [string]$OutputRoot = $(if ($env:AZURE_DEVOPS_DOCS_LOCAL_ROOT) { $env:AZURE_DEVOPS_DOCS_LOCAL_ROOT } else { Join-Path $env:LOCALAPPDATA 'azure-devops-docs\docfx' }),
+    [switch]$AllowRepoOutput
 )
 
 $ErrorActionPreference = 'Stop'
 
 $repoRoot = Resolve-Path (Join-Path $PSScriptRoot '..\..')
+$repoRootPath = [System.IO.Path]::GetFullPath($repoRoot.Path).TrimEnd([System.IO.Path]::DirectorySeparatorChar, [System.IO.Path]::AltDirectorySeparatorChar)
+$outputRootPath = [System.IO.Path]::GetFullPath($OutputRoot).TrimEnd([System.IO.Path]::DirectorySeparatorChar, [System.IO.Path]::AltDirectorySeparatorChar)
+
+if (-not $AllowRepoOutput -and ($outputRootPath.Equals($repoRootPath, [System.StringComparison]::OrdinalIgnoreCase) -or $outputRootPath.StartsWith($repoRootPath + [System.IO.Path]::DirectorySeparatorChar, [System.StringComparison]::OrdinalIgnoreCase) -or $outputRootPath.StartsWith($repoRootPath + [System.IO.Path]::AltDirectorySeparatorChar, [System.StringComparison]::OrdinalIgnoreCase))) {
+    throw "OutputRoot must be outside the repository. Use a path outside '$repoRootPath', or pass -AllowRepoOutput if you intentionally want in-repo output."
+}
+
 $docsDir = Join-Path $repoRoot 'docs'
-$siteDir = Join-Path $OutputRoot 'site'
-$logDir = Join-Path $OutputRoot 'logs'
-$pidFile = Join-Path $OutputRoot 'docfx.pid'
+$siteDir = Join-Path $outputRootPath 'site'
+$logDir = Join-Path $outputRootPath 'logs'
+$pidFile = Join-Path $outputRootPath 'docfx.pid'
 
 New-Item -ItemType Directory -Force -Path $siteDir | Out-Null
 New-Item -ItemType Directory -Force -Path $logDir | Out-Null
