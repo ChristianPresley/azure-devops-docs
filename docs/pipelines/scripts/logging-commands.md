@@ -4,7 +4,7 @@ description: How scripts can request work from the agent
 ms.topic: reference
 ms.custom: doc-kit-assisted
 ms.assetid: 3ec13da9-e7cf-4895-b5b8-735c1883cc7b
-ms.date: 03/05/2026
+ms.date: 04/26/2026
 monikerRange: '<= azure-devops'
 ai-usage: ai-assisted
 ---
@@ -14,6 +14,8 @@ ai-usage: ai-assisted
 [!INCLUDE [version-lt-eq-azure-devops](../../includes/version-lt-eq-azure-devops.md)]
 
 Logging commands are how [tasks](../process/tasks.md) and scripts communicate with the Azure Pipelines agent. When a pipeline step writes a specially formatted string to standard output (stdout), the agent intercepts it and performs the requested action—such as setting a variable, uploading an artifact, or marking the step as failed. Logging commands are useful for customizing pipeline behavior and troubleshooting.
+
+For help choosing variable syntax, output variable patterns, and secret handling, see [Variables quick reference](../process/variables-quick-reference.md).
 
 > [!IMPORTANT]
 > We make an effort to mask secrets from appearing in Azure Pipelines output, but you still need to take precautions. Never echo secrets as output.
@@ -43,12 +45,12 @@ The Azure Pipelines agent processes logging commands by scanning **standard outp
 > ./my-external-tool 2>&1 | while IFS= read -r line; do echo "$line"; done
 > ```
 
-|Type  |Commands  |
-|---------|---------|
-|Task commands     |    [AddAttachment](#addattachment-attach-a-file-to-the-build), [Complete](#complete-finish-timeline), [LogDetail](#logdetail-create-or-update-a-timeline-record-for-a-task), [LogIssue](#logissue-log-an-error-or-warning), [PrependPath](#prependpath-prepend-a-path-to-the--path-environment-variable), [SetEndpoint](#setendpoint-modify-a-service-connection-field), [SetProgress](#setprogress-show-percentage-completed), [SetVariable](#setvariable-initialize-or-modify-the-value-of-a-variable), [SetSecret](#setsecret-register-a-value-as-a-secret), [UploadFile](#uploadfile-upload-a-file-that-can-be-downloaded-with-task-logs), [UploadSummary](#uploadsummary-add-some-markdown-content-to-the-build-summary) |
-|Artifact commands     |   [Associate](#associate-initialize-an-artifact), [Upload](#upload-upload-an-artifact)      |
-|Build commands     |  [AddBuildTag](#addbuildtag-add-a-tag-to-the-build), [UpdateBuildNumber](#updatebuildnumber-override-the-automatically-generated-build-number), [UploadLog](#uploadlog-upload-a-log) |
-|Release commands     |    [UpdateReleaseName](#updatereleasename-rename-current-release)     |
+| Type | Commands |
+| --- | --- |
+| Task commands | [AddAttachment](#addattachment-attach-a-file-to-the-build), [Complete](#complete-finish-timeline), [LogDetail](#logdetail-create-or-update-a-timeline-record-for-a-task), [LogIssue](#logissue-log-an-error-or-warning), [PrependPath](#prependpath-prepend-a-path-to-the--path-environment-variable), [SetEndpoint](#setendpoint-modify-a-service-connection-field), [SetProgress](#setprogress-show-percentage-completed), [SetVariable](#setvariable-initialize-or-modify-the-value-of-a-variable), [SetSecret](#setsecret-register-a-value-as-a-secret), [UploadFile](#uploadfile-upload-a-file-that-can-be-downloaded-with-task-logs), [UploadSummary](#uploadsummary-add-some-markdown-content-to-the-build-summary) |
+| Artifact commands | [Associate](#associate-initialize-an-artifact), [Upload](#upload-upload-an-artifact) |
+| Build commands | [AddBuildTag](#addbuildtag-add-a-tag-to-the-build), [UpdateBuildNumber](#updatebuildnumber-override-the-automatically-generated-build-number), [UploadLog](#uploadlog-upload-a-log) |
+| Release commands | [UpdateReleaseName](#updatereleasename-rename-current-release) |
 
 ## Logging command format 
 
@@ -338,7 +340,7 @@ When `isSecret` is set to `true`, the value of the variable will be saved as sec
 
 When `isOutput` is set to `true` the syntax to reference the set variable varies based on whether you're accessing that variable in the same job, a future job, or a future stage. Additionally, if `isOutput` is set to `false` the syntax for using that variable within the same job is distinct. See [levels of output variables](../process/set-variables-scripts.md#levels-of-output-variables) to determine the appropriate syntax for each use case.
 
-For more information about output variables, see [set variables in scripts](../process/set-variables-scripts.md) and [define variables](../process/variables.md#set-variables-in-scripts).
+For more information about output variables, see [set variables in scripts](../process/set-variables-scripts.md), [define variables](../process/variables.md#set-variables-in-scripts), and [Variables quick reference](../process/variables-quick-reference.md#output-variable-syntax).
 
 #### Properties
 

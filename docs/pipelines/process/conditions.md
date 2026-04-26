@@ -3,7 +3,7 @@ title: Pipeline conditions
 description: Learn about conditions that Azure Pipelines stages, jobs, or steps can run under, and ways to specify those conditions.
 ms.topic: concept-article
 ms.assetid: C79149CC-6E0D-4A39-B8D1-EB36C8D3AB89
-ms.date: 08/01/2025
+ms.date: 04/26/2026
 monikerRange: '<= azure-devops'
 #customer intent: As an Azure Pipelines user, I want to understand the conditions that pipeline stages, jobs, and steps can run under, so I can configure builds to run under various conditions.
 ---
@@ -13,6 +13,8 @@ monikerRange: '<= azure-devops'
 [!INCLUDE [version-lt-eq-azure-devops](../../includes/version-lt-eq-azure-devops.md)]
 
 This article describes the different conditions that allow an Azure Pipelines stage, job, or step to run, and how to set those conditions in a YAML pipeline definition.
+
+For help choosing variable syntax and output variable patterns for conditions, see [Variables quick reference](variables-quick-reference.md) and [Expressions](expressions.md#dependencies).
 
 > [!NOTE]
 > This article discusses YAML pipeline capabilities. For Classic pipelines, you can specify some conditions under which tasks or jobs run in the **Control Options** of each task, and in the **Additional options** for a job in a release pipeline.

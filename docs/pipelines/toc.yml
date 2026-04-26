@@ -150,6 +150,9 @@
     - name: Define variables
       displayName: secrets, expressions, queue time, expansion,system, environment variables, macro syntax, template syntax
       href: process/variables.md
+    - name: Variables quick reference
+      displayName: syntax, scope, output variables, secret variables, variable groups, macro syntax, template syntax, runtime syntax
+      href: process/variables-quick-reference.md
     - name: Use predefined variables
       displayName: build variables, agent variables, pipeline variables, system variables
       href: build/variables.md

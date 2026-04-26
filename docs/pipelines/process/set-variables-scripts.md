@@ -3,7 +3,7 @@
 title: Set variables in scripts
 description: Learn how to define variables in Bash and PowerShell scripts and use them in your pipeline.
 ms.topic: concept-article
-ms.date: 01/08/2025
+ms.date: 04/26/2026
 monikerRange: '<= azure-devops'
 ---
 
@@ -16,6 +16,8 @@ When you use PowerShell and Bash scripts in your pipelines, it's often useful to
 Scripts are great for when you want to do something not supported by a task. For example, you can use a script to call a custom REST API and parse the response. 
 
 You use the `task.setvariable` logging command to set variables in [PowerShell](../scripts/powershell.md) and [Bash](/azure/devops/pipelines/tasks/reference/bash-v3) scripts. 
+
+For a compact comparison of variable syntax, scope, output variable patterns, and troubleshooting checks, see [Variables quick reference](variables-quick-reference.md).
 
 > [!NOTE] 
 > Deployment jobs use a different syntax for output variables. To learn more about support for output variables in deployment jobs, see [Deployment jobs](./deployment-jobs.md#support-for-output-variables).
@@ -96,6 +98,19 @@ The name of an output variable may change if your pipeline uses an [execution st
 - script: env
   displayName: 'Print all variables'
 ```
+
+The following table summarizes the most common output variable patterns.
+
+| Use case | Required setting | Reference syntax |
+| --- | --- | --- |
+| Later step in the same job | No `isOutput` property | `$(myVar)` |
+| Later step in the same job, referenced by step name | `isOutput=true` and a step `name` | `$(setOutput.myVar)` |
+| Job in the same stage | `isOutput=true`, a step `name`, and `dependsOn` on the consuming job | Map with `myVarFromJobA: $[ dependencies.A.outputs['passOutput.myOutputVar'] ]`, then use `$(myVarFromJobA)` |
+| Job in a future stage | `isOutput=true`, a step `name`, and `dependsOn` on the consuming stage | Map with `myStageAVar: $[ stageDependencies.A.A1.outputs['MyOutputVar.myStageVal'] ]`, then use `$(myStageAVar)` |
+| Stage condition | `isOutput=true`, a step `name`, and `dependsOn` on the consuming stage | Use `condition: eq(dependencies.A.outputs['A1.printvar.shouldrun'], 'true')` |
+| Deployment job | `isOutput=true` in a deployment lifecycle hook | Use the syntax for the deployment strategy. See [Deployment jobs](deployment-jobs.md#support-for-output-variables). |
+
+When you map an output variable into a `variables:` block, use runtime expression syntax. After the mapping, use macro syntax to read the mapped variable in tasks and scripts.
 
 ## Set an output variable for use in the same job
 
@@ -321,6 +336,37 @@ steps:
     echo "##vso[task.setvariable variable=myStageVal;isOutput=true]$(escape_data $'foo\nbar')"
   name: MyOutputVar
 ```
+
+## Example: Pass a package version between stages
+
+A common use for output variables is to calculate a package or container image version once, then use the same value in build, test, and deployment stages. In this example, the `Build` stage reads a version from a file and exposes it as an output variable. The `Deploy` stage maps that output variable into a local variable named `packageVersion`.
+
+```yaml
+stages:
+- stage: Build
+  jobs:
+  - job: BuildPackage
+    steps:
+    - bash: |
+        packageVersion=$(cat version.txt)
+        echo "Building version $packageVersion"
+        echo "##vso[task.setvariable variable=packageVersion;isOutput=true]$packageVersion"
+      name: setVersion
+    - bash: |
+        echo "Publish package $(setVersion.packageVersion)"
+
+- stage: Deploy
+  dependsOn: Build
+  variables:
+    packageVersion: $[ stageDependencies.Build.BuildPackage.outputs['setVersion.packageVersion'] ]
+  jobs:
+  - job: DeployPackage
+    steps:
+    - bash: |
+        echo "Deploying package version $(packageVersion)"
+```
+
+Use this pattern when the value is discovered during the run. If the value is known before the run starts, define it as a regular variable, variable group value, or runtime parameter instead.
 
 ## FAQ
 

@@ -4,7 +4,7 @@ ms.custom: devx-track-azurecli, copilot-scenario-highlight, doc-kit-assisted
 description: Variables are name-value pairs defined by you for use in a pipeline. You can use variables as inputs to tasks and in your scripts.
 ms.topic: concept-article
 ms.assetid: 4751564b-aa99-41a0-97e9-3ef0c0fce32a
-ms.date: 03/04/2026
+ms.date: 04/26/2026
 ai-usage: ai-assisted
 ---
 
@@ -13,6 +13,8 @@ ai-usage: ai-assisted
 [!INCLUDE [version-lt-eq-azure-devops](../../includes/version-lt-eq-azure-devops.md)]
 
 Variables provide a convenient way to include key data in various parts of the pipeline. The most common use of variables is to define a value that you can use throughout your pipeline. All variables are strings and are mutable. The value of a variable can change from run to run or job to job in your pipeline.
+
+For a compact comparison of syntax, scope, output variable patterns, secrets, and variable groups, see [Variables quick reference](variables-quick-reference.md).
 
 When you define the same variable in multiple places with the same name, the most locally scoped variable takes precedence. So, a variable defined at the job level can override a variable set at the stage level. A variable defined at the stage level overrides a variable set at the pipeline root level. A variable set in the pipeline root level overrides a variable set in the Pipeline settings UI. 
 To learn more about how to work with variables defined at the job, stage, and root level, see [Variable scope](#variable-scopes). 
@@ -138,19 +140,25 @@ Use runtime expression syntax for variables that expand at runtime (`$[variables
 
 Runtime expression variables only expand when they're used for a value, not as a keyword. Values appear on the right side of a pipeline definition. The following is valid: `key: $[variables.value]`. The following isn't valid: `$[variables.key]: value`. The runtime expression must take up the entire right side of a key-value pair. For example, `key: $[variables.value]` is valid but `key: $[variables.value] foo` isn't. 
 
-|Syntax|Example|When is it processed?|Where does it expand in a pipeline definition?|How does it render when not found?|
-|---|---|---|---|---|
-|macro|`$(var)`|runtime before a task executes|value (right side)|prints `$(var)`|
-|template expression|`${{ variables.var }}`|compile time|key or value (left or right side)|empty string|
-|runtime expression|`$[variables.var]`|runtime|value (right side)|empty string|
+| Syntax | Example | When is it processed? | Where does it expand in a pipeline definition? | How does it render when not found? |
+| --- | --- | --- | --- | --- |
+| Macro | `$(var)` | Runtime before a task executes | Value (right side) | Prints `$(var)` |
+| Template expression | `${{ variables.var }}` | Compile time | Key or value (left or right side) | Empty string |
+| Runtime expression | `$[variables.var]` | Runtime | Value (right side) | Empty string |
 
 ### What syntax should I use?
 
-Use macro syntax if you're providing a secure string or a [predefined variable](/azure/devops/pipelines/build/variables) input for a task. 
+Choose syntax based on when the value must be available and where you use it.
 
-Choose a runtime expression if you're working with [conditions](conditions.md) and [expressions](expressions.md). However, don't use a runtime expression if you don't want your empty variable to print (example: `$[variables.var]`). For example, if you have conditional logic that relies on a variable having a specific value or no value, use a macro expression. 
+| Scenario | Recommended syntax | Reason |
+| --- | --- | --- |
+| Pass a value into a task input or script | Macro syntax, such as `$(buildConfiguration)` | The value expands before the task runs and can reflect changes made earlier in the job. |
+| Reuse nonsecret values in templates | Template expression syntax, such as `${{ variables.imageName }}` | The value is injected during template parsing, which makes expanded YAML easier to inspect. |
+| Set a condition or compute a variable from dependency output | Runtime expression syntax, such as `$[ dependencies.A.outputs['setVersion.imageTag'] ]` | Runtime expressions can read dependency state before a job or stage runs. |
+| Use a secret variable in a script | Macro syntax mapped through `env:` | Secret variables aren't automatically exported as environment variables. Explicit mapping limits exposure to the task that needs the value. |
+| Parameterize pipeline structure, such as which stages or jobs exist | [Runtime parameters](runtime-parameters.md) or template expressions | Variables are strings and resolve too late for many structural decisions. |
 
-Typically, a template variable is the standard to use. By leveraging template variables, your pipeline fully injects the variable value into your pipeline at pipeline compilation. This injection is helpful when attempting to debug pipelines. You can download the log files and evaluate the fully expanded value that is being substituted in. Since the variable is substituted in, don't leverage template syntax for sensitive values.
+Don't use template syntax for sensitive values because the value is substituted into the expanded pipeline. Don't use macro syntax in pipeline keywords that resolve before runtime, such as `trigger`, `resources`, or repository checkout references. For a one-page decision aid, see [Variables quick reference](variables-quick-reference.md#choose-variable-syntax).
 
 ### Use AI to identify variable syntax issues
 
@@ -210,6 +218,15 @@ In the YAML file, set a variable at various scopes:
 When you define a variable at the top of a YAML, the variable is available to all jobs and stages in the pipeline and is a global variable. Global variables defined in a YAML aren't visible in the pipeline settings UI. 
 
 Variables at the job level override variables at the root and stage level. Variables at the stage level override variables at the root level. 
+
+| Scope | Available to | Typical use | Precedence |
+| --- | --- | --- | --- |
+| Pipeline settings UI | The pipeline run | Values managed outside YAML, including queue-time overrides | Lowest |
+| Pipeline root | All stages and jobs in the YAML file | Shared defaults, such as build configuration | Overrides pipeline settings UI |
+| Stage | Jobs in the stage | Environment-specific values, such as a deployment slot | Overrides root variables |
+| Job | Steps in the job | Job-specific values, such as a package path or test shard | Highest YAML scope |
+
+Use the broadest scope only when every consumer needs the same value. Use stage or job variables when a value is specific to one deployment environment, test job, or packaging job.
 
 ```yaml
 variables:
@@ -1143,7 +1160,7 @@ If a variable appears in the `variables` block of a YAML file, its value is fixe
 
 You have two options for defining queue-time values. You can define a variable in the UI and select the option to **Let users override this value when running this pipeline** or you can use [runtime parameters](runtime-parameters.md) instead. If your variable isn't a secret, the best practice is to use [runtime parameters](runtime-parameters.md).
 
-To set a variable at queue time, add a new variable within your pipeline and select the override option. Only users with the _Edit queue build configuration_ permission can change a variable's value.
+To set a variable at queue time, add a new variable within your pipeline and select the override option. Only users with the *Edit queue build configuration* permission can change a variable's value.
 
 :::image type="content" source="media/set-queue-time-variable.png" alt-text="Set a variable at queue time.":::
 
@@ -1323,7 +1340,7 @@ There's no [**az pipelines**](/cli/azure/pipelines) command that applies to the 
 
 [!INCLUDE [temp](../../includes/note-cli-not-supported.md)]
 
----
+* * *
 
 ## Related articles
 

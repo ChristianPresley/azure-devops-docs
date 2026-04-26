@@ -5,7 +5,7 @@ ms.assetid: A8AA9882-D3FD-4A8A-B22A-3A137CEDB3D7
 ms.topic: tutorial
 ms.author: ronai
 author: RoopeshNair
-ms.date: 08/15/2024
+ms.date: 04/26/2026
 monikerRange: '<= azure-devops'
 ms.custom: devx-track-azurecli, pipelinesresourcesrefresh, sfi-image-nochange
 ---
@@ -19,6 +19,22 @@ This article explains how to create and use variable groups in Azure Pipelines. 
 Secret variables in variable groups are [protected resources](../security/resources.md). You can add combinations of approvals, checks, and pipeline permissions to limit access to secret variables in a variable group. Access to nonsecret variables isn't limited by approvals, checks, or pipeline permissions.
 
 Variable groups follow the [library security model](index.md#library-security) for roles and permissions.
+
+For a compact comparison of variable groups, variable syntax, scope, output variables, and secret handling, see [Variables quick reference](../process/variables-quick-reference.md).
+
+## Plan variable group usage
+
+Use variable groups for values that multiple pipelines need to share. Keep values that are specific to one pipeline, stage, or job in the YAML file so they stay close to the pipeline logic.
+
+| Value type | Recommended location | Example |
+| --- | --- | --- |
+| Shared nonsecret configuration | Variable group | Region names, service URLs, feature flags |
+| Shared secrets | Protected variable group or Key Vault-linked variable group | API tokens, passwords, signing credentials |
+| Pipeline-specific defaults | Pipeline root variables | Build configuration, image name |
+| Environment-specific overrides | Stage variables | Deployment slot, approval environment name |
+| Values discovered during a run | Output variables | Package version, generated artifact name |
+
+In YAML pipelines, authorize the pipeline before it can use a variable group. If the group contains secrets, avoid **Open access** unless every pipeline in the project is trusted to use those secrets.
 
 ## Prerequisites
 

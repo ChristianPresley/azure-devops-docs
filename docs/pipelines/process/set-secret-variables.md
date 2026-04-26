@@ -2,7 +2,7 @@
 title: Set secret variables
 description: Learn how to set secret variables.
 ms.topic: concept-article
-ms.date: 01/12/2026
+ms.date: 04/26/2026
 monikerRange: "<=azure-devops"
 ---
 
@@ -17,6 +17,20 @@ Secret variables are encrypted variables that you can use in pipelines without e
 The recommended ways to [set secret variables are in the UI](#secret-variable-in-the-ui), [in a variable group](#set-a-secret-variable-in-a-variable-group), and [in a variable group from Azure Key Vault](#link-secrets-from-an-azure-key-vault). You can also [set secret variables in a script with a logging command](#set-secret-variable-in-a-script-by-using-logging-commands) but this method isn't recommended since anyone who can access your pipeline can also see the secret.
 
 Secret variables that you set in the pipeline settings UI for a pipeline are scoped to the pipeline where you set them. Use variable groups to share secret variables across pipelines.
+
+## Choose a secret storage method
+
+Choose the narrowest secret storage method that still supports your scenario.
+
+| Scenario | Recommended method | Notes |
+| --- | --- | --- |
+| One pipeline needs one secret | Set a secret variable in the pipeline UI | The secret is scoped to that pipeline. |
+| Multiple pipelines in a project need the same secret | Use a protected variable group | Add pipeline permissions, approvals, and checks to limit access. |
+| Secrets are rotated or centrally managed outside Azure DevOps | Link a variable group to Azure Key Vault | The pipeline fetches the latest secret value at runtime. |
+| A script must consume a secret | Map the secret with `env:` on the task | Secret variables aren't automatically exported as environment variables. |
+| A script discovers a temporary value that must be masked later in the same job | Use `task.setvariable` with `issecret=true` only when necessary | This approach is less secure than defining secrets before the run. |
+
+For a compact comparison of variable syntax, scope, output variables, and secret handling, see [Variables quick reference](variables-quick-reference.md).
 
 ## Secret variable in the UI
 
@@ -128,6 +142,15 @@ Use the `task.setvariable` logging command to set variables in PowerShell and Ba
 > **Security Risk**: Setting secret variables in scripts by using logging commands is inherently less secure. Anyone with access to your pipeline definition, build logs, or source code can see the logging command and potentially expose the secret. Use this method only for debugging purposes in secure, trusted environments. Always prefer UI-based configuration, variable groups, or Azure Key Vault integration for production scenarios.
 
 To set a variable as a script by using a logging command, pass the `issecret` flag. 
+
+When a later script needs a secret variable, map it explicitly with `env:` instead of relying on automatic environment variable mapping. This pattern limits the secret to the task that needs it.
+
+```yaml
+steps:
+- bash: ./deploy.sh
+    env:
+        DEPLOY_TOKEN: $(deploymentToken)
+```
 
 [!INCLUDE [set secret variable in UI](includes/secret-variables-logging.md)]
 

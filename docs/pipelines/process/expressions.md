@@ -3,7 +3,7 @@ title: Expressions
 description: Discover how to use expressions in Azure Pipelines. Define conditions, evaluate variables, and streamline your CI/CD workflows with this guide.
 ms.topic: concept-article
 ms.assetid: 4df37b09-67a8-418e-a0e8-c17d001f0ab3
-ms.date: 01/09/2026
+ms.date: 04/26/2026
 ms.author: rabououn
 author: ramiMSFT
 monikerRange: "<=azure-devops"
@@ -18,6 +18,8 @@ monikerRange: "<=azure-devops"
 Use expressions when you need to specify a string, boolean, or number value while authoring a pipeline. When an expression returns an array, normal indexing rules apply and the index starts with `0`. 
 
 The most common use of expressions is in [conditions](conditions.md) to determine whether a job or step should run. 
+
+For help deciding when to use macro syntax, template expressions, runtime expressions, and output variable mappings, see [Variables quick reference](variables-quick-reference.md).
 
 ::: moniker range="<=azure-devops"
 ```yaml
@@ -482,7 +484,7 @@ steps:
 ### trim
 * Returns the parameter without leading and trailing white spaces
 * Min parameters: 1. Max parameters: 1
-* Example: `trim('  variable  ') ` returns 'variable'
+* Example: `trim('  variable  ')` returns 'variable'
 ::: moniker-end
 
 ::: moniker range="<=azure-devops"

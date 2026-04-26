@@ -3,7 +3,7 @@ title: Deployment jobs
 description: Deploy to resources within an environment
 ms.topic: concept-article
 ms.assetid: fc825338-7012-4687-8369-5bf8f63b9c10
-ms.date: 07/17/2025
+ms.date: 04/26/2026
 monikerRange: "<=azure-devops"
 ---
 
@@ -353,6 +353,8 @@ To share variables between stages, output an [artifact](../artifacts/pipeline-ar
  
 
 While executing deployment strategies, you can access output variables across jobs using the following syntax.
+
+For nondeployment job output variable patterns and troubleshooting checks, see [Variables quick reference](variables-quick-reference.md#output-variable-syntax) and [Set variables in scripts](set-variables-scripts.md#levels-of-output-variables).
 
 - For **runOnce** strategy: `$[dependencies.<job-name>.outputs['<job-name>.<step-name>.<variable-name>']]` (for example, `$[dependencies.JobA.outputs['JobA.StepA.VariableA']]`)
 - For **runOnce** strategy plus a resourceType: `$[dependencies.<job-name>.outputs['Deploy_<resource-name>.<step-name>.<variable-name>']]`. (for example, `$[dependencies.JobA.outputs['Deploy_VM1.StepA.VariableA']]`)
