@@ -1,0 +1,57 @@
+/* Custom polish for the docfx "modern" template to feel a bit more
+   Microsoft-Learn-ish. We can't reproduce the real Learn chrome
+   (UHF header, version selector, feedback widget, search) — that's
+   server-rendered by closed-source Microsoft tooling. This just tightens
+   spacing, widens the content column, and uses a Learn-leaning palette. */
+
+:root {
+    --bs-link-color-rgb: 0, 120, 212;
+    --bs-link-hover-color-rgb: 0, 91, 161;
+}
+
+[data-bs-theme="dark"] {
+    --bs-link-color-rgb: 79, 168, 255;
+    --bs-link-hover-color-rgb: 121, 192, 255;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI Variable",
+        "Segoe UI", system-ui, sans-serif;
+}
+
+/* Wider content column, closer to learn.microsoft.com */
+main.container-xxl {
+    max-width: 1600px;
+}
+
+article.content {
+    max-width: 980px;
+}
+
+/* Tighter heading rhythm */
+article.content h1 {
+    font-weight: 600;
+    margin-top: 0.5rem;
+}
+
+article.content h2,
+article.content h3 {
+    font-weight: 600;
+    margin-top: 2rem;
+}
+
+/* Sticky in-page TOC on the right rail */
+.affix {
+    position: sticky;
+    top: 1rem;
+}
+
+/* Calm down the left nav */
+.toc .nav-link {
+    padding: 0.2rem 0.5rem;
+    font-size: 0.9rem;
+}
+
+.toc .nav-link.active {
+    font-weight: 600;
+}
