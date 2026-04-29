@@ -1,0 +1,21 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"remote.portsAttributes": {
+			"8080": {
+				"label": "Docs (docfx)",
+				"onAutoForward": "notify",
+				"protocol": "http"
+			},
+			"9222": {
+				"label": "Edge debug",
+				"onAutoForward": "ignore"
+			}
+		},
+		"remote.autoForwardPortsSource": "hybrid"
+	}
+}
