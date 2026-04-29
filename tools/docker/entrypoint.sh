@@ -26,6 +26,13 @@
 # subtree (~5-15s) plus the breadcrumb. Cross-section links into
 # unscoped subtrees will 404 in the preview -- unset PREVIEW_SCOPE (or
 # leave it blank) for a full-fidelity build.
+#
+# PREVIEW_SCOPE accepts:
+#   - a single subtree:           PREVIEW_SCOPE=user-guide
+#   - a comma-separated list:     PREVIEW_SCOPE=user-guide,pipelines,repos
+#   - "*" for every top-level
+#     docs subdirectory:          PREVIEW_SCOPE=*
+#   - empty/unset:                full-fidelity build via write_full_config
 
 set -eu
 
@@ -65,11 +72,13 @@ BUILD_CWD="$BUILD_DIR"
 LR_MARKER='<!--docfx-livereload-->'
 
 # Generate /tmp/preview-docfx.json from the real docfx.json, restricting
-# the "all" content + resource groups to PREVIEW_SCOPE. Other groups
-# (the breadcrumb single-file group, the legacy bootstrap group) are
-# left intact so the breadcrumb and landing page still build.
+# the "all" content + resource groups to one or more PREVIEW_SCOPE
+# subtrees. Other groups (the breadcrumb single-file group, the legacy
+# bootstrap group) are left intact so the breadcrumb and landing page
+# still build. SCOPES is a comma-separated list of top-level subtree
+# names, e.g. "user-guide" or "user-guide,pipelines,repos".
 write_scoped_config() {
-    SCOPE=$1
+    SCOPES=$1
     # Build a symlink farm so docfx can resolve globs against /repo/docs
     # while reading our generated config from a writable location.
     mkdir -p "$BUILD_DIR"
@@ -80,32 +89,31 @@ write_scoped_config() {
         [ "$name" = "docfx.json" ] && continue
         ln -sfn "$entry" "$BUILD_DIR/$name"
     done
-    jq --arg scope "$SCOPE" '
-        .build.template = ["default", "modern"]
+    jq --arg scopes "$SCOPES" '
+        ($scopes | split(",") | map(select(length > 0))) as $s
+        | .build.template = ["default", "modern"]
         | .build.content |= map(
             if .group == "all" then
-                .files = [
-                    ($scope + "/**/*.md"),
-                    ($scope + "/**/*.yml"),
-                    "user-guide/what-is-azure-devops.md",
-                    "index.yml",
-                    "toc.yml"
-                ]
+                .files = (
+                    ($s | map(. + "/**/*.md"))
+                    + ($s | map(. + "/**/*.yml"))
+                    + ["user-guide/what-is-azure-devops.md", "index.yml", "toc.yml"]
+                )
             else . end
         )
         | .build.resource |= map(
             if .group == "all" then
-                .files = [
-                    ($scope + "/**/*.png"),
-                    ($scope + "/**/*.jpg"),
-                    ($scope + "/**/*.gif"),
-                    ($scope + "/**/*.svg"),
-                    ($scope + "/**/*.mp4")
-                ]
+                .files = (
+                    ($s | map(. + "/**/*.png"))
+                    + ($s | map(. + "/**/*.jpg"))
+                    + ($s | map(. + "/**/*.gif"))
+                    + ($s | map(. + "/**/*.svg"))
+                    + ($s | map(. + "/**/*.mp4"))
+                )
             else . end
         )
     ' "$DOCS_DIR/docfx.json" > "$BUILD_CONFIG"
-    echo "[entrypoint] wrote scoped config $BUILD_CONFIG (scope=$SCOPE)"
+    echo "[entrypoint] wrote scoped config $BUILD_CONFIG (scopes=$SCOPES)"
 }
 
 # Generate $BUILD_CONFIG with the same content/resource groups as the
@@ -193,9 +201,13 @@ build() {
     inject_livereload
 }
 
-# When PREVIEW_SCOPE is set, only watch that subtree.
+# When PREVIEW_SCOPE is a single subtree, only watch that subtree;
+# otherwise watch the whole docs tree (multi-scope or full build).
 fingerprint() {
-    if [ -n "$PREVIEW_SCOPE" ] && [ -d "$DOCS_DIR/$PREVIEW_SCOPE" ]; then
+    if [ -n "$PREVIEW_SCOPE" ] \
+        && [ "${PREVIEW_SCOPE#*,}" = "$PREVIEW_SCOPE" ] \
+        && [ "$PREVIEW_SCOPE" != "*" ] \
+        && [ -d "$DOCS_DIR/$PREVIEW_SCOPE" ]; then
         WATCH_DIR="$DOCS_DIR/$PREVIEW_SCOPE"
     else
         WATCH_DIR="$DOCS_DIR"
@@ -210,16 +222,57 @@ fingerprint() {
 
 cd "$DOCS_DIR"
 
-if [ -n "$PREVIEW_SCOPE" ]; then
-    if [ ! -d "$DOCS_DIR/$PREVIEW_SCOPE" ]; then
-        echo "[entrypoint] WARNING: PREVIEW_SCOPE='$PREVIEW_SCOPE' is not a directory under $DOCS_DIR. Falling back to full build."
-        PREVIEW_SCOPE=""
-        write_full_config
-    else
-        echo "[entrypoint] PREVIEW_SCOPE=$PREVIEW_SCOPE -- builds will be scoped to docs/$PREVIEW_SCOPE/"
-        write_scoped_config "$PREVIEW_SCOPE"
-    fi
+# Expand PREVIEW_SCOPE into a comma-separated list of valid subtrees.
+# Supports:
+#   - empty/unset: full-fidelity build
+#   - "*":         every top-level subdirectory of docs/
+#   - "a,b,c":     comma-separated list of subtree names
+#   - "a":         single subtree (back-compat)
+resolved_scopes=""
+if [ "$PREVIEW_SCOPE" = "*" ]; then
+    for entry in "$DOCS_DIR"/*/; do
+        name=$(basename "$entry")
+        # Skip non-content dirs that have no .md/.yml docs of their own
+        # or are pure include/asset trees.
+        case "$name" in
+            includes|media|breadcrumb|demo-gen|dev-resources) continue ;;
+        esac
+        if [ -z "$resolved_scopes" ]; then
+            resolved_scopes="$name"
+        else
+            resolved_scopes="$resolved_scopes,$name"
+        fi
+    done
+    echo "[entrypoint] PREVIEW_SCOPE=* expanded to: $resolved_scopes"
+elif [ -n "$PREVIEW_SCOPE" ]; then
+    # Validate each comma-separated entry; drop missing ones with a warning.
+    OLDIFS=$IFS
+    IFS=','
+    for s in $PREVIEW_SCOPE; do
+        IFS=$OLDIFS
+        if [ -d "$DOCS_DIR/$s" ]; then
+            if [ -z "$resolved_scopes" ]; then
+                resolved_scopes="$s"
+            else
+                resolved_scopes="$resolved_scopes,$s"
+            fi
+        else
+            echo "[entrypoint] WARNING: PREVIEW_SCOPE entry '$s' is not a directory under $DOCS_DIR -- skipping."
+        fi
+        IFS=','
+    done
+    IFS=$OLDIFS
+fi
+
+if [ -n "$resolved_scopes" ]; then
+    PREVIEW_SCOPE="$resolved_scopes"
+    echo "[entrypoint] PREVIEW_SCOPE=$PREVIEW_SCOPE -- builds scoped to: $PREVIEW_SCOPE"
+    write_scoped_config "$PREVIEW_SCOPE"
 else
+    if [ -n "${PREVIEW_SCOPE:-}" ]; then
+        echo "[entrypoint] WARNING: no valid scopes resolved from PREVIEW_SCOPE -- falling back to full build."
+    fi
+    PREVIEW_SCOPE=""
     write_full_config
 fi
 
@@ -257,8 +310,11 @@ SERVE_PID=$!
 
 trap 'echo "[entrypoint] shutting down..."; kill $SERVE_PID 2>/dev/null || true; exit 0' TERM INT
 
-# Watch directory: $DOCS_DIR or the scoped subtree.
-if [ -n "$PREVIEW_SCOPE" ] && [ -d "$DOCS_DIR/$PREVIEW_SCOPE" ]; then
+# Watch directory: a single scoped subtree, or the whole docs tree for
+# multi-scope and full builds.
+if [ -n "$PREVIEW_SCOPE" ] \
+    && [ "${PREVIEW_SCOPE#*,}" = "$PREVIEW_SCOPE" ] \
+    && [ -d "$DOCS_DIR/$PREVIEW_SCOPE" ]; then
     WATCH_DIR="$DOCS_DIR/$PREVIEW_SCOPE"
 else
     WATCH_DIR="$DOCS_DIR"

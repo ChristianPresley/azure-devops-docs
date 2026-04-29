@@ -12,12 +12,14 @@ services:
       - "8080:8080"
     environment:
       # Optional. When set to a top-level docs subtree (e.g. "user-guide",
-      # "pipelines", "boards"), docfx builds only that subtree. NOTE: in
-      # the current docfx 2.78.3 + bind-mount setup, scoped REBUILDS may
-      # not rewrite article HTML reliably -- treat as experimental and
-      # verify rendered output before relying on it. Leave unset for the
-      # known-good full-fidelity build.
-      PREVIEW_SCOPE: "${PREVIEW_SCOPE:-}"
+      # "pipelines", "boards"), docfx builds only that subtree. Accepts:
+      #   - single subtree:        PREVIEW_SCOPE=user-guide
+      #   - comma-separated list:  PREVIEW_SCOPE=user-guide,pipelines,repos
+      #   - "*" for every subtree: PREVIEW_SCOPE=*  (default)
+      #   - empty string:          full-fidelity build via the real docfx.json
+      # The default "*" expands to every top-level docs subdirectory so
+      # cross-section links resolve in the preview.
+      PREVIEW_SCOPE: "${PREVIEW_SCOPE:-*}"
       # Polling fallback interval (seconds). Only used if inotifywait
       # fails to start (e.g. Windows-host bind mount). On native ext4
       # the find walk is ~50ms so 0.2s is cheap.
