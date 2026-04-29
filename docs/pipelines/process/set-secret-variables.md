@@ -97,29 +97,13 @@ The script outputs `True`.
 
 You can add secrets to a variable group or link secrets from an existing [Azure Key Vault](/azure/key-vault/general/basic-concepts). 
 
-### Create new variable groups 
+### Create new variable groups
 
-1. Select **Pipelines** > **Library** > **+ Variable group**.
-
-   :::image type="content" source="../library/media/add-variable-group.png" alt-text="Screenshot of the Library page with the Add Variable Group button highlighted.":::
-
-1. Enter a name and description for the group.
-
-1. Optional: Move the toggle to link secrets from an Azure Key Vault as variables. For more information, see [Use Azure Key Vault secrets](../release/azure-key-vault.md).
-
-1. Enter the name and value for each [variable](../release/variables.md#custom-variables) to include in the group, choosing **+ Add** for each one. 
-
-1. To make your variable secure, choose the lock icon at the end of the row.
-
-1. When you're finished adding variables, select **Save**.
-
-   :::image type="content" source="../library/media/save-variable-group.png" alt-text="Screenshot of the Save button on the variable group creation page showing the completed variable group ready to be saved.":::
-
-Variable groups follow the [library security model](../library/index.md#library-security).
+To create a variable group and add secret variables, see [Manage variable groups](../library/variable-groups.md#create-a-variable-group).
 
 ### Link secrets from an Azure Key Vault
- 
-You can create variable groups and link them to an existing Key Vault, so you can map to secrets stored in the key vault. Only the secret names are mapped to the variable group, not the secret values. The pipeline runs that link to the variable group and fetches the latest secret values from the vault. For more information, see [Link a variable group to secrets in Azure Key Vault](../library/link-variable-groups-to-key-vaults.md).
+
+To link a variable group to an existing Azure Key Vault so that secrets are fetched at runtime, see [Link a variable group to secrets in Azure Key Vault](../library/link-variable-groups-to-key-vaults.md).
 
 ## Use the Azure Key Vault task
 

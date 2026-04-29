@@ -23,6 +23,7 @@ Use this reference when you need to choose a variable syntax, decide where to de
 | Share secrets across pipelines | [Variable group linked to Azure Key Vault](../library/link-variable-groups-to-key-vaults.md) | Key Vault supports central secret management and rotation. |
 | Pass a value from one step, job, or stage to another | [Output variable](set-variables-scripts.md#levels-of-output-variables) | Output variables are designed for values discovered while the pipeline runs. |
 | Gate a job or stage based on a previous result | [Condition with an expression](conditions.md) | Conditions evaluate pipeline state and dependency outputs. |
+| Access predefined variables for deployment stages and artifacts in Classic pipelines | [Classic release variables](../release/variables.md) | Predefined variables for release context, artifact paths, and deployment identity. |
 
 ## Choose variable syntax
 

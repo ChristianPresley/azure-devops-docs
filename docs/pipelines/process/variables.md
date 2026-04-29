@@ -603,6 +603,9 @@ To share variables across multiple pipelines in your project, use the web interf
 
 ## Use output variables from tasks
 
+> [!TIP]
+> For complete examples and all output variable patterns — same job, cross-job, cross-stage, deployment jobs, and matrix jobs — see [Set variables in scripts](set-variables-scripts.md#levels-of-output-variables).
+
 ::: moniker range="<=azure-devops"
 Some tasks define output variables, which you can use in downstream steps, jobs, and stages.
 In YAML, you can access variables across jobs and stages by using [dependencies](expressions.md#dependencies). 
@@ -815,6 +818,9 @@ Configuration  False             False        config.debug
 ::: moniker-end
 
 ## Set variables in scripts
+
+> [!TIP]
+> For the full reference — including `task.setvariable` properties, output variable levels, cross-job and cross-stage patterns, and FAQ — see [Set variables in scripts](set-variables-scripts.md).
 
 Scripts can define variables that later steps in the pipeline consume. All variables set by this method are treated as strings. To set a variable from a script, use a command syntax and print to stdout.
 

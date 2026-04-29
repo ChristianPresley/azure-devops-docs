@@ -147,24 +147,21 @@
       href: release/parameters.md
   - name: Variables
     items:
-    - name: Define variables
-      displayName: secrets, expressions, queue time, expansion,system, environment variables, macro syntax, template syntax
-      href: process/variables.md
     - name: Variables quick reference
       displayName: syntax, scope, output variables, secret variables, variable groups, macro syntax, template syntax, runtime syntax
       href: process/variables-quick-reference.md
+    - name: Define variables
+      displayName: secrets, expressions, queue time, expansion,system, environment variables, macro syntax, template syntax
+      href: process/variables.md
     - name: Use predefined variables
       displayName: build variables, agent variables, pipeline variables, system variables
       href: build/variables.md
-    - name: Job access tokens
-      displayName: job access token, identity, build service account, project build service account, collection build service account, access token, build service
-      href: process/access-tokens.md
-    - name: Set secret variables
-      displayName: secret variables
-      href: process/set-secret-variables.md
     - name: Set variables in scripts
-      displayName: variables, task, setname, scripts
+      displayName: variables, task, setvariable, output variables, scripts
       href: process/set-variables-scripts.md
+    - name: Set secret variables
+      displayName: secret variables, key vault, variable group, logging command
+      href: process/set-secret-variables.md
     - name: Variable groups
       items:
       - name: Manage variable groups
@@ -179,6 +176,9 @@
     - name: Use classic release and artifacts variables
       displayName: identity, system, build, agent, deployment job, System.AccessToken, System.Debug
       href: release/variables.md
+    - name: Job access tokens
+      displayName: job access token, identity, build service account, project build service account, collection build service account, access token, build service
+      href: process/access-tokens.md
   - name: Library, resources, & secure files
     items:
     - name: Pipeline resources
