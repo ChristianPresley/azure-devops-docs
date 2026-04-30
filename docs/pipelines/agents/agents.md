@@ -248,7 +248,7 @@ az pipelines agent list --pool-id 4 --output table
 
 ID    Name          Is Enabled    Status    Version
 ----  ------------  ------------  --------  ---------
-3     Hosted Agent  True          offline   2.155.1
+3     Hosted Agent  True          offline   4.273.0
 ```
 
 ### Show agent details

@@ -58,7 +58,7 @@ steps:
     sdk: 'iphonesimulator'
     configuration: 'Debug'
     xcWorkspacePath: '**/*.xcodeproj/project.xcworkspace'
-    xcodeVersion: 'default' # Options: 10, 11, 12, 13, 14, default, specifyPath
+    xcodeVersion: 'default' # Options: 14, 15, 16, default, specifyPath
 ```
 
 **Production build for App Store:**
@@ -74,14 +74,14 @@ steps:
     sdk: 'iphoneos'
     configuration: 'Release'
     xcWorkspacePath: '**/*.xcodeproj/project.xcworkspace'
-    xcodeVersion: '14'
+    xcodeVersion: '16'
     packageApp: true
     exportPath: '$(build.artifactStagingDirectory)'
     exportOptions: 'automatic'
 ```
 
 Key differences for production:
-- **xcodeVersion**: Specify a fixed version (e.g., `'14'`) instead of `'default'` for consistent, reproducible builds.
+- **xcodeVersion**: Specify a fixed version (e.g., `'16'`) instead of `'default'` for consistent, reproducible builds.
 - **scheme**: Replace the empty string with your app's actual scheme name.
 - **sdk**: Use `'iphoneos'` for device builds; use `'iphonesimulator'` for simulator builds.
 - **configuration**: Use `'Release'` for production; use `'Debug'` for development.
