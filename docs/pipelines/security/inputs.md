@@ -39,7 +39,7 @@ variables:
   readonly: true
 ```
 
-Use particular caution with secret variables. The recommended methods for setting secret variables include using the UI, creating a variable group, or using a variable group sourced from Azure Key Vault. For more information, see [Set secret variables](../process/set-secret-variables.md).
+Use particular caution with secret variables. The recommended methods for setting secret variables include using the UI, creating a variable group, or using a variable group sourced from Azure Key Vault. For more information, see [Set secret variables](../variables/secrets.md).
 
 ### Queue-time variables
 
@@ -95,7 +95,7 @@ If **Limit variables that can be set at queue time** is enabled at the project o
 :::image type="content" source="media/no-new-variables.png" alt-text="Screenshot of not being able to add variables at run time with setting on.":::
 
 Using the [Builds - Queue](/rest/api/azure/devops/build/builds/queue) or the [Runs - Run Pipeline](/rest/api/azure/devops/pipelines/runs/run-pipeline) APIs to queue a pipeline run and attempting to set the value of a variable not marked **Settable at queue time** fails with an error similar to the following:
- 
+
 ```json
 {
   "$id": "1",
@@ -114,7 +114,7 @@ Using the [Builds - Queue](/rest/api/azure/devops/build/builds/queue) or the [Ru
 
 A running pipeline can't modify pipeline parameters, unlike variables. Parameters have data types such as `number` and `string`, and can be restricted to specific value subsets. This restriction is valuable when a user-configurable aspect of the pipeline should only accept values from a predefined list, ensuring that the pipeline doesn't accept arbitrary data.
 
-<a name="shellTasksValidation"></a> 
+<a name="shellTasksValidation"></a>
 <a name="enable-shell-tasks-arguments-parameter-validation"></a>
 ### Enable shell tasks arguments validation
 
@@ -122,9 +122,9 @@ Pipelines can reference tasks executed within the pipeline. Some tasks include a
 
 Applying the  **Enable shell tasks arguments validation** setting validates `argument` parameters for built-in shell tasks to check for inputs that can inject commands into scripts. The check ensures that the shell correctly executes characters like semicolons, quotes, and parentheses in the following pipeline tasks:
 
-- PowerShell 
+- PowerShell
 - BatchScript
-- Bash 
+- Bash
 - Ssh
 - AzureFileCopy
 - WindowsMachineFileCopy
@@ -139,8 +139,8 @@ To resolve the issue, adjust the argument by escaping special characters as indi
 
 ## Related content
 
-- [Define variables](../process/variables.md)
-- [Set secret variables](../process/set-secret-variables.md)
-- [Use predefined variables](../build/variables.md)
+- [Define variables](../variables/index.md)
+- [Set secret variables](../variables/secrets.md)
+- [Use predefined variables](../variables/reference.md)
 - [Use runtime parameters](../process/runtime-parameters.md)
 - [Use template types](../process/templates.md)
