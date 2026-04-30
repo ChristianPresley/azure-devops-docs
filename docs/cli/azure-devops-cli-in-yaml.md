@@ -1,12 +1,12 @@
 ---
 title: Azure DevOps CLI in Azure Pipeline YAML
-titleSuffix: Azure DevOps 
+titleSuffix: Azure DevOps
 description: Learn how to use Azure DevOps CLI with a YAML pipeline with these examples that show how to run Azure DevOps CLI commands.
 ms.topic: how-to
 ms.subservice: azure-devops-reference
 ms.custom: devx-track-azurecli, linux-related-content, pat-reduction
-ms.manager: wiwagn 
-ms.author: chcomley  
+ms.manager: wiwagn
+ms.author: chcomley
 author: chcomley
 monikerRange: 'azure-devops'
 ms.date: 04/22/2026
@@ -18,7 +18,7 @@ zone_pivot_groups: configure-cli
 # Azure DevOps CLI in Azure Pipeline YAML
 
 
-[!INCLUDE [version-eq-azure-devops](../includes/version-eq-azure-devops.md)] 
+[!INCLUDE [version-eq-azure-devops](../includes/version-eq-azure-devops.md)]
 
 [!INCLUDE [feature-rollout](../includes/feature-rollout.md)]
 
@@ -27,13 +27,13 @@ Azure DevOps CLI lets you manage Azure DevOps resources from the command line. R
 For authentication, use an [Azure DevOps service connection](../pipelines/library/service-endpoints.md) backed by Microsoft Entra workload identity federation. We recommend this approach because it eliminates credential management. Use a personal access token (PAT) only when a service connection isn't available.
 
 
-::: zone pivot="pat"  
+::: zone pivot="pat"
 
 ## Authenticate with Azure DevOps
 
 Some Azure DevOps CLI commands, like `az devops configure` and `az devops --help`, don't require any authentication. They don't connect into Azure DevOps. Most commands interact with Azure DevOps and do require authentication.
 
-You can authenticate using the [System.AccessToken](../pipelines/build/variables.md#systemaccesstoken) security token used by the running pipeline, by assigning it to an environment variable named `AZURE_DEVOPS_EXT_PAT`, as shown in the following example.
+You can authenticate using the [System.AccessToken](../pipelines/variables/reference.md#systemaccesstoken) security token used by the running pipeline, by assigning it to an environment variable named `AZURE_DEVOPS_EXT_PAT`, as shown in the following example.
 
 Using `System.AccessToken` relies on having a PAT. As a more secure alternative, use a service connection. For setup guidance, see [Manage service connections](../pipelines/library/service-endpoints.md).
 
@@ -71,7 +71,7 @@ The Microsoft-hosted Windows and Linux agents are preconfigured with Azure CLI a
 
 The following example shows how to sign in to Azure DevOps and run a few commands. This example uses the `ubuntu-latest` Microsoft-hosted agent image. You can replace it with any of the other [Windows or Linux hosted images](../pipelines/agents/hosted.md#software).
 
-This example authenticates with Azure DevOps CLI. It uses the [System.AccessToken](../pipelines/build/variables.md#systemaccesstoken) security token used by the running pipeline.
+This example authenticates with Azure DevOps CLI. It uses the [System.AccessToken](../pipelines/variables/reference.md#systemaccesstoken) security token used by the running pipeline.
 
 # [Bash](#tab/bash)
 
@@ -306,11 +306,11 @@ The following example of configuring Azure CLI and Azure DevOps CLI extension on
     inputs:
       versionSpec: '3.x'
       architecture: 'x64'
-  
+
   # Update pip to latest
   - bash: python -m pip install --upgrade pip
     displayName: 'Upgrade pip'
-  
+
   # Update to latest Azure CLI version, min version required for Azure DevOps is 2.10.1
   - bash: pip install --pre azure-cli
     displayName: 'Upgrade Azure CLI'
@@ -324,11 +324,11 @@ The following example of configuring Azure CLI and Azure DevOps CLI extension on
     inputs:
       versionSpec: '3.x'
       architecture: 'x64'
-  
+
   # Update pip to latest
   - pwsh: python -m pip install --upgrade pip
     displayName: 'Upgrade pip'
-  
+
   # Update to latest Azure CLI version, min version required for Azure DevOps is 2.10.1
   - pwsh: pip install --pre azure-cli
     displayName: 'Upgrade Azure CLI'
@@ -338,7 +338,7 @@ The following example of configuring Azure CLI and Azure DevOps CLI extension on
 
 Install Azure CLI DevOps extension:
 
-- Azure CLI version [2.10.1](index.md) or higher is installed. 
+- Azure CLI version [2.10.1](index.md) or higher is installed.
 - There's a version of `bash` installed on the agent and in the path. A bash installation is required to use the [bash task](/azure/devops/pipelines/tasks/reference/bash-v3).
 
 # [Bash](#tab/bash)
@@ -347,7 +347,7 @@ Install Azure CLI DevOps extension:
   # Install Azure DevOps extension
   - bash: az extension add -n azure-devops
     displayName: 'Install Azure DevOps extension'
-  
+
   # Now you can make calls into Azure DevOps CLI
   # ...
   ```
@@ -358,7 +358,7 @@ Install Azure CLI DevOps extension:
   # Install Azure DevOps extension
   - pwsh: az extension add -n azure-devops
     displayName: 'Install Azure DevOps extension'
-  
+
   # Now you can make calls into Azure DevOps CLI
   # ...
   ```
@@ -423,7 +423,7 @@ steps:
 
 ## Assign the results of an Azure DevOps CLI call to a variable
 
-To store the results of an Azure DevOps CLI call to a pipeline variable, use the `task.setvariable` syntax described in [Set variables in scripts](../pipelines/process/variables.md#set-variables-in-scripts). The following example gets the ID of a variable group named **Fabrikam-2023** and uses this value in a subsequent step.
+To store the results of an Azure DevOps CLI call to a pipeline variable, use the `task.setvariable` syntax described in [Set variables in scripts](../pipelines/variables/index.md#set-variables-in-scripts). The following example gets the ID of a variable group named **Fabrikam-2023** and uses this value in a subsequent step.
 
 # [Bash](#tab/bash)
 
@@ -478,17 +478,17 @@ steps:
 ```
 ---
 
-::: zone-end  
+::: zone-end
 
 ::: zone pivot="service-connection"
 
 
-## Authenticate with a service connection 
+## Authenticate with a service connection
 
 When you use a service connection, the service connection provides the necessary credentials for Azure CLI and Azure DevOps CLI commands in the AzureCLI@3 task without requiring manual credential management in the pipeline.
 
 > [!NOTE]
-> When you use a service connection for authentication with `AzureCLI@3`, you need to [manually add the service principal to your Azure DevOps organization](../integrate/get-started/authentication/service-principal-managed-identity.md#step-2-add-the-identity-to-azure-devops). 
+> When you use a service connection for authentication with `AzureCLI@3`, you need to [manually add the service principal to your Azure DevOps organization](../integrate/get-started/authentication/service-principal-managed-identity.md#step-2-add-the-identity-to-azure-devops).
 >
 > For PAT-free guidance and service-connection best practices, see [Manage service connections](../pipelines/library/service-endpoints.md).
 
@@ -531,7 +531,7 @@ steps:
 
 ## Assign the results of an Azure DevOps CLI call to a variable
 
-To store the results of an Azure DevOps CLI call to a pipeline variable, use the `task.setvariable` syntax described in [Set variables in scripts](../pipelines/process/variables.md#set-variables-in-scripts). The following example gets the ID of a variable group named **kubernetes** and uses this value in a subsequent step.
+To store the results of an Azure DevOps CLI call to a pipeline variable, use the `task.setvariable` syntax described in [Set variables in scripts](../pipelines/variables/index.md#set-variables-in-scripts). The following example gets the ID of a variable group named **kubernetes** and uses this value in a subsequent step.
 
 ```yml
 trigger:
@@ -572,17 +572,17 @@ steps:
 ```
 
 
-::: zone-end 
+::: zone-end
 
-For more examples of working with variables, including working with variables across jobs and stages, see [Define variables](../pipelines/process/variables.md). For examples of the query syntax used in the previous example, see [How to query Azure CLI command output using a JMESPath query](/cli/azure/query-azure-cli).
+For more examples of working with variables, including working with variables across jobs and stages, see [Define variables](../pipelines/variables/index.md). For examples of the query syntax used in the previous example, see [How to query Azure CLI command output using a JMESPath query](/cli/azure/query-azure-cli).
 
 ## Related content
 
 - [Access Azure DevOps with Microsoft Entra workload identity](../pipelines/library/add-devops-entra-service-connection.md)
-- [System.AccessToken](../pipelines/build/variables.md#systemaccesstoken)
+- [System.AccessToken](../pipelines/variables/reference.md#systemaccesstoken)
 - [Access repositories, artifacts, and other resources](../pipelines/process/access-tokens.md)
 - [Manage service connections](../pipelines/library/service-endpoints.md)
-- [Define variables](../pipelines/process/variables.md)
+- [Define variables](../pipelines/variables/index.md)
 - [Azure DevOps CLI extension reference](/cli/azure/devops)
 - [Azure DevOps CLI extension az pipelines reference](/cli/azure/pipelines)
 - [How to query Azure CLI command output using a JMESPath query](/cli/azure/query-azure-cli)
