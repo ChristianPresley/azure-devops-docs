@@ -584,7 +584,7 @@ The updated environment variable will be reflected in subsequent tasks.
 
 #### Usage
 
-Write a debug-level message to the live log. The message is shown only when [`system.debug`](../build/variables.md) is set to `true` for the run; otherwise the agent records the line in the diagnostic log but suppresses it from the timeline view. Use `task.debug` to add diagnostic context that's available on demand without bloating normal pipeline logs.
+Write a debug-level message to the live log. The message is shown only when [`system.debug`](../variables/reference.md#system-debug) is set to `true` for the run; otherwise the agent records the line in the diagnostic log but suppresses it from the timeline view. Use `task.debug` to add diagnostic context that's available on demand without bloating normal pipeline logs.
 
 #### Example
 
