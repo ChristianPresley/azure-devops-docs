@@ -43,9 +43,9 @@ steps:
 
 ## Environment variables
 
-Command line, PowerShell, and Bash resolve [environment variables](../process/variables.md#environment-variables) differently. To access a system-provided value like PATH, you must use a different syntax per platform.
+Command line, PowerShell, and Bash resolve [environment variables](../variables/index.md#environment-variables) differently. To access a system-provided value like PATH, you must use a different syntax per platform.
 
-Azure Pipelines uses [macro syntax](../process/variables.md#macro-syntax-variables) as a cross-platform way to refer to variables at runtime. Variables with macro syntax get processed before a task executes during runtime. The variable expands before the platform shell encounters it.
+Azure Pipelines uses [macro syntax](../variables/index.md#macro-syntax-variables) as a cross-platform way to refer to variables at runtime. Variables with macro syntax get processed before a task executes during runtime. The variable expands before the platform shell encounters it.
 
 To use macro syntax in a pipeline, surround the variable name as follows: `$(<variable name>)`. The following cross-platform example script echoes the ID of the pipeline.
 
