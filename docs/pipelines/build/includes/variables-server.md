@@ -4,7 +4,7 @@ ms.service: azure-devops-pipelines
 ms.manager: wiwagn
 ms.author: rabououn
 author: ramiMSFT
-ms.date: 02/13/2026
+ms.date: 04/30/2026
 ---
 <a id="agent-variables"></a>
 
@@ -47,7 +47,7 @@ Example of **Agent.ContainerMapping**:
 
 <a id="build-variables"></a>
 
-When you use a variable in a template that isn't marked as available in templates, the variable doesn't render. The variable doesn't render because its value isn't accessible within the template's scope. 
+When you use a variable in a template that isn't marked as available in templates, the variable doesn't render. The variable doesn't render because its value isn't accessible within the template's scope.
 
 
 | Variable | Description | Available in [templates](../../process/templates.md)? |
@@ -98,13 +98,13 @@ When you use a variable in a template that isn't marked as available in template
 | Pipeline.Workspace | Workspace directory for a particular pipeline. This variable has the same value as `Agent.BuildDirectory`. For example, `/home/vsts/work/1`. For more information about the agent directory structure, see [Agent directory structure](../../agents/agents.md#agent-directory-structure).|
 
 > [!TIP]
-> If you're using classic release pipelines, you can use [classic releases and artifacts variables](../../release/variables.md) to store and access data throughout your pipeline.
+> If you're using classic release pipelines, you can use [classic releases and artifacts variables](../../variables/reference.md) to store and access data throughout your pipeline.
 
 ##  Deployment job variables (Azure DevOps Server)
 
 <a id="deployment-job-variables"></a>
 
-These variables are scoped to a specific [Deployment job](../../process/deployment-jobs.md) and is resolved only at job execution time. 
+These variables are scoped to a specific [Deployment job](../../process/deployment-jobs.md) and is resolved only at job execution time.
 
 | Variable | Description |
 |:---------|:------------|
@@ -119,11 +119,11 @@ These variables are scoped to a specific [Deployment job](../../process/deployme
 
 <a id="system-variables"></a>
 
-When you use a variable in a template that isn't marked as available in templates, the variable doesn't render. The variable doesn't render because its value isn't accessible within the template's scope. 
+When you use a variable in a template that isn't marked as available in templates, the variable doesn't render. The variable doesn't render because its value isn't accessible within the template's scope.
 
 | Variable | Description | Available in [templates](../../process/templates.md)? |
 |:---------|:------------|:------------------------------------------------------|
-| System.AccessToken | [Use the OAuth token to access the REST API](../../scripts/powershell.md#example-powershell-script-access-rest-api). <br><br>[Use System.AccessToken from YAML scripts](../variables.md#systemaccesstoken). <br><br>It can be used as an environment variable in a script and as a parameter in a build task. It can't be used as part of the build number or as a version control tag. | Yes |
+| System.AccessToken | [Use the OAuth token to access the REST API](../../scripts/powershell.md#example-powershell-script-access-rest-api). <br><br>[Use System.AccessToken from YAML scripts](../../variables/reference.md#systemaccesstoken). <br><br>It can be used as an environment variable in a script and as a parameter in a build task. It can't be used as part of the build number or as a version control tag. | Yes |
 | System.CollectionId | The GUID of the Azure DevOps organization or collection. | Yes |
 | System.CollectionUri | The URI of the Azure DevOps organization or collection. For example: `https://dev.azure.com/fabrikamfiber/`. | Yes |
 | System.DefaultWorkingDirectory | [!INCLUDE [include](../includes/variables-build-sources-directory.md)] | Yes |
@@ -140,7 +140,6 @@ When you use a variable in a template that isn't marked as available in template
 | System.PullRequest.IsFork | If the pull request is from a fork of the repository, this variable is set to `True`. Otherwise, it's set to `False`. | Yes |
 | System.PullRequest.PullRequestId | The ID of the pull request that caused this build. For example: `17`. (This variable is initialized only if the build ran because of a [Git PR affected by a branch policy](../../../repos/git/branch-policies.md#build-validation)). | No |
 | System.PullRequest.PullRequestNumber | The number of the pull request that caused this build. This variable is populated for pull requests from GitHub that have a different pull request ID and pull request number. This variable is only available in a YAML pipeline if a branch policy affects the PR. | No |
-| System.PullRequest.targetBranchName | The name of the target branch for a pull request. This variable can be used in a pipeline to conditionally execute tasks or steps based on the target branch of the pull request. For example, you might want to trigger a different set of tests or code analysis tools depending on the branch that the changes are being merged into. | No |
 | System.PullRequest.SourceBranch | The branch that is being reviewed in a pull request. For example: `refs/heads/users/raisa/new-feature` for Azure Repos. (This variable is initialized only if the build ran because of a [Git PR affected by a branch policy](../../../repos/git/branch-policies.md#build-validation)). This variable is only available in a YAML pipeline if a branch policy affects the PR. | No |
 | System.PullRequest.SourceRepositoryUri | The URL to the repo that contains the pull request. For example: `https://dev.azure.com/ouraccount/_git/OurProject`.  | No |
 | System.PullRequest.TargetBranch | The branch that is the target of a pull request. For example: `refs/heads/main` when your repository is in Azure Repos and `main` when your repository is in GitHub. This variable is initialized only if the build ran because of a [Git PR affected by a branch policy](../../../repos/git/branch-policies.md#build-validation). This variable is only available in a YAML pipeline if a branch policy affects the PR. | No |
