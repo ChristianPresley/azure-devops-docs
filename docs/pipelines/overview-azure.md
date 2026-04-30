@@ -19,7 +19,7 @@ monikerRange: '<= azure-devops'
 
 Azure Pipelines enables continuous integration (CI) and continuous delivery (CD) to test and build your code and ship it to any target. By integrating Azure Pipelines with Azure services, you can automate testing, building, and deployment processes.
 
-This article provides links to detailed guides for integrating Azure Pipelines with specific Azure services. Use the sections below to find the service you're working with, or see [Build and release tasks](tasks/index.md) for a comprehensive list of available tasks.
+This article provides links to detailed guides for integrating Azure Pipelines with specific Azure services. Use the sections below to find the service you're working with, or see the [Azure Pipelines task reference](/azure/devops/pipelines/tasks/reference/) for a comprehensive list of available tasks.
 
 **Azure App Configuration**
 - [Push settings to App Configuration with Azure Pipelines](/azure/azure-app-configuration/push-kv-devops-pipeline)
@@ -46,7 +46,7 @@ This article provides links to detailed guides for integrating Azure Pipelines w
 - [Continuous integration and continuous deployment to Azure IoT Edge devices](/azure/iot-edge/how-to-continuous-integration-continuous-deployment)
 
 **Azure Kubernetes Service**
-- [Build and deploy to Azure Kubernetes Service with Azure Pipelines](ecosystems/kubernetes/aks-template.md)
+- [Build and deploy to Azure Kubernetes Service with Azure Pipelines](ecosystems/kubernetes/deploy.md)
 
 **Azure Monitor**
 - [Query Azure Monitor Alerts](process/approvals.md#query-azure-monitor-alerts)
