@@ -15,7 +15,7 @@ Pipelines often rely on multiple repositories that contain source code, tools, s
 
 ## Specify multiple repositories
 
-Repositories can be specified as a [repository resource](/azure/devops/pipelines/yaml-schema/resources-repositories-repository), or inline with the `checkout` step. 
+Repositories can be specified as a [repository resource](/azure/devops/pipelines/yaml-schema/resources-repositories-repository), or inline with the `checkout` step.
 
 The following repository types are supported.
 
@@ -123,7 +123,7 @@ You must use a [repository resource](/azure/devops/pipelines/yaml-schema/resourc
 
 | Repository type | Service connection |
 |-----------------|--------------------|
-| Bitbucket Cloud | [Bitbucket Cloud](../library/service-endpoints.md#bitbucket-cloud-service-connection) | 
+| Bitbucket Cloud | [Bitbucket Cloud](../library/service-endpoints.md#bitbucket-cloud-service-connection) |
 | GitHub          | [GitHub](../library/service-endpoints.md#github-service-connection) |
 | GitHub Enterprise Server | [GitHub Enterprise Server](../library/service-endpoints.md#github-enterprise-server-service-connection) |
 | Azure Repos Git repositories in a different organization | [Azure DevOps](../library/add-devops-entra-service-connection.md) (recommended) or [Azure Repos/Team Foundation Server](../library/service-endpoints.md#azure-repos) |
@@ -185,11 +185,11 @@ steps:
 
 ## Checkout path
 
-Unless a `path` is specified in the `checkout` step, source code is placed in a default directory. This directory is different depending on whether you are checking out a single repository or multiple repositories. 
+Unless a `path` is specified in the `checkout` step, source code is placed in a default directory. This directory is different depending on whether you are checking out a single repository or multiple repositories.
 
 - **Single repository**: If you have a single `checkout` step in your job, or you have no checkout step which is equivalent to `checkout: self`, your source code is checked out into a directory called `s` located as a subfolder of `$(Agent.BuildDirectory)`. If `$(Agent.BuildDirectory)` is `C:\agent\_work\1`, your code is checked out to `C:\agent\_work\1\s`.
 - **Multiple repositories**: If you have multiple `checkout` steps in your job, your source code is checked out into directories named after the repositories as a subfolder of `s` in `$(Agent.BuildDirectory)`. If `$(Agent.BuildDirectory)` is `C:\agent\_work\1` and your repositories are named `tools` and `code`, your code is checked out to `C:\agent\_work\1\s\tools` and `C:\agent\_work\1\s\code`.
-  
+
   > [!NOTE]
   > If no `path` is specified in the `checkout` step, the name of the repository is used for the folder,
   > not the `repository` value which is used to reference the repository in the `checkout` step.
@@ -226,7 +226,7 @@ If you are using inline syntax, designate the ref by appending `@<ref>`. For exa
 - checkout: git://MyProject/MyRepo@refs/heads/features/tools # also checks out the features/tools branch
 - checkout: git://MyProject/MyRepo@refs/tags/MyTag # checks out the commit referenced by MyTag.
 ```
-    
+
 > [!IMPORTANT]
 > The `checkout` value, including the inline `@<ref>` portion, resolves at compile time as a resource reference. **Macro syntax variables (`$(var)`) aren't expanded** in the `checkout` value. For example, `checkout: git://MyProject/MyRepo@$(branch)` doesn't resolve the variable — the pipeline tries to check out a ref literally named `$(branch)`, which typically fails with a "ref not found" error.
 >
@@ -375,7 +375,7 @@ You can also trigger the pipeline when you create or update a pull request in an
 
 ## Repository details
 
-When you check out multiple repositories, some details about the `self` repository are available as [variables](../build/variables.md).
+When you check out multiple repositories, some details about the `self` repository are available as [variables](../variables/reference.md).
 When you use multi-repo triggers, some of those variables have information about the triggering repository instead.
 Details about all of the repositories consumed by the job are available as a [template context object](../process/template-expressions.md#context) called `resources.repositories`.
 
@@ -409,7 +409,7 @@ Azure Pipelines provides a **Limit job authorization scope to current project** 
 
 ### Why am I prompted to authorize resources the first time I try to check out a different repository?
 
-When you check out Azure Repos Git repositories other than the one containing the pipeline, you may be prompted to authorize access to that resource before the pipeline runs for the first time. These prompts are displayed on the pipeline run summary page. 
+When you check out Azure Repos Git repositories other than the one containing the pipeline, you may be prompted to authorize access to that resource before the pipeline runs for the first time. These prompts are displayed on the pipeline run summary page.
 
 :::image type="content" source="media/multi-repo-checkout/pipeline-resource-prompt.png" alt-text="This pipeline needs permission to access a resource":::
 
