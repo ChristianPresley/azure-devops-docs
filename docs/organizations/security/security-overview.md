@@ -172,7 +172,7 @@ To ensure the security and integrity of your services in Azure DevOps, implement
   - [Learn about GitHub Advanced Security](../../repos/security/github-advanced-security-security-overview.md)
 - **Secure Azure Pipelines:** Safeguard your CI/CD processes by setting permissions, using security templates, and securing agents and containers.
   - [Learn about Azure Pipelines security](../../pipelines/security/overview.md)
-  - [Add users to Azure Pipelines](../../pipelines/policies/set-permissions.md)
+  - [Manage security in Azure Pipelines](../../pipelines/policies/permissions.md)
   - [Use templates for security](../../pipelines/process/templates.md)
   - [Secure agents, projects, and containers](../../pipelines/security/misc.md)
   - [Secure access to Azure Repos from pipelines](../../pipelines/security/secure-access-to-repos.md)
