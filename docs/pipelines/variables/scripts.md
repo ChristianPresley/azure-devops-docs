@@ -11,18 +11,18 @@ monikerRange: '<= azure-devops'
 
 [!INCLUDE [version-lt-eq-azure-devops](../../includes/version-lt-eq-azure-devops.md)]
 
-When you use PowerShell and Bash scripts in your pipelines, it's often useful to be able to set variables that you can then use in future tasks. Newly set variables aren't available in the same task. 
+When you use PowerShell and Bash scripts in your pipelines, it's often useful to be able to set variables that you can then use in future tasks. Newly set variables aren't available in the same task.
 
-Scripts are great for when you want to do something not supported by a task. For example, you can use a script to call a custom REST API and parse the response. 
+Scripts are great for when you want to do something not supported by a task. For example, you can use a script to call a custom REST API and parse the response.
 
-You use the `task.setvariable` logging command to set variables in [PowerShell](../scripts/powershell.md) and [Bash](/azure/devops/pipelines/tasks/reference/bash-v3) scripts. 
+You use the `task.setvariable` logging command to set variables in [PowerShell](../scripts/powershell.md) and [Bash](/azure/devops/pipelines/tasks/reference/bash-v3) scripts.
 
-For a compact comparison of variable syntax, scope, output variable patterns, and troubleshooting checks, see [Variables quick reference](variables-quick-reference.md).
+For a compact comparison of variable syntax, scope, output variable patterns, and troubleshooting checks, see [Variables quick reference](quick-reference.md).
 
-> [!NOTE] 
-> Deployment jobs use a different syntax for output variables. To learn more about support for output variables in deployment jobs, see [Deployment jobs](./deployment-jobs.md#support-for-output-variables).
+> [!NOTE]
+> Deployment jobs use a different syntax for output variables. To learn more about support for output variables in deployment jobs, see [Deployment jobs](../process/deployment-jobs.md#support-for-output-variables).
 
-To use a variable with a condition in a pipeline, see [Specify conditions](conditions.md). 
+To use a variable with a condition in a pipeline, see [Specify conditions](../process/conditions.md).
 
 ## About `task.setvariable`
 
@@ -30,7 +30,7 @@ When you add a variable with `task.setvariable`, the following tasks can use the
 
 # [Bash](#tab/bash)
 
-Set the variable `myVar` with the value `foo`. 
+Set the variable `myVar` with the value `foo`.
 
 ```yaml
 - bash: |
@@ -46,7 +46,7 @@ Read the variable `myVar`:
 
 # [PowerShell](#tab/powershell)
 
-Set the variable `myVar` with the value `foo`. 
+Set the variable `myVar` with the value `foo`.
 
 ```yaml
 - powershell: |
@@ -70,14 +70,14 @@ The `task.setvariable` command includes properties for setting a variable as sec
 * `isOutput` = boolean (Optional, defaults to false)
 * `isReadOnly` = boolean (Optional, defaults to false)
 
-To use the variable in the next stage, set the `isOutput` property to `true`. To reference a variable with the `isOutput` set to true, you include the task name. For example, `$(TaskName.myVar)`. 
+To use the variable in the next stage, set the `isOutput` property to `true`. To reference a variable with the `isOutput` set to true, you include the task name. For example, `$(TaskName.myVar)`.
 
-When you set a variable as read only, downstream tasks can't overwrite it. Set `isreadonly` to `true`. Setting a variable as read only enhances security by making that variable immutable. 
+When you set a variable as read only, downstream tasks can't overwrite it. Set `isreadonly` to `true`. Setting a variable as read only enhances security by making that variable immutable.
 
 
 ## Set a variable as secret
 
-[!INCLUDE [set secret variable in UI](includes/secret-variables-logging.md)]
+[!INCLUDE [set secret variable in UI](../process/includes/secret-variables-logging.md)]
 
 
 ## Levels of output variables
@@ -86,13 +86,13 @@ There are four different types of output variables with distinct syntaxes:
 
 * [Output variables set in the same job without the `isOutput` parameter](#set-an-output-variable-for-use-in-the-same-job). To reference these variables, you use macro syntax. Example: `$(myVar)`.
 * [Output variables set in the same job with the `isOutput` parameter](#set-an-output-variable-for-use-in-the-same-job). To reference these variables, you include the task name. Example: `$(myTask.myVar)`.
-* [Output variables set in a future job](#set-an-output-variable-for-use-in-future-jobs). To reference these variables, you reference the variable in the `variables` section with `dependency` syntax.  
-* [Output variables set in future stages](#set-an-output-variable-for-use-in-future-stages). To reference these variables, you reference the variable in the `variables` section with `stageDependencies` syntax.  
+* [Output variables set in a future job](#set-an-output-variable-for-use-in-future-jobs). To reference these variables, you reference the variable in the `variables` section with `dependency` syntax.
+* [Output variables set in future stages](#set-an-output-variable-for-use-in-future-stages). To reference these variables, you reference the variable in the `variables` section with `stageDependencies` syntax.
 
 > [!NOTE]
 > Future stages or jobs can only access output variables if they depend on the stage or job where the variable was set. To make an output variable accessible, make sure that the next stage or job depends on the stage or job where you created the variable. If multiple stages or jobs need to use the same output variable, use the `dependsOn` condition to establish this dependency.
 
-The name of an output variable may change if your pipeline uses an [execution strategy like a matrix job](/azure/devops/pipelines/yaml-schema/jobs-job-strategy). For those cases, output your variable for testing first to verify its name. You can also print out all available variables in a pipeline with the script `env`. 
+The name of an output variable may change if your pipeline uses an [execution strategy like a matrix job](/azure/devops/pipelines/yaml-schema/jobs-job-strategy). For those cases, output your variable for testing first to verify its name. You can also print out all available variables in a pipeline with the script `env`.
 
 ```yaml
 - script: env
@@ -108,13 +108,13 @@ The following table summarizes the most common output variable patterns.
 | Job in the same stage | `isOutput=true`, a step `name`, and `dependsOn` on the consuming job | Map with `myVarFromJobA: $[ dependencies.A.outputs['passOutput.myOutputVar'] ]`, then use `$(myVarFromJobA)` |
 | Job in a future stage | `isOutput=true`, a step `name`, and `dependsOn` on the consuming stage | Map with `myStageAVar: $[ stageDependencies.A.A1.outputs['MyOutputVar.myStageVal'] ]`, then use `$(myStageAVar)` |
 | Stage condition | `isOutput=true`, a step `name`, and `dependsOn` on the consuming stage | Use `condition: eq(dependencies.A.outputs['A1.printvar.shouldrun'], 'true')` |
-| Deployment job | `isOutput=true` in a deployment lifecycle hook | Use the syntax for the deployment strategy. See [Deployment jobs](deployment-jobs.md#support-for-output-variables). |
+| Deployment job | `isOutput=true` in a deployment lifecycle hook | Use the syntax for the deployment strategy. See [Deployment jobs](../process/deployment-jobs.md#support-for-output-variables). |
 
 When you map an output variable into a `variables:` block, use runtime expression syntax. After the mapping, use macro syntax to read the mapped variable in tasks and scripts.
 
 ## Set an output variable for use in the same job
 
-When you use an output variable in the same job, you don't have to use the `isOutput` property. By default, the variable is available to downstream steps within the same job. However, if you do add the `isOutput` property, you need to reference the variable with the task name. 
+When you use an output variable in the same job, you don't have to use the `isOutput` property. By default, the variable is available to downstream steps within the same job. However, if you do add the `isOutput` property, you need to reference the variable with the task name.
 
 # [Bash](#tab/bash)
 
@@ -131,7 +131,7 @@ jobs:
     name: setOutput
 ```
 
-This script gets the same-job variables `myJobVar` and `myOutputJobVar`. Notice that the syntax changes for referencing an output variable once `isOutput=true` is added. 
+This script gets the same-job variables `myJobVar` and `myOutputJobVar`. Notice that the syntax changes for referencing an output variable once `isOutput=true` is added.
 
 ```yaml
 jobs:
@@ -143,14 +143,14 @@ jobs:
      echo "##vso[task.setvariable variable=myOutputJobVar;isOutput=true]this is the same job too"
     name: setOutput
   - bash: |
-     echo $(myJobVar) 
+     echo $(myJobVar)
   - bash: |
      echo $(setOutput.myOutputJobVar)
 ```
 
 # [PowerShell](#tab/powershell)
 
-This script sets the same-job output variable `myJobVar` without specifying `isOutput` and sets `myOutputJobVar` with `isOutput=true`. 
+This script sets the same-job output variable `myJobVar` without specifying `isOutput` and sets `myOutputJobVar` with `isOutput=true`.
 
 ```yaml
 jobs:
@@ -163,7 +163,7 @@ jobs:
     name: setOutput
 ```
 
-This script gets the same-job variables `myJobVar` and `myOutputJobVar`. Notice that the syntax changes for referencing an output variable once `isOutput=true` is added. 
+This script gets the same-job variables `myJobVar` and `myOutputJobVar`. Notice that the syntax changes for referencing an output variable once `isOutput=true` is added.
 
 ```yaml
 jobs:
@@ -175,7 +175,7 @@ jobs:
      Write-Host "##vso[task.setvariable variable=myOutputJobVar;isOutput=true]this is the same job too"
     name: setOutput
   - powershell: |
-     Write-Host $(myJobVar) 
+     Write-Host $(myJobVar)
   - powershell: |
      Write-Host $(setOutput.myOutputJobVar)
 ```
@@ -183,9 +183,9 @@ jobs:
 ---
 ## Set an output variable for use in future jobs
 
-When you use output variables across jobs, you reference them with `dependencies`. The syntax for accessing an output variable in a future job or stage varies based on the relationship between the setter and consumer of the variable. Learn about each case in [dependencies](expressions.md#dependencies). 
+When you use output variables across jobs, you reference them with `dependencies`. The syntax for accessing an output variable in a future job or stage varies based on the relationship between the setter and consumer of the variable. Learn about each case in [dependencies](../process/expressions.md#dependencies).
 
-Output variables are only available in the next downstream job. If multiple jobs consume the same output variable, use the `dependsOn` condition. 
+Output variables are only available in the next downstream job. If multiple jobs consume the same output variable, use the `dependsOn` condition.
 
 # [Bash](#tab/bash)
 
@@ -213,7 +213,7 @@ jobs:
 - job: B
   dependsOn: A
   variables:
-    myVarFromJobA: $[ dependencies.A.outputs['passOutput.myOutputVar'] ]  
+    myVarFromJobA: $[ dependencies.A.outputs['passOutput.myOutputVar'] ]
   steps:
   - bash: |
      echo $(myVarFromJobA)
@@ -244,7 +244,7 @@ jobs:
 - job: B
   dependsOn: A
   variables:
-    myVarFromJobA: $[ dependencies.A.outputs['passOutput.myOutputVar'] ]  
+    myVarFromJobA: $[ dependencies.A.outputs['passOutput.myOutputVar'] ]
   steps:
   - powershell: |
      Write-Host $(myVarFromJobA)
@@ -253,11 +253,11 @@ jobs:
 
 ## Set an output variable for use in future stages
 
-Output variables can be used across stages in pipelines. You can use output variables to pass useful information, such as the ID of a generated output, from one stage to the next. 
+Output variables can be used across stages in pipelines. You can use output variables to pass useful information, such as the ID of a generated output, from one stage to the next.
 
-When you set a variable with the `isOutput` property, you can reference that variable in later stages with the task name and the `stageDependencies` syntax. Learn more about [dependencies](expressions.md#dependencies). 
+When you set a variable with the `isOutput` property, you can reference that variable in later stages with the task name and the `stageDependencies` syntax. Learn more about [dependencies](../process/expressions.md#dependencies).
 
-Output variables are only available in the next downstream stage. If multiple stages consume the same output variable, use the `dependsOn` condition. 
+Output variables are only available in the next downstream stage. If multiple stages consume the same output variable, use the `dependsOn` condition.
 
 # [Bash](#tab/bash)
 
@@ -370,15 +370,15 @@ Use this pattern when the value is discovered during the run. If the value is kn
 
 ## FAQ
 
-### My output variable isn't rendering. What is going wrong? 
+### My output variable isn't rendering. What is going wrong?
 
-There are a few reasons why your output variable might not appear. 
+There are a few reasons why your output variable might not appear.
 
-* Output variables set with `isOutput` aren't available in the same job and instead are only available in downstream jobs. 
-* Depending on what variable syntax you use, a variable that sets an output variable's value might not be available at runtime. For example, variables with macro syntax (`$(var)`) get processed before a task runs. In contrast, variables with template syntax are processed at runtime (`$[variables.var]`). You usually want to use runtime syntax when setting output variables. For more information on variable syntax, see [Define variables](variables.md#understand-variable-syntax).
+* Output variables set with `isOutput` aren't available in the same job and instead are only available in downstream jobs.
+* Depending on what variable syntax you use, a variable that sets an output variable's value might not be available at runtime. For example, variables with macro syntax (`$(var)`) get processed before a task runs. In contrast, variables with template syntax are processed at runtime (`$[variables.var]`). You usually want to use runtime syntax when setting output variables. For more information on variable syntax, see [Define variables](index.md#understand-variable-syntax).
 * There might be extra spaces within your expression. If your variable isn't rendering, check for extra spaces surrounding `isOutput=true`.
 
-You can troubleshoot the `dependencies` output for a pipeline job or stage by adding a variable for the dependencies and then printing that variable. For example, in this pipeline job `A` sets the output variable `MyTask`. The second job (`B`) depends on job `A`. A new variable, `deps` holds the JSON representation of the job dependencies. The second step in Job `B` uses PowerShell to print `deps` so that you can see the job dependencies.  
+You can troubleshoot the `dependencies` output for a pipeline job or stage by adding a variable for the dependencies and then printing that variable. For example, in this pipeline job `A` sets the output variable `MyTask`. The second job (`B`) depends on job `A`. A new variable, `deps` holds the JSON representation of the job dependencies. The second step in Job `B` uses PowerShell to print `deps` so that you can see the job dependencies.
 
 ```yml
 trigger:
@@ -386,20 +386,20 @@ trigger:
 
 pool:
   vmImage: 'ubuntu-latest'
- 
+
 jobs:
 - job: A
   steps:
     - script: |
         echo "##vso[task.setvariable variable=MyTask;isOutput=true]theoutputval"
-      name: ProduceVar  
+      name: ProduceVar
 - job: B
   dependsOn: A
   variables:
     varFromA: $[ dependencies.A.outputs['ProduceVar.MyTask'] ]
     deps: $[convertToJson(dependencies)] # create a variable with the job dependencies
   steps:
-  - script: echo $(varFromA) # 
+  - script: echo $(varFromA) #
   - powershell: Write-Host "$(deps)"
   ```
 
