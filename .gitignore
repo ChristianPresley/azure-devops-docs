@@ -20,3 +20,6 @@ requirements.txt
 docs/_site/
 docs/all/
 docs/team-services/
+
+# Playwright MCP runtime output (screenshots, logs, accessibility snapshots)
+.playwright-output/
