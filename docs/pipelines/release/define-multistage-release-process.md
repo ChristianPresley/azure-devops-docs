@@ -39,7 +39,7 @@ Enabling the continuous deployment trigger will configure the pipeline to automa
 
 1. In the **Artifacts** section, select the **Continuous deployment trigger** icon to open the trigger panel, then toggle it to enable.
 
-1. Under the first stage, select the **Pre-deployment conditions** icon and ensure the deployment trigger is set to **After release**. This triggers deployments to this stage automatically when a new release is created. 
+1. Under the first stage, select the **Pre-deployment conditions** icon and ensure the deployment trigger is set to **After release**. This triggers deployments to this stage automatically when a new release is created.
 
 ## Add stages
 
@@ -50,16 +50,16 @@ Enabling the continuous deployment trigger will configure the pipeline to automa
 1. Select **+ Add** > **New stage** to create a new stage.
 
 1. In your newly added stage, select the **Pre-deployment conditions** icon. Set the trigger to **After stage**, and then select your original stage from the drop-down menu.
- 
+
     :::image type="content" source="media/define-multistage-release-process/change-trigger-prod.png" alt-text="A screenshot displaying how to set up pre-deployment conditions in a Classic release pipeline.":::
-    
-1. Select the **Tasks** drop-down menu and select your desired stage. Depending on the tasks that you're using, change the settings so that this stage deploys to your desired target. In this example, we're using **Deploy Azure App Service** task to deploy to an Azure App Service as shown below. 
+
+1. Select the **Tasks** drop-down menu and select your desired stage. Depending on the tasks that you're using, change the settings so that this stage deploys to your desired target. In this example, we're using **Deploy Azure App Service** task to deploy to an Azure App Service as shown below.
 
     :::image type="content" source="media/define-multistage-release-process/change-target-environment.png" alt-text="A screenshot displaying how to set up stage tasks in a Classic release pipeline.":::
 
 ## Add Pre-deployment approvals
 
-Adding approvals ensures that all criteria are met before deploying to the next stage. 
+Adding approvals ensures that all criteria are met before deploying to the next stage.
 
 1. Sign in to your Azure DevOps organization, and then navigate to your project.
 
@@ -91,7 +91,7 @@ In this example we'll manually create a new release. Usually a release is create
 
     :::image type="content" source="media/define-multistage-release-process/approve-dialog.png" alt-text="A screenshot displaying how to approve deployment requests in a Classic release pipeline.":::
 
-> [!NOTE]   
+> [!NOTE]
 > Release administrators can access and override all approval decisions.
 
 ## Monitor and track deployments
@@ -99,13 +99,13 @@ In this example we'll manually create a new release. Usually a release is create
 Deployment logs allow you to monitor and troubleshoot the release of your application. Follow the steps below to check the logs for your deployment:
 
 1. In the release summary, hover over a stage and select **Logs**. You can also access the logs page during deployment to see the live logs of each task.
-   
+
 1. Select any task to view its specific logs. You can also download individual task logs or a zip of all the log files.
 
-1. If you need additional information to debug your deployment, you can [run the release in debug mode](../../pipelines/release/variables.md#run-a-release-in-debug-mode).
+1. If you need additional information to debug your deployment, you can [run the release in debug mode](../variables/reference.md#run-a-release-in-debug-mode).
 
     :::image type="content" source="media/define-multistage-release-process/download-logs.png" alt-text="A screenshot displaying deployment logs in a Classic release pipeline.":::
-    
+
 ## Related content
 
 - [Use approvals and gates to control your deployment](deploy-using-approvals.md)
