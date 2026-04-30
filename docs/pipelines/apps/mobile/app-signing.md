@@ -266,7 +266,7 @@ Add the following code to the pipeline [Xcode build (Xcode@5)](/azure/devops/pip
 Configure the following settings for the **Xcode build** task:
 
 - Under **Signing style**, select **Manual signing** from the dropdown list.
-- Under **Signing identity**, enter *$(APPLE_CERTIFICATE_SIGNING_IDENTITY)*. 
+- Under **Signing identity**, enter *$(APPLE_CERTIFICATE_SIGNING_IDENTITY)*.
 - Under **Provisioning profile UUID**, enter *$(APPLE_PROV_PROFILE_UUID)*.
 
 ---
@@ -279,4 +279,4 @@ The pipeline build agent now securely signs and provisions your app without furt
 - [Build, test, and deploy Xcode apps](../../ecosystems/xcode.md)
 - [Azure Pipelines agents](../../agents/agents.md)
 - [Create and manage agent pools](../../agents/pools-queues.md)
-- [Define variables](../../process/variables.md)
+- [Define variables](../../variables/index.md)
