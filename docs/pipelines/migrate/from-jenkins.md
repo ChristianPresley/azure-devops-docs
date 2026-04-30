@@ -181,12 +181,12 @@ on a particular build agent machine. Similarly, Azure Pipelines offers many opti
 
 Azure Pipelines offers cloud hosted build agents for Linux, Windows, and
 macOS builds. To select the build environment, you can use the
-[`vmimage`](../agents/hosted.md#use-a-microsoft-hosted-agent)
+[`vmImage`](../agents/hosted.md#use-a-microsoft-hosted-agent)
 keyword. For example, to select a macOS build:
 
 ``` yaml
 pool:
-  vmimage: macOS-latest
+  vmImage: macOS-latest
 ```
 
 Additionally, you can specify a `container` and specify a docker image
@@ -275,7 +275,7 @@ continuous integration system.
 | A unique identifier (not necessarily numeric) for the current build invocation. | `BUILD_ID` | `BUILD_BUILDID` |
 | The URL that displays the build logs. | `BUILD_URL` |  This value isn't set as an environment variable in Azure Pipelines but you can derive it from other variables.<sup>1</sup> |
 | The name of the machine that the current build runs on. | `NODE_NAME` | `AGENT_NAME` |
-| The name of this project or build definition. | `JOB_NAME` | `RELEASE_DEFINITIONNAME` |
+| The name of this project or build definition. | `JOB_NAME` | `BUILD_DEFINITIONNAME` |
 | A string for identification of the build; the build number is a good unique identifier. | `BUILD_TAG` | `BUILD_BUILDNUMBER` |
 | A URL for the host executing the build. | `JENKINS_URL` | `SYSTEM_TEAMFOUNDATIONCOLLECTIONURI` |
 | A unique identifier for the build executor or build agent that runs currently. | `EXECUTOR_NUMBER` | `AGENT_NAME` |

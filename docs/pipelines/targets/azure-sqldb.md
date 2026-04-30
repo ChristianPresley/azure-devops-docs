@@ -74,9 +74,9 @@ For Classic release pipelines, select **Start with an empty pipeline**, link the
 Alternatively, you can use SQL scripts instead of DACPAC to deploy your database. Below is a simple SQL script that creates an empty database:
 
 ```sql
-  USE [main]
+  USE [master]
   GO
-  IF NOT EXISTS (SELECT name FROM main.sys.databases WHERE name = N'DatabaseExample')
+  IF NOT EXISTS (SELECT name FROM master.sys.databases WHERE name = N'DatabaseExample')
   CREATE DATABASE [DatabaseExample]
   GO
 ```
@@ -86,8 +86,6 @@ To run SQL scripts from your pipeline, you'll need to add and remove firewall ru
 #### Set Azure firewall rules
 
 The following PowerShell script creates firewall rules. Save it as `SetAzureFirewallRule.ps1` and add it to your repository:
-
-#### [ARM](#tab/arm/)
 
 ```powershell
 [CmdletBinding(DefaultParameterSetName = 'None')]
@@ -101,45 +99,9 @@ $agentIP = (New-Object net.webclient).downloadstring("https://api.ipify.org")
 New-AzSqlServerFirewallRule -ResourceGroupName $ResourceGroupName -ServerName $ServerName -FirewallRuleName $FirewallRuleName -StartIPAddress $agentIP -EndIPAddress $agentIP
 ```
 
-#### [ASM (Classic)](#tab/asm/)
-
-```powershell
-[CmdletBinding(DefaultParameterSetName = 'None')]
-param
-(
-  [String] [Parameter(Mandatory = $true)] $ServerName,
-  [String] [Parameter(Mandatory = $true)] $ResourceGroupName,
-  [String] $FirewallRuleName = "AzureWebAppFirewall"
-)
-
-$ErrorActionPreference = 'Stop'
-
-function New-AzureSQLServerFirewallRule {
-  $agentIP = (New-Object net.webclient).downloadstring("https://api.ipify.org")
-  New-AzureSqlDatabaseServerFirewallRule -StartIPAddress $agentIP -EndIPAddress $agentIP -RuleName $FirewallRuleName -ServerName $ServerName
-}
-
-function Update-AzureSQLServerFirewallRule{
-  $agentIP= (New-Object net.webclient).downloadstring("https://api.ipify.org")
-  Set-AzureSqlDatabaseServerFirewallRule -StartIPAddress $agentIP -EndIPAddress $agentIP -RuleName $FirewallRuleName -ServerName $ServerName
-}
-
-if ((Get-AzureSqlDatabaseServerFirewallRule -ServerName $ServerName -RuleName $FirewallRuleName -ErrorAction SilentlyContinue) -eq $null)
-{
-  New-AzureSQLServerFirewallRule
-}
-else
-{
-  Update-AzureSQLServerFirewallRule
-}
-```
-* * *
-
 #### Remove Azure firewall rules
 
 The following PowerShell script removes firewall rules. Save it as `RemoveAzureFirewallRule.ps1` and add it to your repository:
-
-#### [ARM](#tab/arm/)
 
 ```powershell
 [CmdletBinding(DefaultParameterSetName = 'None')]
@@ -151,26 +113,6 @@ param
 )
 Remove-AzSqlServerFirewallRule -ServerName $ServerName -FirewallRuleName $FirewallRuleName -ResourceGroupName $ResourceGroupName
 ```
-
-#### [ASM (Classic)](#tab/asm/)
-
-```powershell
-[CmdletBinding(DefaultParameterSetName = 'None')]
-param
-(
-  [String] [Parameter(Mandatory = $true)] $ServerName,
-  [String] [Parameter(Mandatory = $true)] $ResourceGroupName,
-  [String] $FirewallRuleName = "AzureWebAppFirewall"
-)
-
-$ErrorActionPreference = 'Stop'
-
-if ((Get-AzureSqlDatabaseServerFirewallRule -ServerName $ServerName -RuleName $FirewallRuleName -ErrorAction SilentlyContinue))
-{
-  Remove-AzureSqlDatabaseServerFirewallRule -RuleName $FirewallRuleName -ServerName $ServerName
-}
-```
-* * *
 
 #### Deploy database with SQL scripts
 

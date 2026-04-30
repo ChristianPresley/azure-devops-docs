@@ -29,17 +29,14 @@ When running Selenium tests for a web app, you can launch the browser in two way
 1. **Headless mode**. In this mode, the browser runs as normal but without any UI
    components being visible. While this mode is not useful for browsing the web,
    it's useful for running automated tests in an unattended manner in a CI/CD pipeline.
-   [Chrome](https://chromium.googlesource.com/chromium/src/+/lkgr/headless/README.md)
-   and [Firefox](https://developer.mozilla.org/docs/Mozilla/Firefox) browsers can be run in headless mode.
+   [Chromium-based browsers (Chrome and Microsoft Edge)](https://chromium.googlesource.com/chromium/src/+/lkgr/headless/README.md)
+   and [Firefox](https://developer.mozilla.org/docs/Mozilla/Firefox) can be run in headless mode. Microsoft Edge has supported headless mode since Edge 109 (use the `--headless=new` flag for the modern headless implementation).
 	
    This mode generally consumes less resources on the machine because the UI isn't
    rendered and tests run faster. As a result, potentially more tests can be run in
    parallel on the same machine to reduce the total test execution time. 
 
    [Screenshots can be captured](#capture-screenshot) in this mode and used for troubleshooting failures.
-
-   > [!NOTE] 
-   > Microsoft Edge browser currently cannot be run in the headless mode.
   	
 1. **Visible UI mode**. In this mode, the browser runs normally and the UI components are visible.
    When running tests in this mode on Windows, [special configuration of the agents](#visible-ui-mode) is required.

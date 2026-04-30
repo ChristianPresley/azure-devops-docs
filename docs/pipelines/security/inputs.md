@@ -123,7 +123,7 @@ Pipelines can reference tasks executed within the pipeline. Some tasks include a
 Applying the  **Enable shell tasks arguments validation** setting validates `argument` parameters for built-in shell tasks to check for inputs that can inject commands into scripts. The check ensures that the shell correctly executes characters like semicolons, quotes, and parentheses in the following pipeline tasks:
 
 - PowerShell
-- BatchScript
+- CmdLine
 - Bash
 - Ssh
 - AzureFileCopy

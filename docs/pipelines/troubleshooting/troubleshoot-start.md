@@ -141,7 +141,6 @@ To check the capabilities and demands specified for your agents and pipelines, s
 * [Config fails while testing agent connection (on-premises TFS only)](#config-fails-while-testing-agent-connection-on-premises-tfs-only)
 * [Agent lost communication](#agent-lost-communication)
 * [TFS Job Agent not started](#tfs-job-agent-not-started)
-* [Misconfigured notification URL (1.x agent version)](#misconfigured-notification-url-1x-agent-version)
 
 #### Config fails while testing agent connection (on-premises TFS only)
 
@@ -178,12 +177,6 @@ This error might indicate the agent lost communication with the server for a spa
 ### TFS Job Agent not started
 
 This might be characterized by a message in the web console "Waiting for an agent to be requested." Verify the TFSJobAgent (display name: *Visual Studio Team Foundation Background Job Agent*) Windows service is started.
-
-### Misconfigured notification URL (1.x agent version)
-
-This might be characterized by a message in the web console "Waiting for console output from an agent," and the process eventually times out.
-
-A mismatching notification URL might cause the worker to process to fail to connect to the server. See *Team Foundation Administration Console*, *Application Tier*. The 1.x agent listens to the message queue using the URL that it was configured with. However, when a job message is pulled from the queue, the worker process uses the notification URL to communicate back to the server.
 
 ::: moniker-end
 

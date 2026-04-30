@@ -266,7 +266,7 @@ To support security of your pipeline operations, you can add users to a built-in
 
 ::: moniker range="azure-devops"
 
-YAML pipelines don't have a [Create work item on failure](build/options.md#create-a-work-item-on-failure) setting like classic build pipelines. Classic build pipelines are single stage, and **Create work item on failure** applies to the whole pipeline. YAML pipelines can be multi-stage, and a pipeline level setting may not be appropriate. To implement **Create work item on failure** in a YAML pipeline, you can use methods such as the [Work Items - Create](/rest/api/azure/devops/wit/work-items/create) REST API call, or the Azure DevOps CLI [az boards work-item create](/cli/azure/boards/work-item#az-boards-work-item-create) command at the desired point in your pipeline.
+YAML pipelines don't have a **Create work item on failure** setting like classic build pipelines. Classic build pipelines are single stage, and **Create work item on failure** applies to the whole pipeline. YAML pipelines can be multi-stage, and a pipeline level setting may not be appropriate. To implement **Create work item on failure** in a YAML pipeline, you can use methods such as the [Work Items - Create](/rest/api/azure/devops/wit/work-items/create) REST API call, or the Azure DevOps CLI [az boards work-item create](/cli/azure/boards/work-item#az-boards-work-item-create) command at the desired point in your pipeline.
 
 The following example has two jobs. The first job represents the work of the pipeline, but if it fails, the second job runs, and creates a bug in the same project as the pipeline.
 
@@ -323,7 +323,7 @@ The second job in the pipeline has a dependency on the first job and only runs i
 
 ::: moniker range="< azure-devops"
 
-YAML pipelines don't have a [Create work item on failure](build/options.md#create-a-work-item-on-failure) setting like classic build pipelines. Classic build pipelines are single stage, and **Create work item on failure** applies to the whole pipeline. YAML pipelines can be multi-stage, and a pipeline level setting may not be appropriate. To implement **Create work item on failure** in a YAML pipeline, you can use the [Work Items - Create](/rest/api/azure/devops/wit/work-items/create) REST API call at the desired point in your pipeline.
+YAML pipelines don't have a **Create work item on failure** setting like classic build pipelines. Classic build pipelines are single stage, and **Create work item on failure** applies to the whole pipeline. YAML pipelines can be multi-stage, and a pipeline level setting may not be appropriate. To implement **Create work item on failure** in a YAML pipeline, you can use the [Work Items - Create](/rest/api/azure/devops/wit/work-items/create) REST API call at the desired point in your pipeline.
 
 The following example has two jobs. The first job represents the work of the pipeline, but if it fails, the second job runs, and creates a bug in the same project as the pipeline.
 
@@ -427,6 +427,6 @@ You've learned the basics of customizing your pipeline. Next we recommend that y
 
 Or, to grow your CI pipeline to a CI/CD pipeline, include a [deployment job](../pipelines/process/deployment-jobs.md) with steps to deploy your app to an [environment](../pipelines/process/environments.md).
 
-To learn more about the topics in this guide see [Jobs](../pipelines/process/phases.md), [Tasks](../pipelines/process/tasks.md), [Catalog of Tasks](../pipelines/tasks/index.md), [Variables](./variables/index.md), [Triggers](../pipelines/build/triggers.md), or [Troubleshooting](../pipelines/troubleshooting/troubleshooting.md).
+To learn more about the topics in this guide see [Jobs](../pipelines/process/phases.md), [Tasks](../pipelines/process/tasks.md), [Catalog of Tasks](/azure/devops/pipelines/tasks/reference/), [Variables](./variables/index.md), [Triggers](../pipelines/build/triggers.md), or [Troubleshooting](../pipelines/troubleshooting/troubleshooting.md).
 
 To learn what else you can do in YAML pipelines, see [YAML schema reference](/azure/devops/pipelines/yaml-schema/).

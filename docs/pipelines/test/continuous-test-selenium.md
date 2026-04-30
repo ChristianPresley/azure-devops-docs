@@ -6,7 +6,7 @@ ms.topic: concept-article
 ms.custom: continuous-test
 ms.author: alexpysanets
 author: raviLiftr
-ms.date: 03/15/2019
+ms.date: 04/30/2026
 monikerRange: '<= azure-devops'
 ---
 
@@ -53,9 +53,11 @@ from Visual Studio Test Explorer.
    Packages**. Add the following packages to your project:
 
    * Selenium.WebDriver
-   * Selenium.Firefox.WebDriver
    * Selenium.WebDriver.ChromeDriver
-   * Selenium.WebDriver.IEDriver<p />
+   * Selenium.WebDriver.MSEdgeDriver
+
+   > [!NOTE]
+   > Selenium 4 ships with Selenium Manager, which can auto-resolve compatible browser drivers at run time, so explicit driver packages are optional. Internet Explorer 11 retired June 15, 2022; do not target it for new tests.
 
    ![Adding the browser driver packages to your solution](media/continuous-test-selenium/continuous-test-selenium-02.png)
 
@@ -70,9 +72,8 @@ from Visual Studio Test Explorer.
    using System.Text;
    using Microsoft.VisualStudio.TestTools.UnitTesting;
    using OpenQA.Selenium;			
-   using OpenQA.Selenium.Firefox;	
    using OpenQA.Selenium.Chrome;	
-   using OpenQA.Selenium.IE;
+   using OpenQA.Selenium.Edge;
 
    namespace SeleniumBingTests
    {
@@ -128,11 +129,8 @@ from Visual Studio Test Explorer.
            case "Chrome":
              driver = new ChromeDriver();
              break;
-           case "Firefox":
-             driver = new FirefoxDriver();
-             break;
-           case "IE":
-             driver = new InternetExplorerDriver();
+           case "Edge":
+             driver = new EdgeDriver();
              break;
            default:
              driver = new ChromeDriver();
@@ -168,10 +166,9 @@ to deploy a web app, see [Deploy to Azure Web Apps](../targets/webapp.md).
 You can deploy and test your app using either the Microsoft-hosted agent in Azure, or a self-hosted agent that you install on the target servers.
 
 * When using the **Microsoft-hosted agent**, you should use the Selenium web drivers that are
-  preinstalled on the Windows agents (agents named **Hosted VS 20xx**) because they're compatible with the browser versions installed on the Microsoft-hosted agent images.
-  The paths to the folders containing these drivers can be obtained from the environment variables named `IEWebDriver` (Internet Explorer),
-  `ChromeWebDriver` (Google Chrome), and `GeckoWebDriver` (Firefox).
-  The drivers are **not** preinstalled on other agents such as Linux, Ubuntu, and macOS agents.
+  preinstalled on the Windows agents (`windows-2022` and `windows-latest`) because they're compatible with the browser versions installed on the Microsoft-hosted agent images.
+  The paths to the folders containing these drivers can be obtained from the environment variables named
+  `ChromeWebDriver` (Google Chrome) and `EdgeWebDriver` (Microsoft Edge). On the current `ubuntu-22.04` and `ubuntu-24.04` images, `ChromeWebDriver` and `EdgeWebDriver` are also preset.
   Also see [UI testing considerations](ui-testing-considerations.md).
   <!--
   For example,  

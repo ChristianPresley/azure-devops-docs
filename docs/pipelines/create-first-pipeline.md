@@ -772,11 +772,11 @@ When you manually queue a build, you can, for a single run of the build:
 To learn more about pipeline settings, see:
 
 * [Getting sources](repos/index.md)
-* [Tasks](tasks/index.md)
+* [Tasks](/azure/devops/pipelines/tasks/reference/)
 * [Variables](./variables/reference.md)
 * [Triggers](build/triggers.md)
 * [Retention](policies/retention.md)
-* [History](build/history.md)
+* [Pipeline runs](process/runs.md)
 
 ::: moniker-end
 
