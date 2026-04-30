@@ -125,7 +125,7 @@ Swift Package Manager (SPM) is Apple's native dependency manager and is integrat
 
 If your private Swift packages are hosted on GitHub, set up authentication by using an environment variable named `GITHUB_ACCESS_TOKEN` with a value of a personal access token that has access to the repository.
 
-Don't add the secret token directly to your pipeline YAML, as this action exposes it in your source code. For more information, see [Set secret variables](../process/variables.md#secret-variables).
+Don't add the secret token directly to your pipeline YAML, as this action exposes it in your source code. For more information, see [Set secret variables](../variables/index.md#secret-variables).
 
 The following pipeline code uses a secret variable named `myGitHubAccessToken` for authentication when resolving Swift Package dependencies:
 
@@ -145,7 +145,7 @@ For private packages hosted on Azure Repos or other Git providers, configure the
 
 #### CocoaPods
 
-If your project uses CocoaPods, use the [CocoaPods](/azure/devops/pipelines/tasks/reference/cocoa-pods-v0) task to install dependencies. 
+If your project uses CocoaPods, use the [CocoaPods](/azure/devops/pipelines/tasks/reference/cocoa-pods-v0) task to install dependencies.
 
 ```yaml
 - task: CocoaPods@0
@@ -158,7 +158,7 @@ If your project uses CocoaPods, use the [CocoaPods](/azure/devops/pipelines/task
 
 If your project uses Carthage (a dependency manager for iOS/macOS projects) with a private Carthage repository, set up authentication by using an environment variable named `GITHUB_ACCESS_TOKEN` with a value of a token that has access to the repository. Carthage automatically detects and uses this environment variable.
 
-Don't add the secret token directly to your pipeline YAML, as this action exposes it in your source code. For more information, see [Set secret variables](../process/variables.md#secret-variables).
+Don't add the secret token directly to your pipeline YAML, as this action exposes it in your source code. For more information, see [Set secret variables](../variables/index.md#secret-variables).
 
 The following pipeline code uses a secret variable named `myGitHubAccessToken` for the value of the `GITHUB_ACCESS_TOKEN` environment variable.
 
@@ -175,7 +175,7 @@ Visual Studio App Center was retired on March 31, 2025. Learn about [recommended
 
 ### Keep artifacts with the build record
 
-To store your iOS AppStore Package (IPA) file with the build record or test and deploy it in subsequent pipelines, add the [Copy Files](/azure/devops/pipelines/tasks/reference/copy-files-v2) and [Publish Pipeline Artifacts](/azure/devops/pipelines/tasks/reference/publish-pipeline-artifact-v1) tasks to your pipeline. 
+To store your iOS AppStore Package (IPA) file with the build record or test and deploy it in subsequent pipelines, add the [Copy Files](/azure/devops/pipelines/tasks/reference/copy-files-v2) and [Publish Pipeline Artifacts](/azure/devops/pipelines/tasks/reference/publish-pipeline-artifact-v1) tasks to your pipeline.
 
 ```yaml
 - task: CopyFiles@2
@@ -208,7 +208,7 @@ There are limitations when using this task with [Apple two-factor authentication
 - task: AppStoreRelease@1
   displayName: 'Publish to the App Store TestFlight track'
   inputs:
-    serviceEndpoint: 'My Apple App Store service connection' 
+    serviceEndpoint: 'My Apple App Store service connection'
     appIdentifier: com.yourorganization.testapplication.etc
     ipaPath: '$(build.artifactstagingdirectory)/**/*.ipa'
     shouldSkipWaitingForProcessing: true
