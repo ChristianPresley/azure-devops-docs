@@ -77,7 +77,7 @@ A [deployment job](deployment-jobs.md) contains steps that run sequentially. You
     pool:
       vmImage: 'Ubuntu-latest'
     # creates an environment if it doesn't exist
-    environment: 
+    environment:
       name: 'smarthotel-dev'
       resourceName: myVM
       resourceType: virtualMachine
@@ -95,9 +95,9 @@ You can scope the deployment target to a particular resource within the environm
 In the following example, the value for the `kubernetesServiceConnection` automatically passes down to the task from the `environment.resource` input.
 
 ```YAML
-environment: 
+environment:
   name: 'smarthotel-dev.bookings'
-strategy: 
+strategy:
  runOnce:
    deploy:
      steps:
@@ -113,7 +113,7 @@ strategy:
 
 > [!NOTE]
 > If you're using a private AKS cluster, make sure you're connected to the cluster's virtual network as the API server endpoint isn't exposed through a public IP address.
-> 
+>
 > Azure Pipelines recommends setting up a self-hosted agent within a VNET that has access to the cluster's virtual network. See [Options for connecting to the private cluster](/azure/aks/private-clusters#options-for-connecting-to-the-private-cluster) for details.
 
 ## Use manual approval checks
@@ -185,7 +185,7 @@ Change your access level and then check to see if you can create environments. F
 
 If you see the message **Job XXXX: Environment XXXX could not be found. The environment does not exist or has not been authorized for use.**, there are several possible reasons for the failure.
 
-- [Runtime parameters](runtime-parameters.md) don't work when creating environments, because the parameters are expanded only at run time. You can use [variables](./variables.md?tabs=yaml%2cbatch&view=azure-devops&preserve-view=true) to create an environment or use [templateContext to pass properties to templates](template-parameters.md#use-templatecontext-to-pass-properties-to-templates). 
+- [Runtime parameters](runtime-parameters.md) don't work when creating environments, because the parameters are expanded only at run time. You can use [variables](../variables/index.md?tabs=yaml%2cbatch&view=azure-devops&preserve-view=true) to create an environment or use [templateContext to pass properties to templates](template-parameters.md#use-templatecontext-to-pass-properties-to-templates).
 
   When you refer to an environment that doesn't exist in a YAML pipeline file, Azure Pipelines automatically creates the environment in the following cases:
 
@@ -202,5 +202,5 @@ If you see the message **Job XXXX: Environment XXXX could not be found. The envi
 ## Related articles
 
 - [Define approvals and checks](approvals.md)
-- [Define variables](variables.md)
+- [Define variables](../variables/index.md)
 - [Define resources in YAML](resources.md)
