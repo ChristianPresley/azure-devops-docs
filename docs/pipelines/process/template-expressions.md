@@ -19,7 +19,7 @@ Template expressions make your Azure Pipelines templates more dynamic and reusab
 - **Reduce repetition**: Create flexible, reusable templates that work across different scenarios and teams.
 
 Use template [expressions](expressions.md) to specify how values are dynamically resolved during pipeline initialization.
-Wrap your template expression inside this syntax: `${{ }}`. 
+Wrap your template expression inside this syntax: `${{ }}`.
 
 Template expressions can expand template parameters and variables.
 Use parameters to influence how a template is expanded.
@@ -46,9 +46,9 @@ steps:
     solution: ${{ parameters['solution'] }}  # index syntax
 - task: VSTest@3
   inputs:
-    testSelector: 'testAssemblies' 
+    testSelector: 'testAssemblies'
     testAssemblyVer2: ${{ parameters.solution }} # property dereference syntax
-    searchFolder: '$(System.DefaultWorkingDirectory)' 
+    searchFolder: '$(System.DefaultWorkingDirectory)'
 ```
 
 Then you reference the template and pass it the optional `solution` parameter:
@@ -65,8 +65,8 @@ steps:
 ### Context
 
 Within a template expression, you have access to the `parameters` context (the set of data available within the expression, such as parameters and variables passed to the template) that contains the values of parameters passed in.
-Additionally, you have access to the `variables` context that contains all the variables specified in the YAML file plus 
-many of the [predefined variables](../build/variables.md) (noted on each variable in that article). 
+Additionally, you have access to the `variables` context that contains all the variables specified in the YAML file plus
+many of the [predefined variables](../variables/reference.md) (noted on each variable in that article).
 Importantly, it doesn't have runtime variables such as those stored on the pipeline or given when you start a run.
 Template expansion happens [early in the run](runs.md#process-the-pipeline), so those variables aren't available.
 
@@ -100,7 +100,7 @@ steps:
 > [!NOTE]
 > String parameters with `default: ''` (empty string) behave differently depending on how you trigger the pipeline:
 > * **In the pipeline editor**: You can run the pipeline directly and the empty string default is respected, allowing `coalesce` to fall back to the next value.
-> * **In the Run Pipeline pane**: Azure DevOps requires you to provide a non-empty value for parameters with empty string defaults, preventing `coalesce` from falling back. 
+> * **In the Run Pipeline pane**: Azure DevOps requires you to provide a non-empty value for parameters with empty string defaults, preventing `coalesce` from falling back.
 
 ### Insertion
 
@@ -179,7 +179,7 @@ jobs:
 
 ### Conditional insertion
 
-If you want to conditionally insert into a sequence or a mapping in a template, use insertions and expression evaluation. You can also use `if` statements [outside of templates](expressions.md) as long as you use template syntax.  
+If you want to conditionally insert into a sequence or a mapping in a template, use insertions and expression evaluation. You can also use `if` statements [outside of templates](expressions.md) as long as you use template syntax.
 
 For example, to insert into a sequence in a template:
 
@@ -244,7 +244,7 @@ steps:
     debug: true
 ```
 
-You can also use conditional insertion for variables. In this example, `start` always prints and `this is a test` only prints when the `foo` variable equals `test`. 
+You can also use conditional insertion for variables. In this example, `start` always prints and `this is a test` only prints when the `foo` variable equals `test`.
 
 ```yaml
 variables:
@@ -260,14 +260,14 @@ steps:
   - script: echo "this is a test" # runs when foo=test
 ```
 
-You can also set variables based on the values of other variables. In the following pipeline, `myVar` is used to set the value of `conditionalVar`. 
+You can also set variables based on the values of other variables. In the following pipeline, `myVar` is used to set the value of `conditionalVar`.
 
 ```yaml
 trigger:
 - main
 
-pool: 
-   vmImage: 'ubuntu-latest' 
+pool:
+   vmImage: 'ubuntu-latest'
 
 variables:
   - name: myVar
@@ -328,7 +328,7 @@ jobs:
       - script: echo So will this!
 ```
 
-You can also use `stringList` to define and iterate over parameters that contain a list of items. 
+You can also use `stringList` to define and iterate over parameters that contain a list of items.
 
 > [!NOTE]
 > The `stringList` data type isn't available in templates. Use the `object` data type in templates instead.
@@ -342,9 +342,9 @@ parameters:
     - WUS
     - CUS
     - EUS
-  default: 
+  default:
     - WUS
-    - EUS 
+    - EUS
 
 stages:
 - ${{ each stage in parameters.regions}}:
