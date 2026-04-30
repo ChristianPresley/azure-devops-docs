@@ -13,10 +13,10 @@ To limit damage done by leaking a PAT token, we've added a new PAT scope, named 
 
 The following REST API calls support the new PAT scope as follows:
 
-* [Update an Approval](/rest/api/azure/devops/approvalsandchecks/approvals/update) supports scope `Pipeline Resources Use` 
-* [Manage Checks](/rest/api/azure/devops/approvalsandchecks/check-configurations) supports scope `Pipeline Resources Use and Manage` 
-* [Update Pipeline Permissions For Resources](/rest/api/azure/devops/approvalsandchecks/pipeline-permissions/update-pipeline-permisions-for-resources) supports scope `Pipeline Resources Use and Manage` 
-* [Authorize Definition Resources](/rest/api/azure/devops/build/resources/authorize-definition-resources) supports scope `Pipeline Resources Use and Manage` 
+* [Update an Approval](/rest/api/azure/devops/approvalsandchecks/approvals/update) supports scope `Pipeline Resources Use`
+* [Manage Checks](/rest/api/azure/devops/approvalsandchecks/check-configurations) supports scope `Pipeline Resources Use and Manage`
+* [Update Pipeline Permissions For Resources](/rest/api/azure/devops/approvalsandchecks/pipeline-permissions/update-pipeline-permisions-for-resources) supports scope `Pipeline Resources Use and Manage`
+* [Authorize Definition Resources](/rest/api/azure/devops/build/resources/authorize-definition-resources) supports scope `Pipeline Resources Use and Manage`
 * [Authorize Project Resources](/rest/api/azure/devops/build/authorizedresources/authorize-project-resources) supports scope `Pipeline Resources Use and Manage`
 
 ### Experience improvements to pipeline permissions
@@ -26,11 +26,11 @@ We've improved the experience around managing pipeline permissions to make the p
 In the past, if you checked off "Grant access permission to all pipelines" when you created a protected resource, but then you restricted access to the resource, your pipeline needed a new authorization to use the resource. This behavior was inconsistent with subsequent opening and closing access to the resource, where a new authorization wasn't required. This is now fixed.
 ### Variables as inputs in checks
 
-[Approvals and checks](/azure/devops/pipelines/process/approvals) are a runtime security mechanism that allows resource owners to control which pipeline _runs_ can use their resource. 
+[Approvals and checks](/azure/devops/pipelines/process/approvals) are a runtime security mechanism that allows resource owners to control which pipeline _runs_ can use their resource.
 
-Two popular checks are _Invoke Azure Function_ and _Invoke REST API_. In the past, when configuring them, one could only use [predefined system variables](/azure/devops/pipelines/build/variables) or [variable groups](/azure/devops/pipelines/library/variable-groups).
+Two popular checks are _Invoke Azure Function_ and _Invoke REST API_. In the past, when configuring them, one could only use [predefined system variables](/azure/devops/pipelines/variables/reference) or [variable groups](/azure/devops/pipelines/library/variable-groups).
 
-In this sprint, we've added support for pipeline-defined variables. This works when specifying `Function key`, `Headers`, `Body`, and `Query` parameters for such checks. 
+In this sprint, we've added support for pipeline-defined variables. This works when specifying `Function key`, `Headers`, `Body`, and `Query` parameters for such checks.
 
 Say you have the following YAML pipeline. Notice we define variables `FunctionKey`, `MyHeader`, `MyBody`, and `MyQuery`, and a runtime-defined variable named`RetryCount`.
 
@@ -41,7 +41,7 @@ variables:
   MyQuery: "FabrikamQuery"
   MyBody: "FabrikamBody"
 
-stages: 
+stages:
 - stage: Build
   jobs:
   - job: SetRC
@@ -50,7 +50,7 @@ stages:
       name: RCValue
 - stage: Deploy
   jobs:
-  - deployment: 
+  - deployment:
     environment: Production
     strategy:
       runOnce:
@@ -70,7 +70,7 @@ Learn more about [the recommended way to use Invoke Azure Function & REST API ch
 
 Azure Pipelines masks secrets in logs. Secrets can be variables marked as secret, variables from variable groups that are linked to Azure Key Vault or elements of a Service Connection marked as secret by the Service Connection provider.
 
-All occurrences of secret value are masked. Masking short secrets e.g. '`1`', '`2`', '`Dev`' makes it easy to guess their values e.g. in a date: '`Jan 3, 202***`'   
+All occurrences of secret value are masked. Masking short secrets e.g. '`1`', '`2`', '`Dev`' makes it easy to guess their values e.g. in a date: '`Jan 3, 202***`'
 It's now clear '`3`' is a secret. In such cases you may prefer not masking the secret altogether. If it's not possible to not mark the value as secret (e.g. the value is taken from Key Vault), you can set the `AZP_IGNORE_SECRETS_SHORTER_THAN` knob to a value of up to 4.
 
 ### Script to self-validate pipeline agent version
@@ -84,7 +84,7 @@ We have created a [script](https://github.com/microsoft/azure-pipelines-agent/tr
 
 ### Pipeline run status overview icon
 
-In this sprint, we're making it easier to know the overall status of a pipeline run. 
+In this sprint, we're making it easier to know the overall status of a pipeline run.
 
 For YAML pipelines that have many stages, it used to be hard to know the status of a pipeline run, that is, is it still running or it finished. And if it finished, what is the overall state: successful, failed, or canceled. We fixed this issue by adding a run status overview icon.
 > ![Pipeline run status overview icon](../../media/215-pipelines-03.png)
