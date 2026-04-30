@@ -59,7 +59,7 @@ https://github.com/MicrosoftDocs/pipelines-java
 
 10. When you're ready to make changes to your pipeline, select it in the **Pipelines** page, and then **Edit** the `azure-pipelines.yml` file.
 
-Learn more about [working with Java](ecosystems/java.md) in your pipeline.  
+Learn more about [working with Java](ecosystems/java.md) in your pipeline.
 
 #### [.NET](#tab/net)
 
@@ -169,7 +169,7 @@ Learn more about [working with JavaScript](ecosystems/javascript.md) in your pip
     https://github.com/MicrosoftDocs/pipelines-java
     ```
 
-    After you've forked it, clone it to your dev machine. 
+    After you've forked it, clone it to your dev machine.
     Learn how: [Fork a repo](https://help.github.com/en/articles/fork-a-repo).
 
 1. Navigate to the cloned directory.
@@ -184,22 +184,22 @@ Learn more about [working with JavaScript](ecosystems/javascript.md) in your pip
 
     If you don't have the **azure-devops** Azure CLI extension, you'll be prompted to install it.
 
-    The repository and branch details are picked up from the git configuration available in the cloned directory.   
+    The repository and branch details are picked up from the git configuration available in the cloned directory.
 
 1. If prompted, enter your GitHub user name and password to authenticate Azure Pipelines.
-   
+
     ```azurecli-interactive
-    Enter your GitHub username (Leave blank for using already generated PAT): 
+    Enter your GitHub username (Leave blank for using already generated PAT):
     Enter your GitHub password:
-    ``` 
+    ```
 
 1. Add a name, `ContosoPipelineServiceConnection`, for the service connection created to enable Azure Pipelines to communicate with the GitHub Repository.
-    
+
     ```azurecli-interactive
     Enter a service connection name to create? ContosoPipelineServiceConnection
     ```
 
-1. Select the Maven pipeline template from the list of recommended templates. 
+1. Select the Maven pipeline template from the list of recommended templates.
 
     ```azurecli-interactive
     Which template do you want to use for this pipeline?
@@ -241,7 +241,7 @@ Learn more about [working with JavaScript](ecosystems/javascript.md) in your pip
     [2] View or edit the yaml
     Please enter a choice [Default choice(1)]:2
     ```
-    
+
 1. Select *1* to commit the YAML file to the main branch.
 
     ```azurecli-interactive
@@ -354,7 +354,7 @@ We'll show you how to use the classic editor in Azure DevOps Server 2019 to crea
 
    ![Repos files](./media/create-first-pipeline/repos-files.png)
 
-2. If your project is empty, you will be greeted with a screen to help you add code to your repository. Choose the bottom choice to **initialize** your repo with a `readme` file: 
+2. If your project is empty, you will be greeted with a screen to help you add code to your repository. Choose the bottom choice to **initialize** your repo with a `readme` file:
 
    ![Initialize repository](media/initialize-repo.png)
 
@@ -366,9 +366,9 @@ We'll show you how to use the classic editor in Azure DevOps Server 2019 to crea
 
 2. Add a file.
 
-   > [!div class="mx-imgBorder"] 
+   > [!div class="mx-imgBorder"]
    >![On the Files tab, from the repo node, select the New File option](media/get-started-designer/add-a-file-newnav-tfs-2018-2.png)
-   > 
+   >
 
 3. In the dialog box, name your new file and create it.
    ```
@@ -384,19 +384,19 @@ We'll show you how to use the classic editor in Azure DevOps Server 2019 to crea
 
 ::: moniker-end
 
-   
+
 
 ::: moniker range="<azure-devops"
 
 1. Select **Azure Pipelines**, it should automatically take you to the **Builds** page.
 
-   > [!div class="mx-imgBorder"] 
+   > [!div class="mx-imgBorder"]
    > ![Go to Builds tab](media/get-started-designer/navigate-to-builds-tab-newnav-tfs-2018-2.png)
    >
 
 2. Create a new pipeline.
 
-   > [!div class="mx-imgBorder"] 
+   > [!div class="mx-imgBorder"]
    > ![Select the build tab button](media/get-started-designer/builds-tab-mine-new-button-vsts-newnavon.png)
    >
 
@@ -414,21 +414,21 @@ We'll show you how to use the classic editor in Azure DevOps Server 2019 to crea
 
 6. On the left side, select the plus sign **( + )** to add a task to **Job 1**. On the right side, select the **Utility** category, select the **PowerShell** task from the list, and then choose **Add**.
 
-   > [!div class="mx-imgBorder"] 
+   > [!div class="mx-imgBorder"]
    > ![Add the build task to the job](media/get-started-designer/builds-tab-add-task-azure-devops-newnavon.png)
-   
+
 7. On the left side, select your new **PowerShell** script task.
 
 8. For the **Script Path** argument, select the :::image type="icon" source="../media/icons/more-actions.png" border="false"::: button to browse your repository and select the script you created.
 
-   > [!div class="mx-imgBorder"] 
+   > [!div class="mx-imgBorder"]
    > ![Select your script](media/get-started-designer/powershell-task-1-azure-devops-newnavon.png)
- 
+
 9. Select **Save & queue**, and then select **Save**.
 
    ::: moniker-end
 
-   
+
 
 ::: moniker range="<azure-devops"
 
@@ -456,31 +456,31 @@ We'll show you how to use the classic editor in Azure DevOps Server 2019 to crea
 
 1. You see a link to the new build on the top of the page.
 
-   > [!div class="mx-imgBorder"] 
+   > [!div class="mx-imgBorder"]
    > ![build console](media/get-started-designer/build-console-link-to-new-build-azure-devops-newnavon.png)
 
    Choose the link to watch the new build as it happens. Once the agent is allocated, you'll start seeing the live logs of the build. Notice that the PowerShell script is run as part of the build, and that "Hello world" is printed to the console.
 
-   > [!div class="mx-imgBorder"] 
+   > [!div class="mx-imgBorder"]
    > ![Watch in the build console](media/get-started-designer/build-console-azure-devops-newnavon.png)
 
 1. Go to the build summary. On the **Artifacts** tab of the build, notice that the script is published as an artifact.
 
-   > [!div class="mx-imgBorder"] 
+   > [!div class="mx-imgBorder"]
    > ![Open the build console to see the artifact](media/get-started-designer/artifacts-explorer-azure-devops-newnavon.png)
 
 ::: moniker-end
 
    ::: moniker range="<azure-devops"
 
-   > [!div class="mx-imgBorder"] 
+   > [!div class="mx-imgBorder"]
    > ![Open the PowerShell task in the build console](media/get-started-designer/powershell-task-2-azure-devops-newnavon.png)
 
    ::: moniker-end
 
-   
 
-   
+
+
 
 ::: moniker range="<azure-devops"
 
@@ -490,12 +490,12 @@ Now you can see the results of your changes. Go to **Azure Pipelines** and selec
 
    ::: moniker range="<azure-devops"
 
-   > [!div class="mx-imgBorder"] 
+   > [!div class="mx-imgBorder"]
    > ![Build a summary PowerShell script log](media/get-started-designer/build-summary-powershell-script-log-azure-devops-newnav.png)
 
    ::: moniker-end
 
-   
+
 
 ::: moniker range="<azure-devops"
 
@@ -511,9 +511,9 @@ Now you can see the results of your changes. Go to **Azure Pipelines** and selec
 
 1. Select the **Lightning bolt** to trigger continuous deployment and then enable the **Continuous deployment trigger** on the right.
 
-   > [!div class="mx-imgBorder"] 
+   > [!div class="mx-imgBorder"]
    > ![Select lightning bolt to trigger continuous deployment](media/get-started-designer/trigger-continuous-deployment-release-environment-azure-devops-newnavon.png)
-   >   
+   >
 
 1. Select the **Tasks** tab and select your **QA** stage.
 
@@ -533,15 +533,15 @@ Now you can see the results of your changes. Go to **Azure Pipelines** and selec
 
 1. On the **Pipeline** tab, select the **QA** stage and select **Clone**.
 
-   > [!div class="mx-imgBorder"] 
+   > [!div class="mx-imgBorder"]
    > ![Clone the release environment in QA](media/get-started-designer/clone-release-environment-azure-devops-newnavon.png)
-   >   
+   >
 
 1. Rename the cloned stage **Production**.
 
 1. Rename the release pipeline **Hello world**.
 
-   > [!div class="mx-imgBorder"] 
+   > [!div class="mx-imgBorder"]
    > ![Rename the release pipeline hello world](media/get-started-designer/rename-release-pipeline-azure-devops-newnavon.png)
    >
 
@@ -553,30 +553,30 @@ Now you can see the results of your changes. Go to **Azure Pipelines** and selec
 
 1. Create a new release.
 
-   > [!div class="mx-imgBorder"] 
+   > [!div class="mx-imgBorder"]
    > ![Create release - DevOps 2019 and 2020](media/get-started-designer/create-release-azure-devops-newnavon.png)
 
    When **Create new release** appears, select **Create**.
 
 2. Open the release that you created.
 
-   > [!div class="mx-imgBorder"] 
+   > [!div class="mx-imgBorder"]
    > ![release created - DevOps 2019 and 2020](media/get-started-designer/release-created-azure-devops-newnavon.png)
    >
- 
+
 3. View the logs to get real-time data about the release.
 
-   > [!div class="mx-imgBorder"] 
+   > [!div class="mx-imgBorder"]
    > ![release logs - DevOps 2019 and 2020](media/get-started-designer/release-logs-azure-devops-newnavon.png)
    >
 
    ::: moniker-end
 
-   
+
 
 ::: moniker range="<azure-devops"
 
-> [!div class="mx-imgBorder"] 
+> [!div class="mx-imgBorder"]
 > ![release script step final log - DevOps 2019 and 2020](media/get-started-designer/release-script-step-final-log-azure-devops-newnavon.png)
 >
 
@@ -685,7 +685,7 @@ When you're ready to get going with CI/CD for your app, you can use the version 
 
 If your pipeline has a pattern that you want to replicate in other pipelines, clone it, export it, or save it as a template.
 
-> [!div class="mx-imgBorder"] 
+> [!div class="mx-imgBorder"]
 > ![all-definitions-build-action-menu-replicate-actions](media/get-started-designer/all-definitions-build-action-menu-replicate-actions-newnav.png)
 >
 
@@ -711,7 +711,7 @@ If you're editing a build pipeline and you want to test some changes that are no
 
 ::: moniker range="<azure-devops"
 
-> [!div class="mx-imgBorder"] 
+> [!div class="mx-imgBorder"]
 > ![save-as-draft](media/get-started-designer/save-as-draft-newnav.png)
 >
 
@@ -719,7 +719,7 @@ If you're editing a build pipeline and you want to test some changes that are no
 
 ::: moniker range="<azure-devops"
 
-> [!div class="mx-imgBorder"] 
+> [!div class="mx-imgBorder"]
 > ![edit draft - DevOps 2019 and 2020](media/get-started-designer/edit-draft-newnav.png)
 >
 
@@ -727,7 +727,7 @@ If you're editing a build pipeline and you want to test some changes that are no
 
 ::: moniker range="<azure-devops"
 
-> [!div class="mx-imgBorder"] 
+> [!div class="mx-imgBorder"]
 > ![publish draft - DevOps 2019 and 2020](media/get-started-designer/publish-draft-newnav.png)
 >
 
@@ -753,7 +753,7 @@ When you manually queue a build, you can, for a single run of the build:
 
 * Specify the [pool](agents/pools-queues.md) into which the build goes.
 
-* Add and modify some [variables](build/variables.md).
+* Add and modify some [variables](./variables/reference.md).
 
 * Add [demands](/azure/devops/pipelines/yaml-schema/pool-demands).
 
@@ -773,7 +773,7 @@ To learn more about pipeline settings, see:
 
 * [Getting sources](repos/index.md)
 * [Tasks](tasks/index.md)
-* [Variables](build/variables.md)
+* [Variables](./variables/reference.md)
 * [Triggers](build/triggers.md)
 * [Retention](policies/retention.md)
 * [History](build/history.md)
