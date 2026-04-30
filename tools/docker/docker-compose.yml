@@ -1,0 +1,46 @@
+services:
+  docfx-preview:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: azure-devops-docs/docfx-preview:latest
+    container_name: azure-devops-docs-preview
+    ports:
+      # Host 8080 -> container 8080. VS Code Insiders auto-forwards this
+      # when the workspace is open; you can also open http://localhost:8080
+      # directly in the Simple Browser (Ctrl+Shift+P > "Simple Browser: Show").
+      - "8080:8080"
+    environment:
+      # Optional. When set to a top-level docs subtree (e.g. "user-guide",
+      # "pipelines", "boards"), docfx builds only that subtree. Accepts:
+      #   - single subtree:        PREVIEW_SCOPE=user-guide
+      #   - comma-separated list:  PREVIEW_SCOPE=user-guide,pipelines,repos
+      #   - "*" for every subtree: PREVIEW_SCOPE=*  (default)
+      #   - empty string:          full-fidelity build via the real docfx.json
+      # The default "*" expands to every top-level docs subdirectory so
+      # cross-section links resolve in the preview.
+      PREVIEW_SCOPE: "${PREVIEW_SCOPE:-*}"
+      # Polling fallback interval (seconds). Only used if inotifywait
+      # fails to start (e.g. Windows-host bind mount). On native ext4
+      # the find walk is ~50ms so 0.2s is cheap.
+      PREVIEW_POLL_INTERVAL: "${PREVIEW_POLL_INTERVAL:-0.2}"
+      # How long the watcher waits after the first change event before
+      # kicking off the rebuild, so a flurry of saves coalesces into a
+      # single build. Used by both the inotify and polling paths.
+      PREVIEW_DEBOUNCE_INTERVAL: "${PREVIEW_DEBOUNCE_INTERVAL:-0.3}"
+      # Set to "1" to wipe rendered HTML before every rebuild (the old
+      # behavior, needed only when docfx's manifest-based skip-unchanged
+      # logic misbehaves -- e.g. on Windows-host bind mounts where
+      # mtimes are unreliable). Leave unset on native ext4.
+      PREVIEW_FORCE_CLEAN: "${PREVIEW_FORCE_CLEAN:-}"
+    volumes:
+      # Mount the repo root read-only so docfx can read all content but
+      # cannot write into the working tree.
+      - ../../:/repo:ro
+      # Persist generated site/log output across runs (and keep it out of
+      # the repo working tree).
+      - docfx-site:/site
+    restart: unless-stopped
+
+volumes:
+  docfx-site:
