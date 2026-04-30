@@ -29,7 +29,7 @@ To install a specific Node.js version, add the following code to your *azure-pip
 ```yaml
 - task: UseNode@1
   inputs:
-    version: '16.x' # replace with the version you need
+    version: '22.x' # replace with the version you need
 ```
 
 ::: moniker range=">=azure-devops"
@@ -63,10 +63,10 @@ pool:
   vmImage: 'ubuntu-latest'
 strategy:
   matrix:
-    node_16_x:
-      node_version: 16.x
-    node_13_x:
-      node_version: 18.x
+    node_20_x:
+      node_version: 20.x
+    node_22_x:
+      node_version: 22.x
 
 steps:
 - task: UseNode@1
@@ -458,7 +458,7 @@ pool:
 steps:
 - task: UseNode@1
   inputs:
-    version: '16.x'
+    version: '22.x'
   displayName: 'Install Node.js'
 
 - script: npm install
@@ -612,7 +612,7 @@ If you can build your project on your development machine but can't build it in 
   ```yaml
   steps:
   - bash: |
-      NODE_VERSION=16  # or your preferred version
+      NODE_VERSION=22  # or your preferred version
       npm config delete prefix  # avoid a warning
       . ${NVM_DIR}/nvm.sh
       nvm use ${NODE_VERSION}
@@ -661,7 +661,7 @@ steps: # Checking out connected repo
     
 - task: UseNode@1
   inputs:
-    version: '16.x'
+    version: '22.x'
   displayName: 'Install Node.js'
 
 - script: |
