@@ -6,7 +6,7 @@ ms.author: sdanie
 ms.date: 01/28/2025
 ---
 
-When pipeline jobs run on agents, a directory structure is created to store the source code, binaries, and artifacts. 
+When pipeline jobs run on agents, a directory structure is created to store the source code, binaries, and artifacts.
 
 The agent's home directory is the directory where the agent is installed. The directory is typically located:
 
@@ -42,4 +42,4 @@ The work directory structure is:
 
 On Microsoft-hosted agents, a different agent is used on each run, so the work directory isn't retained between runs. On self-hosted agents, only the artifacts staging directory and test results directories are cleaned between runs by default. For more information about the workspace clean option, see [Workspace](../../process/phases.md#workspace).
 
-For more information about predefined variables, see [Predefined variables](../../build/variables.md).
+For more information about predefined variables, see [Predefined variables](../../variables/reference.md).
