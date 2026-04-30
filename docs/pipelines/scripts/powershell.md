@@ -14,7 +14,7 @@ monikerRange: '<= azure-devops'
 
 This article explains how PowerShell scripts can add business logic to Azure Pipelines. The [PowerShell v2 (PowerShell@2)](/azure/devops/pipelines/tasks/reference/powershell-v2) task runs PowerShell scripts that can access the Azure DevOps REST API, work with Azure DevOps work items, manage tests, or call other services.
 
-You can use [predefined variables](../build/variables.md) or [user-defined variables](../process/variables.md#user-defined-variables) in PowerShell scripts. You can also set [multi-job output variables](../process/variables.md#set-a-multi-job-output-variable) to make variables available to other jobs. For more information, see [Define variables](../process/variables.md).
+You can use [predefined variables](../variables/reference.md) or [user-defined variables](../variables/index.md#user-defined-variables) in PowerShell scripts. You can also set [multi-job output variables](../variables/index.md#set-a-multi-job-output-variable) to make variables available to other jobs. For more information, see [Define variables](../variables/index.md).
 
 You can also use named parameters in your PowerShell scripts. Other kinds of parameters, such as [switch parameters](/powershell/module/microsoft.powershell.core/about/about_functions_advanced_parameters#switch-parameters), aren't supported. For more information, see [How to declare cmdlet parameters](/powershell/scripting/developer/cmdlet/how-to-declare-cmdlet-parameters).
 
@@ -141,7 +141,7 @@ elseif (-not (Test-Path $Env:BUILD_SOURCESDIRECTORY))
     exit 1
 }
 Write-Verbose "BUILD_SOURCESDIRECTORY: $Env:BUILD_SOURCESDIRECTORY"
-    
+
 # Make sure there's a build number
 if (-not $Env:BUILD_BUILDNUMBER)
 {
@@ -149,34 +149,34 @@ if (-not $Env:BUILD_BUILDNUMBER)
     exit 1
 }
 Write-Verbose "BUILD_BUILDNUMBER: $Env:BUILD_BUILDNUMBER"
-    
+
 # Get and validate the version data
 $VersionData = [regex]::matches($Env:BUILD_BUILDNUMBER,$VersionRegex)
 switch($VersionData.Count)
 {
-   0        
-      { 
+   0
+      {
          Write-Error "Couldn't find version number data in BUILD_BUILDNUMBER."
          exit 1
       }
    1 {}
-   default 
-      { 
-         Write-Warning "Found more than one instance of version data in BUILD_BUILDNUMBER." 
+   default
+      {
+         Write-Warning "Found more than one instance of version data in BUILD_BUILDNUMBER."
          Write-Warning "Assuming first instance is version."
       }
 }
 $NewVersion = $VersionData[0]
 Write-Verbose "Version: $NewVersion"
-    
+
 # Apply the version to the assembly property files
-$files = gci $Env:BUILD_SOURCESDIRECTORY -recurse -include "*Properties*","My Project" | 
-    ?{ $_.PSIsContainer } | 
+$files = gci $Env:BUILD_SOURCESDIRECTORY -recurse -include "*Properties*","My Project" |
+    ?{ $_.PSIsContainer } |
     foreach { gci -Path $_.FullName -Recurse -include AssemblyInfo.* }
 if($files)
 {
     Write-Verbose "Applying $NewVersion to $($files.count) files."
-    
+
     foreach ($file in $files) {
         $filecontent = Get-Content($file)
         attrib $file -r
