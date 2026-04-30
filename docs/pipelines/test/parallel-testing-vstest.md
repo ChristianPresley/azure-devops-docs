@@ -88,9 +88,6 @@ to manage state in your test code.
 If you have a large test suite or long-running integration tests to run in your classic build pipeline,
 use the following steps.
 
-> [!NOTE]
-> To use the multi-agent capability in build pipelines with on-premises TFS server, you must use TFS 2018 Update 2 or a later version.
-
 1. **Build job using a single agent**.
    Build Visual Studio projects and publish build artifacts using the tasks shown in the following image.
    This uses the default job settings (single agent, no parallel jobs).
@@ -126,7 +123,7 @@ use the following steps.
 
 Specify the `parallel` strategy in the `job` and indicate how many jobs should be dispatched. You can specify as many as 99 agents to scale up testing for large test suites.
 
-```YAML
+```yaml
 jobs:
 - job: ParallelTesting
   strategy:
@@ -143,9 +140,6 @@ Use the following steps if you have a large test suite or long-running functiona
 to run after deploying your application.
 For example, you may want to deploy a web-application and run Selenium tests in a browser
 to validate the app functionality.
-
-> [!NOTE]
-> To use the multi-agent capability in release pipelines with on-premises TFS server, you must use TFS 2017 Update 1 or a later version.
 
 1. **Deploy app using a single agent**. Use the Azure Deployment: Create or Update Resource Group or the Azure App Service Deploy task to deploy a web app to Azure App services.
    This uses the default job settings (single agent, no parallel jobs).
