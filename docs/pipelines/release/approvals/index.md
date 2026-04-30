@@ -13,7 +13,8 @@ monikerRange: '<= azure-devops'
 
 [!INCLUDE [version-lt-eq-azure-devops](../../../includes/version-lt-eq-azure-devops.md)]
 
-
+> [!NOTE]
+> This article describes gates and approvals for **Classic release pipelines**. If you use **YAML pipelines**, see [Define approvals and checks](../../process/approvals.md) instead.
 
 Release pipelines enable teams to continuously deploy their application across different stages with lower risk and with faster pace. Deployments to each stage can be fully automated by using jobs and tasks.
 

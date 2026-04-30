@@ -14,6 +14,9 @@ monikerRange: '<= azure-devops'
 
 [!INCLUDE [version-lt-eq-azure-devops](../../../includes/version-lt-eq-azure-devops.md)]
 
+> [!NOTE]
+> This article describes pre- and post-deployment approvals for **Classic release pipelines**. If you use **YAML pipelines**, configure approvals on the environment or service connection by following [Define approvals and checks](../../process/approvals.md).
+
 With Azure release pipelines, you can enable manual deployment approvals for each stage in a release pipeline to control your deployment workflow. When you use manual approvals, the deployment is paused at each point where approval is required until the specified approver grants approval, rejects the release, or reassigns the approval to another user.
 
 ## Deployment approvals

@@ -14,6 +14,9 @@ ms.custom: sfi-image-nochange
 
 [!INCLUDE [version-eq-azure-devops](../../includes/version-eq-azure-devops.md)]
 
+> [!NOTE]
+> This article describes approvals and checks for **YAML pipelines**, configured on resources such as environments, service connections, agent pools, variable groups, and secure files. If you use **Classic release pipelines**, see [Release gates and approvals overview](../release/approvals/index.md) instead.
+
 A pipeline is made up of stages. A pipeline author can control whether a stage should run by defining [conditions](conditions.md) on the stage. Another way to control if and when a stage should run is through **approvals and checks**.
 
 Approvals and other checks aren't defined in the yaml file. Users modifying the pipeline yaml file can't modify the checks performed before start of a stage. Administrators of resources manage checks using the web interface of Azure Pipelines.
