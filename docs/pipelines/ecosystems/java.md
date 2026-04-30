@@ -19,7 +19,7 @@ Use a pipeline to:
 * Build your project with [Maven](https://maven.apache.org/), [Gradle](https://gradle.org/), or [Ant](https://ant.apache.org/).
 * Run tests and code analysis tools.
 * Publish your app using a pipeline and Azure Artifacts.
-* Deploy your app to [Azure App Service](java-webapp.md), [Azure Functions](java-function.md), or [Azure Kubernetes Service](kubernetes/aks-template.md).
+* Deploy your app to [Azure App Service](java-webapp.md), [Azure Functions](/azure/azure-functions/functions-create-first-function-cli-java), or [Azure Kubernetes Service](kubernetes/deploy.md).
 
 If you work on an Android projects, see [Build, test, and deploy Android apps](android.md).
 
@@ -249,8 +249,8 @@ Publish your build output to your pipeline. Package and publish your app in a Ma
 Learn more about creating a CI/CD pipeline for your deployment target:
 
 - [Azure App Service](java-webapp.md)
-- [Azure Functions](java-function.md)
-- [Azure Kubernetes Service](kubernetes/aks-template.md)
+- [Azure Functions](/azure/azure-functions/functions-create-first-function-cli-java)
+- [Azure Kubernetes Service](kubernetes/deploy.md)
 
 ::: moniker-end
 
