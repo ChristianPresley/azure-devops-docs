@@ -3,9 +3,9 @@ title: Expressions
 description: Discover how to use expressions in Azure Pipelines. Define conditions, evaluate variables, and streamline your CI/CD workflows with this guide.
 ms.topic: concept-article
 ms.assetid: 4df37b09-67a8-418e-a0e8-c17d001f0ab3
-ms.date: 01/09/2026
-ms.author: sdanie
-author: steved0x
+ms.date: 04/26/2026
+ms.author: rabououn
+author: ramiMSFT
 monikerRange: "<=azure-devops"
 ---
 
@@ -15,9 +15,11 @@ monikerRange: "<=azure-devops"
 
 [!INCLUDE [version-selector](../../includes/version-selector.md)]
 
-Use expressions when you need to specify a string, boolean, or number value while authoring a pipeline. When an expression returns an array, normal indexing rules apply and the index starts with `0`. 
+Use expressions when you need to specify a string, boolean, or number value while authoring a pipeline. When an expression returns an array, normal indexing rules apply and the index starts with `0`.
 
-The most common use of expressions is in [conditions](conditions.md) to determine whether a job or step should run. 
+The most common use of expressions is in [conditions](conditions.md) to determine whether a job or step should run.
+
+For help deciding when to use macro syntax, template expressions, runtime expressions, and output variable mappings, see [Variables quick reference](../variables/quick-reference.md).
 
 ::: moniker range="<=azure-devops"
 ```yaml
@@ -29,7 +31,7 @@ steps:
 
 Another common use of expressions is in defining variables.
 You can evaluate expressions at [compile time](runs.md#process-the-pipeline) or at [run time](runs.md#run-each-step).
-Use compile time expressions anywhere; use runtime expressions in variables and conditions. Use runtime expressions to compute the contents of variables and state (example: `condition`). 
+Use compile time expressions anywhere; use runtime expressions in variables and conditions. Use runtime expressions to compute the contents of variables and state (example: `condition`).
 
 ```yaml
 # Two examples of expressions used to define variables
@@ -118,16 +120,16 @@ To use property dereference syntax, the property name must:
 - Be followed by `a-Z`, `0-9`, or `_`
 
 Different variables are available depending on the execution context.
-- If you create pipelines using YAML, then [pipeline variables](../build/variables.md) are available.
-- If you create build pipelines using classic editor, then [build variables](../build/variables.md) are available.
-- If you create release pipelines using classic editor, then [release variables](../release/variables.md) are available.
+- If you create pipelines using YAML, then [pipeline variables](../variables/reference.md) are available.
+- If you create build pipelines using classic editor, then [build variables](../variables/reference.md) are available.
+- If you create release pipelines using classic editor, then [release variables](../variables/reference.md) are available.
 
 Variables are always strings. If you want to use typed values, use [parameters](runtime-parameters.md).
 
 > [!NOTE]
 > There is a limitation for using variables with expressions for both Classical and YAML pipelines when setting up such variables via variables tab UI. Variables that are defined as expressions shouldn't depend on another variable with expression in value since **it isn't guaranteed** that both expressions will be evaluated properly. For example we have variable `a` whose value `$[ <expression> ]` is used as a part for the value of variable `b`. Since the order of processing variables isn't guaranteed variable `b` could have an incorrect value of variable `a` after evaluation.
 >
-> You can only use these constructions when you set up variables through the [variables keyword](./variables.md#set-variables-in-pipeline) in a YAML pipeline. You need to place the variables in the order they should be processed to get the correct values after processing.
+> You can only use these constructions when you set up variables through the [variables keyword](../variables/index.md#set-variables-in-pipeline) in a YAML pipeline. You need to place the variables in the order they should be processed to get the correct values after processing.
 
 ## Functions
 
@@ -169,7 +171,7 @@ You can use the following built-in functions in expressions.
 > This function is of limited use in general pipelines.
 > It's intended for use in the [pipeline decorator context](../../extend/develop/pipeline-decorator-context.md) with system-provided arrays such as the list of steps.
 
-You can use the `containsValue` expression to find a matching value in an object. Here's an example that demonstrates looking in list of source branches for a match for `Build.SourceBranch`. 
+You can use the `containsValue` expression to find a matching value in an object. Here's an example that demonstrates looking in list of source branches for a match for `Build.SourceBranch`.
 
 ```yaml
 parameters:
@@ -181,12 +183,12 @@ parameters:
     - refs/heads/test
 
 jobs:
-  - job: A1 
+  - job: A1
     steps:
     - ${{ each value in parameters.branchOptions }}:
       - script: echo ${{ value }}
 
-  - job: B1 
+  - job: B1
     condition: ${{ containsValue(parameters.branchOptions, variables['Build.SourceBranch']) }}
     steps:
       - script: echo "Matching branch found"
@@ -208,7 +210,7 @@ parameters:
         with:
           - one
           - two
- 
+
 steps:
 - script: |
     echo "${MY_JSON}"
@@ -237,7 +239,7 @@ Script output:
 * `prefix` is a string expression. The function tracks a separate counter value for each unique `prefix`. Use UTF-16 characters in the `prefix`.
 * `seed` is the starting value of the counter.
 
-You can create a counter that automatically increments by one each time your pipeline runs. When you define a counter, provide a `prefix` and a `seed`. The following example demonstrates this concept. 
+You can create a counter that automatically increments by one each time your pipeline runs. When you define a counter, provide a `prefix` and a `seed`. The following example demonstrates this concept.
 
 ```yaml
 variables:
@@ -432,7 +434,7 @@ steps:
 ::: moniker range=">= azure-devops-2022"
 
 ### split
-* Splits a string into substrings based on the specified delimiting characters. 
+* Splits a string into substrings based on the specified delimiting characters.
 * Minimum parameters: 2. Maximum parameters: 2.
 * The first parameter is the string to split.
 * The second parameter is the delimiting characters.
@@ -478,11 +480,19 @@ steps:
 * Performs ordinal ignore-case comparison.
 * Example: `startsWith('ABCDE', 'AB')` (returns True).
 
+### substring
+* Returns a substring from a string. The substring starts at the specified character position.
+* Minimum parameters: 2. Maximum parameters: 3.
+* The first parameter is the source string. The second parameter is the zero-based start index. The optional third parameter is the length of the substring; when omitted, the substring extends to the end of the source string.
+* The function throws an error if the start index is negative, beyond the end of the source string, or if the requested length runs past the end of the source string.
+* Example: `substring('foobar', 0, 3)` returns `foo`.
+* Example: `substring('foobar', 3)` returns `bar`.
+
 ::: moniker range=">= azure-devops"
 ### trim
 * Returns the parameter without leading and trailing white spaces
 * Min parameters: 1. Max parameters: 1
-* Example: `trim('  variable  ') ` returns 'variable'
+* Example: `trim('  variable  ')` returns 'variable'
 ::: moniker-end
 
 ::: moniker range="<=azure-devops"
@@ -529,7 +539,7 @@ Use the following status check functions as expressions in conditions, but not i
 * For a job:
   * With no arguments, evaluates to `True` regardless of whether any jobs in the dependency graph succeeded or failed.
   * With job names as arguments, evaluates to `True` whether any of those jobs succeeded or failed.
-  * You might want to use `not(canceled())` instead when previous jobs in the dependency graph are skipped. 
+  * You might want to use `not(canceled())` instead when previous jobs in the dependency graph are skipped.
 
   > This function is like `always()`, except it evaluates to `False` when the pipeline is canceled.
 
@@ -539,7 +549,7 @@ Use the following status check functions as expressions in conditions, but not i
 Use `if`, `elseif`, and `else` clauses to conditionally assign variable values or set inputs for tasks. You can also conditionally run a step when a condition is met.
 ::: moniker-end
 
-Conditionals only work when you use template syntax. For more information, see [variable syntax](variables.md#understand-variable-syntax).
+Conditionals only work when you use template syntax. For more information, see [variable syntax](../variables/index.md#understand-variable-syntax).
 
 For templates, you can use conditional insertion when adding a sequence or mapping. For more information, see [conditional insertion in templates](templates.md).
 
