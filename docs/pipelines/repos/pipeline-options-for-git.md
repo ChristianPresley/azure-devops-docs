@@ -13,17 +13,17 @@ monikerRange: '<= azure-devops'
 
 While editing a pipeline that uses a Git repo&mdash;in an Azure DevOps project, GitHub, GitHub Enterprise Server, Bitbucket Cloud, or another Git repo&mdash;you have the following options.
 
-| Feature | Azure Pipelines | Azure DevOps Server 2019 and higher | TFS 2018 |
-|---|---|---|---|
-| Branch | Yes | Yes | Yes |
-| Clean | Yes | Yes | Yes |
-| Tag or label sources | Project; Classic only | Team project | Team project |
-| Report build status | Yes | Yes | Yes |
-| Check out submodules | Yes | Yes | Yes |
-| Check out files from LFS | Yes | Yes | Yes |
-| Clone a second repo | Yes | Yes | Yes |
-| Don't sync sources | Yes | Yes | Yes |
-| Shallow fetch | Yes | Yes | Yes |
+| Feature | Azure Pipelines | Azure DevOps Server 2022 and higher |
+|---|---|---|
+| Branch | Yes | Yes |
+| Clean | Yes | Yes |
+| Tag or label sources | Project; Classic only | Team project |
+| Report build status | Yes | Yes |
+| Check out submodules | Yes | Yes |
+| Check out files from LFS | Yes | Yes |
+| Clone a second repo | Yes | Yes |
+| Don't sync sources | Yes | Yes |
+| Shallow fetch | Yes | Yes |
 
 > [!NOTE]
 > Click **Advanced settings** in the **Get Sources** task to see some of the above options.
@@ -97,7 +97,7 @@ By default, `clean` is set to `true` but can be overridden when manually running
 
 #### [Classic](#tab/classic/)
 
-### Azure Pipelines, TFS 2018, TFS 2017.2, TFS 2017.3
+### Azure Pipelines and Azure DevOps Server 2022 and newer
 
 [//]: # (TODO: build.clean variable still works and overrides if clean is set to false)
 
@@ -127,9 +127,9 @@ Some build variables might yield a value that is not a valid label. For example,
 
 After the sources are tagged by your build pipeline, an artifact with the Git ref `refs/tags/{tag}` is automatically added to the completed build. This gives your team additional traceability and a more user-friendly way to navigate from the build to the code that was built. The tag is considered a build artifact since it is produced by the build. When the build is deleted either manually or through a retention policy, the tag is also deleted.
 
-[//]: # (TODO: confirm I got this next section right; e.g. GitHub not in TFS 2018 Update 1)
+[//]: # (TODO: confirm I got this next section right; e.g. GitHub may not be supported on older on-prem versions)
 
-## Report build status (Azure Pipelines, TFS 2018 and newer)
+## Report build status
 
 You've got the option to give your team a view of the build status from your remote source repository.
 
@@ -324,7 +324,7 @@ This option can be useful in cases when you want to:
 
 If you want to disable downloading sources:
 
-* **Azure Pipelines, TFS 2018, and newer:** Click **Advanced settings**, and then select **Don't sync sources**.
+* **Azure Pipelines and Azure DevOps Server 2022 and newer:** Click **Advanced settings**, and then select **Don't sync sources**.
 
 > [!NOTE]
 > When you use this option, the agent also skips running Git commands that clean the repo.

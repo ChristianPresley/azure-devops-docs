@@ -1,6 +1,21 @@
 {
   "redirections": [
     {
+      "source_path_from_root": "/docs/pipelines/policies/set-permissions.md",
+      "redirect_url": "/azure/devops/pipelines/policies/permissions",
+      "redirect_document_id": false
+    },
+    {
+      "source_path_from_root": "/docs/pipelines/build/includes/variables-tfs2018.md",
+      "redirect_url": "/azure/devops/pipelines/build/includes/variables-server-2022",
+      "redirect_document_id": false
+    },
+    {
+      "source_path_from_root": "/docs/pipelines/build/includes/variables-server2019.md",
+      "redirect_url": "/azure/devops/pipelines/build/includes/variables-server-2022",
+      "redirect_document_id": false
+    },
+    {
       "source_path_from_root": "/docs/pipelines/release/key-vault-in-own-project.md",
       "redirect_url": "/azure/devops/pipelines/release/azure-key-vault",
       "redirect_document_id": false

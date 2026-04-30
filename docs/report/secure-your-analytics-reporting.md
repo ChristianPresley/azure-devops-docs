@@ -67,7 +67,7 @@ Analytics security is based on the principle of data visibility inheritance from
 - **Project-based access**: Users can only see analytics data for projects they have access to. For more information, see [Change project-level permissions](../organizations/security/change-project-level-permissions.md).
 - **Work item visibility**: Analytics respects work item area path permissions. For more information, see [Set work tracking permissions](../organizations/security/set-permissions-access-work-tracking.md).
 - **Repository access**: Code metrics are filtered based on repository permissions. For more information, see [Set Git repository permissions](../repos/git/set-git-repository-permissions.md).
-- **Pipeline visibility**: Build and release analytics follow pipeline security settings. For more information, see [Set pipeline permissions](../pipelines/policies/set-permissions.md).
+- **Pipeline visibility**: Build and release analytics follow pipeline security settings. For more information, see [Manage security in Azure Pipelines](../pipelines/policies/permissions.md).
 
 ### Analytics views
 

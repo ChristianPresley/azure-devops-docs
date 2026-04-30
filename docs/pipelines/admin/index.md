@@ -23,7 +23,7 @@ Azure Pipelines administrators set up the resources, permissions, and controls t
 
 ## Manage access and permissions
 
-- [Add users to contribute to pipelines](../policies/set-permissions.md)
+- [Add users to contribute to pipelines](../policies/permissions.md)
 - [Manage pipeline permissions](../policies/permissions.md)
 - [Job access tokens](../process/access-tokens.md)
 - [Service connection permissions](../policies/permissions.md#service-connection-permissions)

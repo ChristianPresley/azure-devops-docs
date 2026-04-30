@@ -98,10 +98,8 @@
         href: agents/device-code-flow-agent-registration.md
   - name: Permissions and access
     items:
-    - name: Add users to contribute to pipelines
-      displayName: add administrators, add users
-      href: policies/set-permissions.md
     - name: Manage permissions
+      displayName: add administrators, add users
       href: policies/permissions.md
     - name: Pipeline permissions
       href: policies/permissions.md#pipeline-permissions

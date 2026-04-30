@@ -24,7 +24,7 @@ Pipeline governance in Azure DevOps is layered. Most administrators configure al
 
 ## Set up permissions and roles
 
-1. **Map identities to groups.** Use built-in groups (Project Administrators, Build Administrators, Release Administrators, Endpoint Administrators) before creating custom groups. See [Add users to contribute to pipelines](../../policies/set-permissions.md).
+1. **Map identities to groups.** Use built-in groups (Project Administrators, Build Administrators, Release Administrators, Endpoint Administrators) before creating custom groups. See [Manage security in Azure Pipelines](../../policies/permissions.md).
 2. **Set object-level permissions** on individual pipelines, environments, agent pools, service connections, and variable groups. See [Pipeline permissions and security roles](../../policies/permissions.md).
 3. **Decide on job authorization scope.** Limit pipelines to the project they live in unless cross-project access is required. See [Job authorization scope](../../process/access-tokens.md#job-authorization-scope).
 4. **Review job access tokens.** Pipelines authenticate to Azure DevOps using a project-scoped token (`System.AccessToken`). See [Job access tokens](../../process/access-tokens.md).
