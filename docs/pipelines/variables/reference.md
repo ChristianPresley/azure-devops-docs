@@ -14,7 +14,7 @@ monikerRange: '<= azure-devops'
 
 [!INCLUDE [version-lt-eq-azure-devops](../../includes/version-lt-eq-azure-devops.md)]
 
-Variables give you a convenient way to get key bits of data into various parts of your pipeline. This reference lists common predefined variables for YAML, build, and Classic release pipelines. There might be a few other predefined variables, but they're mostly for internal use.
+Variables give you a convenient way to get key bits of data into various parts of your pipeline. This reference lists common predefined variables for YAML, build, and Classic release pipelines. For the full set of agent, build, system, pipeline, deployment-job, and checks variables your pipeline exposes, see the predefined variable tables later in this article. Some additional variables may also be set by individual agent feature flags or tasks.
 
 These variables are automatically set by the system and read-only. (The exceptions are Build.Clean and System.Debug.)
 
@@ -44,6 +44,13 @@ To learn how to clean up source, see [Clean the local repo on the agent](../repo
 <h2 id="systemaccesstoken">System.AccessToken</h2>
 
 `System.AccessToken` is a special variable that carries the security token used by the running build.
+
+> [!NOTE]
+> The token surfaces under three forms, depending on context:
+>
+> - `System.AccessToken` &mdash; the canonical name used in classic release pipelines and in YAML expressions such as `$(System.AccessToken)`.
+> - `system.accessToken` &mdash; the camelCase identifier used in YAML when defining a step variable or input (YAML keys are case-insensitive but the camelCase form matches the YAML schema convention).
+> - `SYSTEM_ACCESSTOKEN` &mdash; the environment variable form produced by the agent when `System.AccessToken` is mapped into a step's environment. The agent uppercases the name and replaces the dot with an underscore for all predefined variables.
 
 # [YAML](#tab/yaml)
 
