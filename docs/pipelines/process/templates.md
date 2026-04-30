@@ -15,7 +15,7 @@ ai-usage: ai-assisted
 
 ::: moniker range="<=azure-devops"
 
-Templates let you define reusable content, logic, and parameters in YAML pipelines. To work with templates effectively, you need to have a basic understanding of [Azure Pipelines key concepts](../get-started/key-pipelines-concepts.md) such as stages, steps, and jobs. 
+Templates let you define reusable content, logic, and parameters in YAML pipelines. To work with templates effectively, you need to have a basic understanding of [Azure Pipelines key concepts](../get-started/key-pipelines-concepts.md) such as stages, steps, and jobs.
 
 There are two main types of templates:
 
@@ -53,9 +53,9 @@ To help prevent runaway growth, Azure Pipelines imposes the following limits:
 
 ::: moniker range="<=azure-devops"
 
-To increase security, you can enforce that a pipeline extends from a particular template. The file `start-extends-template.yml` defines the parameter `buildSteps`, which is then used in the pipeline `azure-pipelines.yml`. 
-In `start-extends-template.yml`, if a `buildStep` gets passed with a script step, then it's rejected and the pipeline build fails. 
-When extending from a template, you can increase security by adding a [required template approval](../security/templates.md#set-required-templates). 
+To increase security, you can enforce that a pipeline extends from a particular template. The file `start-extends-template.yml` defines the parameter `buildSteps`, which is then used in the pipeline `azure-pipelines.yml`.
+In `start-extends-template.yml`, if a `buildStep` gets passed with a script step, then it's rejected and the pipeline build fails.
+When extending from a template, you can increase security by adding a [required template approval](../security/templates.md#set-required-templates).
 
 ```yaml
 # File: start-extends-template.yml
@@ -70,7 +70,7 @@ stages:
   jobs:
   - job: secure_buildjob
     steps:
-    - script: echo This happens before code 
+    - script: echo This happens before code
       displayName: 'Base: Pre-build'
     - script: echo Building
       displayName: 'Base: Build'
@@ -78,10 +78,10 @@ stages:
     - ${{ each step in parameters.buildSteps }}:
       - ${{ each pair in step }}:
           ${{ if ne(pair.value, 'CmdLine@2') }}:
-            ${{ pair.key }}: ${{ pair.value }}       
-          ${{ if eq(pair.value, 'CmdLine@2') }}: 
+            ${{ pair.key }}: ${{ pair.value }}
+          ${{ if eq(pair.value, 'CmdLine@2') }}:
             # Step is rejected by raising a YAML syntax error: Unexpected value 'CmdLine@2'
-            '${{ pair.value }}': error         
+            '${{ pair.value }}': error
 
     - script: echo This happens after code
       displayName: 'Base: Signing'
@@ -95,7 +95,7 @@ trigger:
 extends:
   template: start-extends-template.yml
   parameters:
-    buildSteps:  
+    buildSteps:
       - bash: echo Test #Passes
         displayName: succeed
       - bash: echo "Test"
@@ -110,7 +110,7 @@ extends:
 
 ## Extend from a template with resources
 
-You can also use `extends` to extend from a template in your Azure pipeline that contains resources. 
+You can also use `extends` to extend from a template in your Azure pipeline that contains resources.
 
 ```yaml
 # File: azure-pipelines.yml
@@ -125,7 +125,7 @@ extends:
 # File: resource-extends-template.yml
 resources:
   pipelines:
-  - pipeline: my-pipeline 
+  - pipeline: my-pipeline
     source: sourcePipeline
 
 steps:
@@ -136,16 +136,16 @@ steps:
 
 :::zone-end
 
-::: zone pivot="templates-includes"  
+::: zone pivot="templates-includes"
 
 ## Insert a template
 
 ::: moniker range="<=azure-devops"
 
-You can insert content from one YAML and reuse it in a different YAML. Inserting content from one YAML to another saves you from having to manually include the same logic in multiple places. The `insert-npm-steps.yml` file template contains steps that are reused in `azure-pipelines.yml`.  
+You can insert content from one YAML and reuse it in a different YAML. Inserting content from one YAML to another saves you from having to manually include the same logic in multiple places. The `insert-npm-steps.yml` file template contains steps that are reused in `azure-pipelines.yml`.
 
 > [!NOTE]
-> Template files need to exist on your filesystem at the start of a pipeline run. You can't reference templates in an artifact. 
+> Template files need to exist on your filesystem at the start of a pipeline run. You can't reference templates in an artifact.
 
 ```yaml
 # File: templates/insert-npm-steps.yml
@@ -241,7 +241,7 @@ When working with multiple jobs, remember to remove the name of the job in the t
 ```yaml
 # File: templates/insert-multiple-jobs.yml
 jobs:
-- job: 
+- job:
   pool:
     vmImage: 'ubuntu-latest'
   steps:
@@ -297,7 +297,7 @@ pool:
 
 stages:
 - stage: Install
-  jobs: 
+  jobs:
   - job: npminstall
     steps:
     - task: Npm@1
@@ -311,8 +311,8 @@ stages:
 
 In the following templates:
 
-- `templates/npm-with-params.yml` defines two parameters: `name` and `vmImage` and creates a job with the name parameter for the job name and the vmImage parameter for the VM image. 
-- The pipeline (`azure-pipelines.yml`) references the template three times, each with different parameter values referring to the operating system and VM image names. 
+- `templates/npm-with-params.yml` defines two parameters: `name` and `vmImage` and creates a job with the name parameter for the job name and the vmImage parameter for the VM image.
+- The pipeline (`azure-pipelines.yml`) references the template three times, each with different parameter values referring to the operating system and VM image names.
 - The built pipeline runs on a different VM image and named according to the specified OS. Each job performs npm install and npm test steps.
 
 ```yaml
@@ -326,7 +326,7 @@ parameters:
 
 jobs:
 - job: ${{ parameters.name }}
-  pool: 
+  pool:
     vmImage: ${{ parameters.vmImage }}
   steps:
   - script: npm install
@@ -358,7 +358,7 @@ jobs:
 **Stage templates with multiple parameters**
 
 In the following templates:
-- The `stage-template.yml` template defines four parameters: `stageName`, `jobName`, `vmImage`, and `scriptPath`, all of type string. The template creates a stage using the `stageName` parameter to set the stage name, defines a job with `jobName`, and includes a step to run a script. 
+- The `stage-template.yml` template defines four parameters: `stageName`, `jobName`, `vmImage`, and `scriptPath`, all of type string. The template creates a stage using the `stageName` parameter to set the stage name, defines a job with `jobName`, and includes a step to run a script.
 - The pipeline, `azure-pipeline.yml`, then dynamically define stages and jobs using parameters and runs a job that executes a script, `build-script.sh`.
 
 ```yaml
@@ -429,7 +429,7 @@ the template parameters.
 
 steps:
 - script: npm install
-  
+
 - template: templates/steps-with-params.yml  # Template reference
   parameters:
     runExtendedTests: 'true'
@@ -466,7 +466,7 @@ jobs:
 
 ## Variable reuse
 
-Variables can be defined in one YAML and included in another template. This could be useful if you want to store all of your variables in one file. If you're using a template to include variables in a pipeline, the included template can only be used to define variables. You can use steps and more complex logic when you're [extending from a template](#extend-from-a-template). 
+Variables can be defined in one YAML and included in another template. This could be useful if you want to store all of your variables in one file. If you're using a template to include variables in a pipeline, the included template can only be used to define variables. You can use steps and more complex logic when you're [extending from a template](#extend-from-a-template).
 
 > [!NOTE]
 > Use [parameters](template-parameters.md#passing-parameters) instead of variables for added security such as specifying type. For more information on the importance of using parameters for shell tasks, refer to the [Enable shell tasks arguments parameter validation documentation](../security/inputs.md#enable-shell-tasks-arguments-parameter-validation).
@@ -490,19 +490,19 @@ steps:
 ```
 ### Variable templates with parameters
 
-You can pass parameters to variables with templates. In this example, you're passing the `DIRECTORY` parameter to a `RELEASE_COMMAND` variable. 
+You can pass parameters to variables with templates. In this example, you're passing the `DIRECTORY` parameter to a `RELEASE_COMMAND` variable.
 
 ```yaml
 # File: templates/package-release-with-params.yml
 
 parameters:
-- name: DIRECTORY 
+- name: DIRECTORY
   type: string
   default: "." # defaults for any parameters that specified with "." (current directory)
 
 variables:
 - name: RELEASE_COMMAND
-  value: grep version ${{ parameters.DIRECTORY }}/package.json | awk -F \" '{print $4}'  
+  value: grep version ${{ parameters.DIRECTORY }}/package.json | awk -F \" '{print $4}'
 ```
 
 When you consume the template in your pipeline, specify values for
@@ -520,15 +520,15 @@ pool:
   vmImage: 'ubuntu-latest'
 
 stages:
-- stage: Release_Stage 
+- stage: Release_Stage
   displayName: Release Version
   variables: # Stage variables
   - template: package-release-with-params.yml  # Template reference
     parameters:
       DIRECTORY: "azure/todo-list"
-  jobs: 
+  jobs:
   - job: A
-    steps: 
+    steps:
     - bash: $(RELEASE_COMMAND) #output release command
 ```
 
@@ -538,9 +538,9 @@ stages:
 
 ## Extend from a template and use an include template with variables
 
-One common scenario is to have a pipeline with stages for development, testing, and production that uses both an includes template for variables and an extends template for stages and jobs. 
+One common scenario is to have a pipeline with stages for development, testing, and production that uses both an includes template for variables and an extends template for stages and jobs.
 
-In the following example, `variables-template.yml`  defines a set of virtual machine variables that are then used in `azure-pipeline.yml`. 
+In the following example, `variables-template.yml`  defines a set of virtual machine variables that are then used in `azure-pipeline.yml`.
 
 ```yaml
 # variables-template.yml
@@ -553,7 +553,7 @@ variables:
 - name: prodVmImage
   value: 'ubuntu-latest'
 ```
-The following file, `stage-template.yml` defines a reusable stage configuration with three parameters (`name`, `vmImage`, `steps`) and a job named `Build`. 
+The following file, `stage-template.yml` defines a reusable stage configuration with three parameters (`name`, `vmImage`, `steps`) and a job named `Build`.
 
 ```yaml
 # stage-template.yml
@@ -631,7 +631,7 @@ Here's an example nested hierarchy.
           +-- fileC.yml
 ```
 
-Then, in `fileA.yml` you can reference `fileB.yml` and `fileC.yml`  like this. 
+Then, in `fileA.yml` you can reference `fileB.yml` and `fileC.yml`  like this.
 
 ```yaml
 steps:
@@ -639,14 +639,14 @@ steps:
 - template: dir1/dir2/fileC.yml
 ```
 
-If `fileC.yml` is your starting point, you can include `fileA.yml` and `fileB.yml` like this. 
+If `fileC.yml` is your starting point, you can include `fileA.yml` and `fileB.yml` like this.
 
 ```yaml
 steps:
 - template: ../../fileA.yml
 - template: ../fileB.yml
 ```
-When `fileB.yml` is your starting point, you can include `fileA.yml` and `fileC.yml` like this. 
+When `fileB.yml` is your starting point, you can include `fileA.yml` and `fileC.yml` like this.
 
 ```yaml
 steps:
@@ -801,7 +801,7 @@ jobs:
 
 ### How can I use variables inside of templates?
 
-There are times when it's useful to set parameters to values based on variables. Parameters are expanded early in processing a [pipeline run](runs.md) so not all variables are available. To see what predefined variables are available in templates, see [Use predefined variables](../build/variables.md). 
+There are times when it's useful to set parameters to values based on variables. Parameters are expanded early in processing a [pipeline run](runs.md) so not all variables are available. To see what predefined variables are available in templates, see [Use predefined variables](../variables/reference.md).
 
 In this example, the predefined variables `Build.SourceBranch` and `Build.Reason` are used in conditions in template.yml.
 
@@ -819,9 +819,9 @@ extends:
 steps:
 - script: echo Build.SourceBranch = $(Build.SourceBranch) # outputs refs/heads/main
 - script: echo Build.Reason = $(Build.Reason) # outputs IndividualCI
-- ${{ if eq(variables['Build.SourceBranch'], 'refs/heads/main') }}: 
-  - script: echo I run only if Build.SourceBranch = refs/heads/main 
-- ${{ if eq(variables['Build.Reason'], 'IndividualCI') }}: 
-  - script: echo I run only if Build.Reason = IndividualCI 
+- ${{ if eq(variables['Build.SourceBranch'], 'refs/heads/main') }}:
+  - script: echo I run only if Build.SourceBranch = refs/heads/main
+- ${{ if eq(variables['Build.Reason'], 'IndividualCI') }}:
+  - script: echo I run only if Build.Reason = IndividualCI
 - script: echo I run after the conditions
 ```
