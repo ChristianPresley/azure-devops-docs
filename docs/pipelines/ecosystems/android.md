@@ -70,7 +70,7 @@ For more information about using Gradle tasks, see [Using tasks](https://docs.gr
 
 To run on a device instead of an emulator, the Android Application Package (APK) must be signed. Zipaligning reduces the RAM the application consumes. If your build doesn't already [sign and zipalign](https://developer.android.com/studio/publish/app-signing) the APK, add the [Android Signing](/azure/devops/pipelines/tasks/reference/android-signing-v3) task to the pipeline. For more information, see [Sign a mobile app](../apps/mobile/app-signing.md).
 
-For security, store the `apksignerKeystorePassword` and `apksignerKeyPassword` in [secret variables](../process/variables.md#secret-variables) and use those variables in your pipeline.
+For security, store the `apksignerKeystorePassword` and `apksignerKeyPassword` in [secret variables](../variables/index.md#secret-variables) and use those variables in your pipeline.
 
 ```yaml
 - task: AndroidSigning@3
@@ -91,7 +91,7 @@ For security, store the `apksignerKeystorePassword` and `apksignerKeyPassword` i
 To install and run the Android emulator, add the [Bash](/azure/devops/pipelines/tasks/reference/bash-v3) task to your pipeline, and paste in the following code. The emulator starts as a background process and is available in later tasks. Arrange the emulator parameters to fit your testing environment.
 
 > [!IMPORTANT]
-> If you're using a [Microsoft-hosted agent](../agents/hosted.md), use the macOS agent image with the Android emulator. Current Android emulators require hardware acceleration to start. Azure DevOps hosted Ubuntu agents do not support hardware acceleration. 
+> If you're using a [Microsoft-hosted agent](../agents/hosted.md), use the macOS agent image with the Android emulator. Current Android emulators require hardware acceleration to start. Azure DevOps hosted Ubuntu agents do not support hardware acceleration.
 
 ```yaml
 - task: Bash@3
