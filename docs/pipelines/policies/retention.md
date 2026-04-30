@@ -66,7 +66,7 @@ In most cases, you don't need to keep completed runs indefinitely. Run retention
 ::: moniker range="azure-devops"
 
 > [!WARNING]
-> Azure DevOps no longer supports per-pipeline retention rules. The only way to configure retention policies for YAML and classic pipelines is through the project settings described above. You can no longer configure per-pipeline retention policies. 
+> Azure DevOps no longer supports per-pipeline retention rules. The only way to configure retention policies for YAML and classic pipelines is through the project settings described above. You can no longer configure per-pipeline retention policies.
 
 ::: moniker-end
 
@@ -75,7 +75,7 @@ In most cases, you don't need to keep completed runs indefinitely. Run retention
 The **number of recent runs to keep for each pipeline** setting is interpreted differently based on repository type.
 
 - **Azure Repos:** Azure Pipelines retains the configured number of latest runs for the [pipeline's default branch](../process/pipeline-default-branch.md) and for each protected branch in the repository. A protected branch is any branch with branch policies configured.
- 
+
   For example, consider a repository with two branches: `main` and `release`. If the pipeline default branch is `main` and `release` has a branch policy, then `release` is treated as a protected branch. If you configure retention to keep three runs, Azure Pipelines keeps the latest three runs for `main`, the latest three runs for `release`, and the latest three runs for the pipeline overall (regardless of branch).
 
   The following example assumes the most recent run is listed first. It shows which runs are retained when you configure retention to keep the latest three runs (ignoring the days-based setting):
@@ -109,7 +109,7 @@ The number of days to retain is calculated from when the run is completed. For e
 When a run is deleted, the following data is removed:
 
 * Logs
-* All pipeline and build artifacts 
+* All pipeline and build artifacts
 * All symbols
 * Binaries
 * Test results
@@ -139,7 +139,7 @@ Retention policies are processed once per day. Processing time varies because th
 
 ### Automatically set retention lease on pipeline runs
 
-Retention leases let you extend or control the lifetime of pipeline runs beyond configured retention periods. You can add or delete leases for a pipeline run by using the [Lease API](/rest/api/azure/devops/build/leases). You can call this API from within a pipeline by using a script and [predefined variables](../build/variables.md) for `runId` and `definitionId`.
+Retention leases let you extend or control the lifetime of pipeline runs beyond configured retention periods. You can add or delete leases for a pipeline run by using the [Lease API](/rest/api/azure/devops/build/leases). You can call this API from within a pipeline by using a script and [predefined variables](../variables/reference.md) for `runId` and `definitionId`.
 
 You can set a lease for a specific duration. For example, a run that deploys to a test environment can be retained for a shorter period, while a run that deploys to production can be retained longer.
 
@@ -300,7 +300,7 @@ If you believe runs were lost because of a service bug, create a support ticket 
 
 Setting the `Build.Cleanup` capability on agents routes cleanup jobs only to those agents, which keeps other agents available for regular pipeline work. When a pipeline run is deleted, artifacts stored outside Azure DevOps are cleaned up through an agent job. If cleanup jobs saturate your pool, designate a subset of agents as cleanup agents. When any agents have `Build.Cleanup` set, only those agents run cleanup jobs. To enable this, go to **Agent** > **Capabilities** and set `Build.Cleanup` to `1`.
 
-### What happens to file share Artifacts when the build is deleted 
+### What happens to file share Artifacts when the build is deleted
 
 When a build with file share Artifacts is deleted, a new build task is queued on a build agent to clean up those files. An agent is picked to perform this task based on the following criteria:
 Is there an agent with `Build.Cleanup` capability available?
@@ -315,11 +315,11 @@ Test results published in a release stage are retained according to the test ret
 
 ### Are manual test results deleted?
 
-No. Manual test results are not deleted. 
+No. Manual test results are not deleted.
 
 ::: moniker range="<=azure-devops"
 
-### How do I preserve my version control labels or tags? 
+### How do I preserve my version control labels or tags?
 
 If labels or tags must be preserved after a build is deleted, apply them in a pipeline task, add them manually outside the pipeline, or retain the build indefinitely.
 
