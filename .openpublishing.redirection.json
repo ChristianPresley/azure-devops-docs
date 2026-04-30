@@ -14523,6 +14523,38 @@
       "source_path": "docs/test/track-stakeholder-feedback.md",
       "redirect_url": "/azure/devops/test/request-stakeholder-feedback",
       "redirect_document_id": false
+    },
+    {
+      "source_path": "docs/pipelines/process/variables.md",
+      "redirect_url": "/azure/devops/pipelines/variables/index"
+    },
+    {
+      "source_path": "docs/pipelines/process/variables-quick-reference.md",
+      "redirect_url": "/azure/devops/pipelines/variables/quick-reference"
+    },
+    {
+      "source_path": "docs/pipelines/process/set-variables-scripts.md",
+      "redirect_url": "/azure/devops/pipelines/variables/scripts"
+    },
+    {
+      "source_path": "docs/pipelines/process/set-secret-variables.md",
+      "redirect_url": "/azure/devops/pipelines/variables/secrets"
+    },
+    {
+      "source_path": "docs/pipelines/build/variables.md",
+      "redirect_url": "/azure/devops/pipelines/variables/reference"
+    },
+    {
+      "source_path": "docs/pipelines/release/variables.md",
+      "redirect_url": "/azure/devops/pipelines/variables/reference#classic-release-variables"
+    },
+    {
+      "source_path": "docs/pipelines/library/link-variable-groups-to-key-vaults.md",
+      "redirect_url": "/azure/devops/pipelines/library/variable-groups#link-a-variable-group-to-azure-key-vault"
+    },
+    {
+      "source_path": "docs/pipelines/scripts/cli/pipeline-variable-group-secret-nonsecret-variables.md",
+      "redirect_url": "/azure/devops/pipelines/library/variable-groups#manage-variables-in-variable-groups"
     }
   ]
 }
