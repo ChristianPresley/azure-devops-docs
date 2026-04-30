@@ -3,7 +3,7 @@ title: Secure your Azure Pipelines
 description: Guidelines and recommendations for securing pipelines.
 ms.assetid: 1ef377e9-e684-4e72-8486-a42d754761ac
 ms.custom: peer-review-program, pat-reduction
-ms.date: 03/04/2025
+ms.date: 04/30/2026
 monikerRange: "<=azure-devops"
 ms.topic: best-practice
 ---
@@ -31,8 +31,6 @@ To enhance security, consider separating your projects, using branch policies, a
 - **Use project-level identities**: Use a project-based build identity for pipelines instead of a collection-level identity. Project-level identities can only access resources within their associated project, minimizing the risk of unauthorized access by malicious actors. For more information, see [scoped build identities](../process/access-tokens.md#scoped-build-identities) and [job authorization scope](../process/access-tokens.md#job-authorization-scope).
 - **Use branch policies**: To ensure safe changes to code and pipeline, apply permissions and branch policies. Additionally, consider [adding pipeline permissions and checks to repositories](../process/repository-resource.md).
 - **Add additional security for forks**: When you work with public repositories from GitHub, carefully consider your approach to fork builds. Forks originating from outside your organization pose particular risks.    
-    - **Don't provide secrets to fork builds**: By default, pipelines are configured to build forks, but secrets and protected resources aren't automatically exposed to the jobs in those pipelines. It's essential not to disable this protection to maintain security.
-    - **Consider manually triggering fork builds**: Turn off automatic fork builds and use pull request comments to manually build these contributions. This setting gives you an opportunity to review the code before triggering a build. For more information, see [Turn off automatic fork builds](../repos/github.md#contributions-from-forks).
     - **Don't provide secrets to fork builds**: By default, secrets associated with your pipeline aren’t made available to pull request validations of forks. Do not enable the option to **Make secrets available to builds of forks**. For instructions on how to find and verify this setting, see [Contributions from forks](../repos/github.md#contributions-from-forks). 
     - **Consider manually triggering fork builds**: Turn off automatic fork builds and use pull request comments to manually build these contributions. This setting gives you an opportunity to review the code before triggering a build. For instructions on how to do this, see [Turn off automatic fork builds](../repos/github.md#contributions-from-forks).
     - **Use Microsoft-hosted agents for fork builds**: Avoid running builds from forks on self-hosted agents. Doing so could allow external organizations to execute external code on machines within your corporate network. Whenever possible, use Microsoft-hosted agents.
