@@ -198,10 +198,10 @@ The following example uses `stages` filters to evaluate trigger conditions for C
 ```yml
 resources:
   pipelines:
-  - pipeline: MyCIAlias  
-    project: Fabrikam  
-    source: Fabrikam-CI  
-    trigger:    
+  - pipeline: MyCIAlias
+    project: Fabrikam
+    source: Fabrikam-CI
+    trigger:
       stages:
       - PreProduction
       - Production
@@ -215,8 +215,8 @@ resources:
   - pipeline: MyCIAlias
     project: Fabrikam
     source: Fabrikam-CI
-    tags: 
-    - Production 
+    tags:
+    - Production
     trigger:
       tags:
       - Production
@@ -242,7 +242,7 @@ resources:
         - main
         exclude:
         - topic/*
-      tags: 
+      tags:
       - Verified
       - Signed
       stages:
@@ -276,9 +276,9 @@ Artifacts from the `pipeline` resource download to the *$(PIPELINE.WORKSPACE)/\<
 
 #### Pipeline resource variables
 
-The metadata for a pipeline resource is available to all jobs in each run as [predefined variables](../build/variables.md). These variables are available to your pipeline only at runtime, and therefore can't be used in template expressions, which are evaluated at pipeline compile time.
+The metadata for a pipeline resource is available to all jobs in each run as [predefined variables](../variables/reference.md). These variables are available to your pipeline only at runtime, and therefore can't be used in template expressions, which are evaluated at pipeline compile time.
 
-For more information, see [Define variables](variables.md) and [Pipeline resource metadata as predefined variables](/azure/devops/pipelines/yaml-schema/resources-pipelines-pipeline#pipeline-resource-metadata-as-predefined-variables).
+For more information, see [Define variables](../variables/index.md) and [Pipeline resource metadata as predefined variables](/azure/devops/pipelines/yaml-schema/resources-pipelines-pipeline#pipeline-resource-metadata-as-predefined-variables).
 
 The following example returns the predefined variable values for the `myresourcevars` pipeline resource.
 
@@ -287,7 +287,7 @@ resources:
   pipelines:
   - pipeline: myresourcevars
     source: mypipeline
-    trigger: true 
+    trigger: true
 
 steps:
 - script: |
@@ -320,7 +320,7 @@ resources:
   builds:
   - build: Spaceworkz
     type: Jenkins
-    connection: MyJenkinsServer 
+    connection: MyJenkinsServer
     source: SpaceworkzProj   # name of the Jenkins source project
     trigger: true
 ```
@@ -332,7 +332,7 @@ resources:
 
 The `build` resource artifacts don't automatically download to *jobs/deploy-jobs*. To consume artifacts from the `build` resource as part of your jobs, you need to explicitly add the `downloadBuild` task. You can customize the download behavior for each deployment or job.
 
-The `downloadBuild` task automatically resolves to the corresponding download task for the type of `build` resource the runtime defines. Artifacts from the `build` resource download to the *$(PIPELINE.WORKSPACE)/\<build-identifier>/* folder. 
+The `downloadBuild` task automatically resolves to the corresponding download task for the type of `build` resource the runtime defines. Artifacts from the `build` resource download to the *$(PIPELINE.WORKSPACE)/\<build-identifier>/* folder.
 
 In the `downloadBuild` definition, you specify the resource to download artifacts from. The optional `artifact` property specifies artifacts to download. If not specified, all artifacts associated with the resource download.
 
@@ -483,11 +483,11 @@ You can consume a generic container resource image as part of your jobs, or use 
 If you need to consume images from a Docker registry, you can define a generic container resource without using a `type` keyword. For example:
 
 ```yaml
-resources:         
+resources:
   containers:
-  - container: smartHotel 
+  - container: smartHotel
     endpoint: myDockerRegistry
-    image: smartHotelApp 
+    image: smartHotelApp
 ```
 
 For complete schema information, see the [resources.containers.container](/azure/devops/pipelines/yaml-schema/resources-containers-container) definition.
@@ -504,18 +504,18 @@ You need Azure Container Registry **Contributor** or **Owner** permissions to us
 To use the `acr` resource type, you must specify the `azureSubscription`, `resourceGroup`, and `repository` values for your Azure container registry. For example:
 
 ```yaml
-resources:         
+resources:
   containers:
-  - container: petStore      
-    type: acr  
+  - container: petStore
+    type: acr
     azureSubscription: ContosoConnection
     resourceGroup: ContosoGroup
     registry: petStoreRegistry
     repository: myPets
-    trigger: 
+    trigger:
       tags:
-        include: 
-        - production* 
+        include:
+        - production*
 ```
 
 > [!NOTE]
@@ -575,8 +575,8 @@ resources:
     - package: contoso
       type: npm
       connection: pat-contoso
-      name: myname/contoso 
-      version: 7.130.88 
+      name: myname/contoso
+      version: 7.130.88
       trigger: true
 
 steps:
@@ -587,7 +587,7 @@ steps:
 ### Webhooks resource
 
 > [!NOTE]
-> Webhooks released in Azure DevOps Server 2020.1. 
+> Webhooks released in Azure DevOps Server 2020.1.
 
 You can use Azure Pipelines pipeline, container, build, and package resources to consume artifacts and automate triggers, but you can't use them to base deployments on external events or services. Webhooks automate your workflow based on external webhook events that first-class Azure Pipelines resources don't support. You can subscribe to external events through webhooks and use the events to trigger your pipelines.
 
@@ -603,7 +603,7 @@ resources:
     - webhook: myWebhookResource
       connection: myWebHookConnection
 
-steps:  
+steps:
 - script: echo ${{ parameters.myWebHookResource.resource.message.title }}
 ```
 
@@ -614,11 +614,11 @@ The following example uses webhook filters.
 ```yml
 resources:
   webhooks:
-    - webhook: MyWebhookTrigger          
-      connection: MyWebhookConnection    
+    - webhook: MyWebhookTrigger
+      connection: MyWebhookConnection
       filters:
-        - path: repositoryName      
-          value: maven-releases     
+        - path: repositoryName
+          value: maven-releases
         - path: action
           value: CREATED
 
@@ -695,12 +695,12 @@ You can use the `download` shortcut to download the artifacts in build jobs or t
 
 The [Download Pipeline Artifacts task](/azure/devops/pipelines/tasks/reference/download-pipeline-artifact-v2) doesn't provide traceability or triggers, but sometimes it makes sense to use this task directly. For example, you might have a script task stored in a different template that requires artifacts from a build to be downloaded. Or, you might not want to add a pipeline resource to a template. To avoid dependencies, you can use the Download Pipeline Artifacts task to pass all the build information to a task.
 
-### How can I trigger a pipeline run when my Docker Hub image gets updated? 
+### How can I trigger a pipeline run when my Docker Hub image gets updated?
 
-The container resource trigger isn't available for Docker Hub for YAML pipelines, so you need to [set up a classic release pipeline](../release/releases.md). 
+The container resource trigger isn't available for Docker Hub for YAML pipelines, so you need to [set up a classic release pipeline](../release/releases.md).
 
-1. Create a new Docker Hub [service connection](../library/service-endpoints.md). 
-1. Create a classic release pipeline and add a Docker Hub artifact. Set your service connection and select the namespace, repository, version, and source alias. 
+1. Create a new Docker Hub [service connection](../library/service-endpoints.md).
+1. Create a classic release pipeline and add a Docker Hub artifact. Set your service connection and select the namespace, repository, version, and source alias.
 1. Select the trigger and toggle the continuous deployment trigger to **Enable**. Every Docker push that occurs to the selected repository creates a release.
 1. Create a new stage and job. Add two tasks, Docker login and Bash.
    - The Docker task has the `login` action and signs you in to Docker Hub.
@@ -710,7 +710,7 @@ The container resource trigger isn't available for Docker Hub for YAML pipelines
 
 1. Create a service connection.
 
-1. Reference your service connection and name your webhook in the `webhooks` section. 
+1. Reference your service connection and name your webhook in the `webhooks` section.
 
     ```yml
     resources:
@@ -728,9 +728,9 @@ If you receive a 500 status code response with the error `Cannot find webhook fo
 1. Select **Edit** on your pipeline page.
 1. From the **More actions** menu, select **Triggers**.
 1. Select the **YAML** tab and then select **Get sources**.
-1. Under **Default branch for manual and scheduled builds**, update your feature branch. 
+1. Under **Default branch for manual and scheduled builds**, update your feature branch.
 1. Select **Save & queue**.
-1. After this pipeline runs successfully, perform a `POST` API call with valid JSON in the body to 
+1. After this pipeline runs successfully, perform a `POST` API call with valid JSON in the body to
 `https://dev.azure.com/<organization>/_apis/public/distributedtask/webhooks/<webhook-name>?api-version=<apiversion>`. You should now receive a 200 status code response.
 
 ### Why didn't my resource trigger work?
@@ -752,7 +752,7 @@ On the **Trigger issues** page, the error and warning messages describe why the 
 ## Related content
 
 - [About resources for Azure Pipelines](about-resources.md)
-- [Define variables](variables.md)
+- [Define variables](../variables/index.md)
 - [Add and use variable groups](../library/variable-groups.md)
 - [Create and target an environment](environments.md)
 - [Use YAML pipeline editor](../get-started/yaml-pipeline-editor.md)
