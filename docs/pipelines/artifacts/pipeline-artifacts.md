@@ -81,7 +81,7 @@ Packages in Azure Artifacts are immutable. Once you publish a package, its versi
     steps:
       - script: echo Hello Job2!
     dependsOn: Job1
-``` 
+```
 
 > [!NOTE]
 > Pipeline Artifacts and Pipeline Caching are exempt from storage billing.
@@ -121,7 +121,7 @@ steps:
 - **current**: download artifacts produced by the current pipeline run. Options: current, specific.
 
 > [!NOTE]
-> List of published artifacts will be available only in following dependant jobs. Therefore, use `current` option only in separate jobs, that has dependency on jobs with publish artifacts tasks. 
+> List of published artifacts will be available only in following dependant jobs. Therefore, use `current` option only in separate jobs, that has dependency on jobs with publish artifacts tasks.
 
 > [!TIP]
 > You can use [Pipeline resources](../process/resources.md#define-a-pipelines-resource) to define your source in one place and use it anywhere in your pipeline.
@@ -439,7 +439,7 @@ When migrating from build artifacts to pipeline artifacts:
     publishLocation: 'pipeline'
 ```
 
-- **targetPath**: (Required) The path of the file or directory to publish. Can be absolute or relative to the default working directory. Can include [variables](../build/variables.md), but wildcards are not supported. Default: $(Pipeline.Workspace).
+- **targetPath**: (Required) The path of the file or directory to publish. Can be absolute or relative to the default working directory. Can include [variables](../variables/reference.md), but wildcards are not supported. Default: $(Pipeline.Workspace).
 
 - **publishLocation**: (Required) Artifacts publish location. Choose whether to store the artifact in Azure Pipelines, or to copy it to a file share that must be accessible from the pipeline agent. Options: `pipeline`, `filepath`. Default: pipeline.
 
@@ -455,7 +455,7 @@ Once your pipeline run is complete, follow these steps to view or download your 
 
 1. In the related section, select the published artifact.
 
-    :::image type="content"  source="../media/published-artifact.png" alt-text="A screenshot showing how to find published artifacts in a pipeline run."::: 
+    :::image type="content"  source="../media/published-artifact.png" alt-text="A screenshot showing how to find published artifacts in a pipeline run.":::
 
 1. Expand the drop folder to locate your artifact. You can then download your Artifact and explore its content.
 
