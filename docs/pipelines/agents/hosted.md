@@ -44,7 +44,7 @@ You can see the installed software for each Windows hosted agent image by choosi
 
 #### Windows image updates
 
-* Windows Server 2025 with Visual Studio 2026 is now available in public preview starting March 9, 2026. 
+* Windows Server 2025 with Visual Studio 2026 is now available in public preview starting March 9, 2026.
 * The Windows Server 2019 hosted agent image was retired on December 31, 2025.
 * [[Windows & Ubuntu] .NET 6 was removed from the images on August 1, 2025.](https://github.com/actions/runner-images/issues/12241)
 
@@ -132,7 +132,7 @@ In classic build pipelines, you first choose the Azure Pipelines pool and then s
 
 ### Avoid hard-coded references
 
-When you use a Microsoft-hosted agent, always use [variables](../build/variables.md)
+When you use a Microsoft-hosted agent, always use [variables](../variables/reference.md)
 to refer to the build environment and agent resources. For example, don't
 hard-code the drive letter or folder that contains the repository. The precise
 layout of the hosted agents is subject to change without warning.
@@ -181,7 +181,7 @@ To determine your geography, navigate to `https://dev.azure.com/<your_organizati
 
 #### Example
 
-In the following example, the hosted agent IP address ranges for an organization in the West US region are retrieved from the weekly file. Since the West US region is in the United States geography, the IP addresses for all regions in the United States geography are included. In this example, the IP addresses are written to the console. 
+In the following example, the hosted agent IP address ranges for an organization in the West US region are retrieved from the weekly file. Since the West US region is in the United States geography, the IP addresses for all regions in the United States geography are included. In this example, the IP addresses are written to the console.
 
 ```csharp
 using Newtonsoft.Json.Linq;
@@ -200,7 +200,7 @@ namespace WeeklyFileIPRanges
         static void Main(string[] args)
         {
             // United States geography has the following regions:
-            // Central US, East US, East US 2, East US 3, North Central US, 
+            // Central US, East US, East US 2, East US 3, North Central US,
             // South Central US, West Central US, West US, West US 2, West US 3
             // This list is accurate as of 9/8/2023
             List<string> USGeographyRegions = new List<string>
@@ -249,7 +249,7 @@ Microsoft-hosted agents can't be listed by service tags. If you're trying to gra
 
 Microsoft-hosted agents run on secure Azure platform. However, you must be aware of the following security considerations.
 
-- Although Microsoft-hosted agents run on Azure public network, they aren't assigned public IP addresses. So, external entities can't target Microsoft-hosted agents. 
+- Although Microsoft-hosted agents run on Azure public network, they aren't assigned public IP addresses. So, external entities can't target Microsoft-hosted agents.
 - Microsoft-hosted agents are run in individual VMs, which are reimaged after each run. Each agent is dedicated to a single organization, and each VM hosts only a single agent.
 - There are several benefits to running your pipeline on Microsoft-hosted agents, from a security perspective. If you run untrusted code in your pipeline, such as contributions from forks, it is safer to run the pipeline on Microsoft-hosted agents than on self-hosted agents that reside in your corporate network.
 - When a pipeline needs to access your corporate resources behind a firewall, you have to allow the IP address range for the Azure geography. This may increase your exposure as the range of IP addresses is rather large and since machines in this range can belong to other customers as well. The best way to prevent this is to avoid the need to access internal resources. For information on deploying artifacts to a set of servers, see [Communication to deploy to target servers](agents.md#communication-to-deploy-to-target-servers).
@@ -295,7 +295,7 @@ You can see the installed software for each hosted agent by choosing the **Inclu
 
 ### How does Microsoft choose the software and versions to put on the image?
 
-More information about the versions of software included on the images can be found at [Guidelines for what's installed](https://github.com/actions/runner-images/blob/main/docs/create-image-and-azure-resources.md). 
+More information about the versions of software included on the images can be found at [Guidelines for what's installed](https://github.com/actions/runner-images/blob/main/docs/create-image-and-azure-resources.md).
 
 ### When are the images updated?
 
