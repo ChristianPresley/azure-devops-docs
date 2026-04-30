@@ -13,7 +13,7 @@ monikerRange: '<= azure-devops'
 
 You can organize your pipeline into jobs. Every pipeline has at least one job. A job is a series of steps that run sequentially as a unit. In other words, a job is the smallest unit of work that can be scheduled to run.
 
-To learn about the key concepts and components that make up a pipeline, see [Key concepts for new Azure Pipelines users](../get-started/key-pipelines-concepts.md). 
+To learn about the key concepts and components that make up a pipeline, see [Key concepts for new Azure Pipelines users](../get-started/key-pipelines-concepts.md).
 
 Azure Pipelines doesn't support job priority for YAML pipelines. To control when jobs run, you can specify [conditions](#conditions) and [dependencies](#dependencies).
 
@@ -21,9 +21,9 @@ Azure Pipelines doesn't support job priority for YAML pipelines. To control when
 
 #### [YAML](#tab/yaml/)
 
-In the simplest case, a pipeline has a single job. In that case, you don't have to explicitly use the `job` keyword unless you're using a [template](templates.md). You can directly specify the steps in your YAML file. 
+In the simplest case, a pipeline has a single job. In that case, you don't have to explicitly use the `job` keyword unless you're using a [template](templates.md). You can directly specify the steps in your YAML file.
 
-This YAML file has a job that runs on a [Microsoft-hosted agent](../agents/hosted.md) and outputs `Hello world`. 
+This YAML file has a job that runs on a [Microsoft-hosted agent](../agents/hosted.md) and outputs `Hello world`.
 
 ```yaml
 pool:
@@ -32,7 +32,7 @@ steps:
 - bash: echo "Hello world"
 ```
 
-You might want to specify more properties on that job. In that case, you can use the `job` keyword. 
+You might want to specify more properties on that job. In that case, you can use the `job` keyword.
 
 ```yaml
 jobs:
@@ -99,7 +99,7 @@ The full syntax to specify a job is:
   container: containerReference # container to run this job inside
   timeoutInMinutes: number # how long to run the job before automatically cancelling
   cancelTimeoutInMinutes: number # how much time to give 'run always even if cancelled tasks' before killing them
-  variables: { string: string } | [ variable | variableReference ] 
+  variables: { string: string } | [ variable | variableReference ]
   steps: [ script | bash | pwsh | powershell | checkout | task | templateReference ]
   services: { string: string | container } # container resources to run as a service container
 ```
@@ -129,7 +129,7 @@ The full syntax to specify a job is:
   container: containerReference # container to run this job inside
   timeoutInMinutes: number # how long to run the job before automatically cancelling
   cancelTimeoutInMinutes: number # how much time to give 'run always even if cancelled tasks' before killing them
-  variables: { string: string } | [ variable | variableReference ] 
+  variables: { string: string } | [ variable | variableReference ]
   steps: [ script | bash | pwsh | powershell | checkout | task | templateReference ]
   services: { string: string | container } # container resources to run as a service container
   uses: # Any resources (repos or pools) required by this job that are not already referenced
@@ -238,7 +238,7 @@ Learn more about [agent capabilities](../agents/agents.md#capabilities).
 
 ### Server jobs
 
-The server orchestrates and executes tasks in a server job. A server job doesn't require an agent or any target computers. Only a few tasks are supported in a server job now. The maximum time for a server job is 30 days. 
+The server orchestrates and executes tasks in a server job. A server job doesn't require an agent or any target computers. Only a few tasks are supported in a server job now. The maximum time for a server job is 30 days.
 
 ### Agentless jobs supported tasks
 
@@ -252,7 +252,7 @@ Currently, only the following tasks are supported out of the box for agentless j
 * [Query Azure Monitor Alerts task](/azure/devops/pipelines/tasks/reference/azure-monitor-v1)
 * [Query Work Items task](/azure/devops/pipelines/tasks/reference/query-work-items-v0)
 
-Because tasks are extensible, you can add more agentless tasks by using extensions. The default timeout for agentless jobs is 60 minutes.  
+Because tasks are extensible, you can add more agentless tasks by using extensions. The default timeout for agentless jobs is 60 minutes.
 
 #### [YAML](#tab/yaml/)
 
@@ -373,7 +373,7 @@ jobs:
 #### [Classic](#tab/classic/)
 To add a new job, select '...' on the pipeline channel in the **Tasks** tab of the pipeline. The conditions and order of execution for a job are displayed when you select the job in the editor.
 
-When you specify multiple jobs in a build pipeline, they run in parallel by default. You can specify the order in which jobs must execute by configuring dependencies between jobs. Job dependencies aren't supported in release pipelines. Multiple jobs in a release pipeline run in sequence. 
+When you specify multiple jobs in a build pipeline, they run in parallel by default. You can specify the order in which jobs must execute by configuring dependencies between jobs. Job dependencies aren't supported in release pipelines. Multiple jobs in a release pipeline run in sequence.
 
 For example, the pipeline divides the overall release execution into separate execution jobs by using two agent jobs and a [server job](#server-jobs).
 
@@ -511,7 +511,7 @@ From a single job you author, you can run multiple jobs on multiple agents in pa
 
 * **Multi-configuration testing:** You can run test multiple configurations in parallel.
 
-* Multi-configuration always generates at least one job, even if a multi-configuration variable is empty. 
+* Multi-configuration always generates at least one job, even if a multi-configuration variable is empty.
 
 #### [YAML](#tab/yaml/)
 
@@ -522,7 +522,7 @@ jobs:
 - job: Test
   strategy:
     maxParallel: 2
-    matrix: 
+    matrix:
       US_IE:
         Location: US
         Browser: IE
@@ -539,7 +539,7 @@ jobs:
 > They must start with a letter.
 > Also, they must be 100 characters or less.
 
-It's also possible to use [output variables](variables.md#set-a-multi-job-output-variable) to generate a matrix.
+It's also possible to use [output variables](../variables/index.md#set-a-multi-job-output-variable) to generate a matrix.
 This method can be handy if you need to generate the matrix using a script.
 
 `matrix` accepts a runtime expression containing a stringified JSON object.
@@ -571,11 +571,11 @@ To run multiple jobs using multi-configuration option,
   of values for that multiplier. A separate job is run for each value
   in the list. To use multipliers for build or deployment, you must:
 
-* Define one or more [variables](../release/variables.md)
+* Define one or more [variables](../variables/reference.md)
   on the **Variables** tab of the pipeline or in a [variable group](../library/variable-groups.md).
   Each variable, known in this context as a _multiplier_ variable,
   must be defined as a comma-delimited list of the values you want
-  to pass individually to the agents. 
+  to pass individually to the agents.
 
 * Enter the name of the multiplier variable, without the **$** and parentheses, as the
   value of the **Multipliers** parameter. Using a secret variable as a multiplier variable isn't supported.
@@ -677,7 +677,7 @@ The `$(Build.ArtifactStagingDirectory)` and `$(Common.TestResultsDirectory)` are
 When you run a pipeline on a **self-hosted agent**, by default, none of the subdirectories other than `$(Build.ArtifactStagingDirectory)` and `$(Common.TestResultsDirectory)` are cleaned in between two consecutive runs. As a result, you can do incremental builds and deployments, if tasks are implemented to make use of them. You can override this behavior using the `workspace` setting on the job.
 
 > [!IMPORTANT]
-> The workspace clean options are applicable only for self-hosted agents. Jobs are always run on a new agent with Microsoft-hosted agents. 
+> The workspace clean options are applicable only for self-hosted agents. Jobs are always run on a new agent with Microsoft-hosted agents.
 
 ```yaml
 - job: myJob
@@ -708,11 +708,11 @@ In addition to workspace clean, you can also configure cleaning by configuring t
 
 1. Edit your pipeline, choose **...**, and select **Triggers**.
 
-    :::image type="content" source="media/pipeline-triggers/edit-triggers.png" alt-text="Edit triggers."::: 
+    :::image type="content" source="media/pipeline-triggers/edit-triggers.png" alt-text="Edit triggers.":::
 
-1. Select **YAML**, **Get sources**, and configure your desired **Clean** setting. The default is **true**. 
+1. Select **YAML**, **Get sources**, and configure your desired **Clean** setting. The default is **true**.
 
-    :::image type="content" source="media/clean-setting.png" alt-text="Clean setting."::: 
+    :::image type="content" source="media/clean-setting.png" alt-text="Clean setting.":::
 
 #### [Classic](#tab/classic/)
 
@@ -726,7 +726,7 @@ When you run a pipeline on a self-hosted agent, by default, none of the subdirec
 
 ## Artifact download
 
-This example YAML file publishes the artifact `Website` and then downloads the artifact to `$(Pipeline.Workspace)`. The Deploy job only runs if the Build job is successful. 
+This example YAML file publishes the artifact `Website` and then downloads the artifact to `$(Pipeline.Workspace)`. The Deploy job only runs if the Build job is successful.
 
 #### [YAML](#tab/yaml/)
 
