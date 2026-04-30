@@ -480,6 +480,14 @@ steps:
 * Performs ordinal ignore-case comparison.
 * Example: `startsWith('ABCDE', 'AB')` (returns True).
 
+### substring
+* Returns a substring from a string. The substring starts at the specified character position.
+* Minimum parameters: 2. Maximum parameters: 3.
+* The first parameter is the source string. The second parameter is the zero-based start index. The optional third parameter is the length of the substring; when omitted, the substring extends to the end of the source string.
+* The function throws an error if the start index is negative, beyond the end of the source string, or if the requested length runs past the end of the source string.
+* Example: `substring('foobar', 0, 3)` returns `foo`.
+* Example: `substring('foobar', 3)` returns `bar`.
+
 ::: moniker range=">= azure-devops"
 ### trim
 * Returns the parameter without leading and trailing white spaces

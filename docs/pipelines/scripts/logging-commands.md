@@ -152,6 +152,9 @@ That block of commands can also be collapsed, and looks like this:
 
 `##vso[task.logissue]error/warning message`
 
+> [!NOTE]
+> The agent also accepts the short alias `##vso[task.issue]` for this command. Both forms behave identically; prefer the explicit `task.logissue` form in new pipelines.
+
 #### Usage
 
 Log an error or warning message in the timeline record of the current task.
@@ -573,6 +576,40 @@ The updated environment variable will be reflected in subsequent tasks.
 
 ```
 ##vso[task.prependpath]c:\my\directory\path
+```
+
+### Debug: Log a debug message
+
+`##vso[task.debug]debug message`
+
+#### Usage
+
+Write a debug-level message to the live log. The message is shown only when [`system.debug`](../build/variables.md) is set to `true` for the run; otherwise the agent records the line in the diagnostic log but suppresses it from the timeline view. Use `task.debug` to add diagnostic context that's available on demand without bloating normal pipeline logs.
+
+#### Example
+
+```
+##vso[task.debug]Resolved package path: $(System.DefaultWorkingDirectory)/build
+```
+
+### SetTaskVariable: Set a variable scoped to the current task
+
+`##vso[task.settaskvariable variable=name;]value`
+
+#### Usage
+
+Set a variable that is visible to subsequent steps in the same task only. Unlike [`task.setvariable`](#setvariable-initialize-or-modify-the-value-of-a-variable), values set with `task.settaskvariable` aren't promoted to job-scoped environment variables and are not available to other tasks in the job.
+
+#### Properties
+
+* `variable` = variable name (Required)
+* `issecret` = `true` to register the value with the secret masker (Optional)
+* `isreadonly` = `true` to mark the variable read-only for later steps in the task (Optional)
+
+#### Example
+
+```
+##vso[task.settaskvariable variable=interimResult;issecret=true]$(generatedToken)
 ```
 
 ## Artifact commands

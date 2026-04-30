@@ -75,3 +75,29 @@ the deployment group agent - for example "web, db"
 - `--addvirtualmachineresourcetags` - used to indicate that environment resource tags should be added
 - `--virtualmachineresourcetags  <tags>` - used with `--addvirtualmachineresourcetags` to specify the comma separated list of tags for
 the environment resource agent - for example "web, db"
+
+### Diagnostic and advanced flags
+
+These flags are accepted by `config.cmd`/`config.sh` and `run.cmd`/`run.sh` to help with operator-side troubleshooting and advanced installs. They are defined in the agent source ([Constants.cs](https://github.com/microsoft/azure-pipelines-agent/blob/master/src/Microsoft.VisualStudio.Services.Agent/Constants.cs) under `Agent.CommandLine.Flags`).
+
+- `--debug` - run the agent (or configuration) with verbose debug logging emitted to the console.
+- `--diagnostics` - generate a diagnostic bundle in the agent's `_diag` folder. Pair with `--once` (`./run.sh --once --diagnostics`) to capture a single job's diagnostics for a support ticket.
+- `--restreamlogstofiles` - in addition to the normal upload, write console log output to local files. Useful when you also pass `--disableloguploads` and need a local copy of every job's log.
+- `--alwaysextracttask` - force the agent to extract every task package to disk on every job, even when the cached payload appears unchanged. Use this when troubleshooting "stale task" behavior on self-hosted agents.
+- `--launchbrowser` - during interactive configuration, automatically open the device-code URL in the default browser instead of printing it for manual copy/paste. See [Configure agents using device code flow](../../device-code-flow-agent-registration.md).
+- `--preventservicestart` - on Windows, used with `--runAsService` to install the agent service without starting it. Useful when the agent is configured by automation and the service should be started later by another tool.
+- `--commit` - print the Git commit SHA the agent binaries were built from and exit. Use this to confirm the exact build a self-hosted host is running when investigating regressions.
+
+### Re-authenticate an existing agent
+
+To replace the credentials an already-configured agent uses without unconfiguring and reconfiguring, run the agent with the `reauth` verb:
+
+```bash
+./config.sh reauth --auth pat --token <new-pat>
+```
+
+```cmd
+.\config.cmd reauth --auth pat --token <new-pat>
+```
+
+`reauth` accepts the same authentication flags as `configure` (`--auth`, `--token`, `--clientID`, `--clientSecret`, `--tenantId`, etc.). Use it when a personal access token expires or you migrate an agent from PAT to service principal authentication. The `reauth` verb is implemented in `azure-pipelines-agent/src/Agent.Listener/CommandLine/ReAuthAgent.cs`.
