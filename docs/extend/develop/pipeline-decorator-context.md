@@ -25,7 +25,7 @@ When your decorator wants to reference a task, it should use the GUID rather tha
 [!INCLUDE [extension-docs-new-sdk](../../includes/extension-docs-new-sdk.md)]
 
 > [!NOTE]
-> Pipeline decorators are used when building [web extensions](../get-started/node.md). These examples are not designed to work in YAML pipelines. 
+> Pipeline decorators are used when building [web extensions](../get-started/node.md). These examples are not designed to work in YAML pipelines.
 
 
 ## Resources
@@ -40,7 +40,7 @@ Currently, there's only one key: `repositories`.
 In a designer build, the primary repo alias is `__designer_repo`.
 In a YAML pipeline, the primary repo is called `self`.
 In a release pipeline, repositories aren't available.
-[Release artifact variables](../../pipelines/release/variables.md?tabs=batch) are available.
+[Release artifact variables](../../pipelines/variables/reference.md?tabs=batch) are available.
 
 For example, to print the name of the `self` repo in a YAML pipeline:
 ```
@@ -77,7 +77,7 @@ Job details are available on the `job` object.
 The data looks similar to:
 
 ```javascript
-job = 
+job =
 {
 	"steps": [
 		{
@@ -112,7 +112,7 @@ For instance, to conditionally add a task only if it doesn't already exist:
 
 ### Variables
 
-[Pipeline variables](../../pipelines/process/variables.md) are also available.
+[Pipeline variables](../../pipelines/variables/index.md) are also available.
 
 For instance, if the pipeline had a variable called `myVar`, its value would be available to the decorator as `variables['myVar']`.
 
