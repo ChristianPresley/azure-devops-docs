@@ -27,7 +27,7 @@ security concerns that require them to keep their code and build within
 the enterprise data center.
 
 In addition, Azure Pipelines supports hybrid cloud and on-premises models. Azure Pipelines can manage build and release orchestration and
-enables build agents, both in the cloud and installed on-premises. 
+enables build agents, both in the cloud and installed on-premises.
 
 This article provides a guide to translate a Jenkins pipeline configuration
 to Azure Pipelines. It includes information about moving container-based builds and
@@ -265,7 +265,7 @@ jobs:
 ## Predefined variables
 
 Both Jenkins and Azure Pipelines set a [number of environment
-variables](../build/variables.md)
+variables](../variables/reference.md)
 to help you inspect and interact with the execution environment of the
 continuous integration system.
 
