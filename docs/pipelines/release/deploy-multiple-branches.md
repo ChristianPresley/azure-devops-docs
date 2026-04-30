@@ -77,7 +77,7 @@ In this section, you add a second stage (**Prod**) to the same release pipeline 
 1. Select **Pipelines** > **Releases**, open the release pipeline you created earlier, and then select **Edit**.
 
 1. Under **Stages**, select **Add** > **New stage**.
- 
+
 1. In the template picker, select **Start with an empty job**.
 
 1. Select the new stage and rename it to **Prod**. In the next steps, you configure this stage so it deploys only when the artifact comes from the *main* branch.
@@ -95,7 +95,7 @@ In this section, you add a second stage (**Prod**) to the same release pipeline 
 
     With this filter in place, the **Prod** stage deploys only when the release is created from a build of the *main* branch.
 
-    :::image type="content" source="media/configure-deployment-conditions-production-stage.png" alt-text="A screenshot displaying how to configure pre-deployment conditions for the production stage in a Classic release pipeline.":::  
+    :::image type="content" source="media/configure-deployment-conditions-production-stage.png" alt-text="A screenshot displaying how to configure pre-deployment conditions for the production stage in a Classic release pipeline.":::
 
 ## Deploy to a specific stage
 
@@ -119,6 +119,6 @@ By validating both branch paths, you can confirm that each environment deploys o
 
 - [Create a multi-stage release pipeline](define-multistage-release-process.md)
 
-- [Use variables in Classic release pipelines](variables.md)
+- [Use variables in Classic release pipelines](../variables/reference.md)
 
 - [Deploy pull request Artifacts](deploy-pull-request-builds.md)
