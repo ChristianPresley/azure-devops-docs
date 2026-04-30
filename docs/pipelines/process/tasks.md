@@ -303,7 +303,7 @@ The [Node.js Tool Installer](/azure/devops/pipelines/tasks/reference/node-tool-v
    `echo Using Node version $(nodeVersion)`<br>
    `node --version`
 
-1. On the [Variables tab](../build/variables.md), define the variable *nodeVersion* with the value *14.x, 16.x*, and select **Settable at queue time**.
+1. On the [Variables tab](../variables/reference.md), define the variable *nodeVersion* with the value *14.x, 16.x*, and select **Settable at queue time**.
    >[!NOTE]
    > In a Release pipeline, select **Settable at release time**. For more information, see [How can I edit variables at release time?](../../release/index.md#q-how-can-i-edit-variables-at-release-time)
 1. Select **Save & queue**.
