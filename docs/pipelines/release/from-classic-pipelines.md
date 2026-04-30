@@ -16,7 +16,7 @@ Azure Pipelines provides a quick, easy, and safe way to automate building and de
 > [!IMPORTANT]
 > Only Classic pipelines created using the classic build designer can be exported a YAML.
 > If you don’t see an option to export to YAML or JSON, your pipeline likely doesn’t support exporting.
-> Classic release pipelines don’t support YAML export, you'll need to export each task individually. 
+> Classic release pipelines don’t support YAML export, you'll need to export each task individually.
 
 ## Prerequisites
 
@@ -71,7 +71,7 @@ After exporting your Classic pipeline and downloading the *.yml* file to your ma
 
 1. Select **Save and run** once you're done to run your new YAML pipeline.
 
-If your Classic pipeline used variables defined in the Classic UI editor, you need to redefine them either in the YAML file or in the pipeline settings. See [Define variables](../process/variables.md) for more details.
+If your Classic pipeline used variables defined in the Classic UI editor, you need to redefine them either in the YAML file or in the pipeline settings. See [Define variables](../variables/index.md) for more details.
 
 You should also review any cron schedules in your YAML file. YAML schedules use UTC by default, while Classic pipelines use your organization’s local time zone. See [Configure schedules for pipelines](../process/scheduled-triggers.md) for more details.
 
