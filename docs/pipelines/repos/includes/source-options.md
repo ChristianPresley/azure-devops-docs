@@ -77,13 +77,13 @@ The build pipeline will check out your Git submodules as long as they are:
 
 * **Unauthenticated:**  A public, unauthenticated repo with no credentials required to clone or fetch.
 
-* **Authenticated:** 
+* **Authenticated:**
 
   - Contained in the same project as the Azure Repos Git repo specified above.  The same credentials that are used by the agent to get the sources from the main repository are also used to get the sources for submodules.
 
   - Added by using a URL relative to the main repository. For example
     - This one would be checked out:
-     `git submodule add ../../../FabrikamFiberProject/_git/FabrikamFiber FabrikamFiber` 
+     `git submodule add ../../../FabrikamFiberProject/_git/FabrikamFiber FabrikamFiber`
 
       In this example the submodule refers to a repo (FabrikamFiber) in the same Azure DevOps organization, but in a different project (FabrikamFiberProject).  The same credentials that are used by the agent to get the sources from the main repository are also used to get the sources for submodules. This requires that the job access token has access to the repository in the second project. If you restricted the job access token as explained in the section above, then you won't be able to do this. You can allow the job access token to access the repo in the second project by either (a) explicitly granting access to the project build service account in the second project or (b) using collection-scoped access tokens instead of project-scoped tokens for the entire organization. For more information about these options and their security implications, see [Access repositories, artifacts, and other resources](../../process/access-tokens.md).
 
@@ -283,7 +283,7 @@ When `clean` is set to `true` the build pipeline performs an undo of any changes
  git reset --hard HEAD
  ```
 
-For more options, you can configure the `workspace` setting of a [Job](/azure/devops/pipelines/yaml-schema/jobs-job). 
+For more options, you can configure the `workspace` setting of a [Job](/azure/devops/pipelines/yaml-schema/jobs-job).
 
 ```yaml
 jobs:
@@ -295,11 +295,11 @@ jobs:
 
 This gives the following clean options.
 
-* **outputs**: Same operation as the clean setting described in the previous checkout task, plus: Deletes and recreates [`$(Build.BinariesDirectory)`](../../build/variables.md#build-variables). Note that the [`$(Build.ArtifactStagingDirectory)`](../../build/variables.md#build-variables) and [`$(Common.TestResultsDirectory)`](../../build/variables.md#build-variables) are always deleted and recreated prior to every build regardless of any of these settings.
+* **outputs**: Same operation as the clean setting described in the previous checkout task, plus: Deletes and recreates [`$(Build.BinariesDirectory)`](../../variables/reference.md#build-variables). Note that the [`$(Build.ArtifactStagingDirectory)`](../../variables/reference.md#build-variables) and [`$(Common.TestResultsDirectory)`](../../variables/reference.md#build-variables) are always deleted and recreated prior to every build regardless of any of these settings.
 
-* **resources**: Deletes and recreates [`$(Build.SourcesDirectory)`](../../build/variables.md#build-variables). This results in initializing a new, local Git repository for every build.
+* **resources**: Deletes and recreates [`$(Build.SourcesDirectory)`](../../variables/reference.md#build-variables). This results in initializing a new, local Git repository for every build.
 
-* **all**: Deletes and recreates [`$(Agent.BuildDirectory)`](../../build/variables.md#agent-variables). This results in initializing a new, local Git repository for every build.
+* **all**: Deletes and recreates [`$(Agent.BuildDirectory)`](../../variables/reference.md#agent-variables). This results in initializing a new, local Git repository for every build.
 
 # [Classic](#tab/classic/)
 
@@ -307,17 +307,17 @@ Select the **Clean** setting from the properties of the `Get sources` task in yo
 
 ![Select the Clean setting.](../media/github/github-clean-sources.png)
 
-* **Sources**: The build pipeline performs an undo of any changes in [`$(Build.SourcesDirectory)`](../../build/variables.md#build-variables). More specifically, the following Git commands are executed prior to fetching the source.
+* **Sources**: The build pipeline performs an undo of any changes in [`$(Build.SourcesDirectory)`](../../variables/reference.md#build-variables). More specifically, the following Git commands are executed prior to fetching the source.
   ```
   git clean -ffdx
   git reset --hard HEAD
   ```
 
-* **Sources and output directory**: Same operation as **Sources** option above, plus: Deletes and recreates [`$(Build.BinariesDirectory)`](../../build/variables.md#build-variables). Note that the [`$(Build.ArtifactStagingDirectory)`](../../build/variables.md#build-variables) and [`$(Common.TestResultsDirectory)`](../../build/variables.md#build-variables) are always deleted and recreated prior to every build regardless of any of these settings.
+* **Sources and output directory**: Same operation as **Sources** option above, plus: Deletes and recreates [`$(Build.BinariesDirectory)`](../../variables/reference.md#build-variables). Note that the [`$(Build.ArtifactStagingDirectory)`](../../variables/reference.md#build-variables) and [`$(Common.TestResultsDirectory)`](../../variables/reference.md#build-variables) are always deleted and recreated prior to every build regardless of any of these settings.
 
-* **Sources directory**: Deletes and recreates [`$(Build.SourcesDirectory)`](../../build/variables.md#build-variables). This results in initializing a new, local Git repository for every build.
+* **Sources directory**: Deletes and recreates [`$(Build.SourcesDirectory)`](../../variables/reference.md#build-variables). This results in initializing a new, local Git repository for every build.
 
-* **All build directories**: Deletes and recreates [`$(Agent.BuildDirectory)`](../../build/variables.md#agent-variables). This results in initializing a new, local Git repository for every build.
+* **All build directories**: Deletes and recreates [`$(Agent.BuildDirectory)`](../../variables/reference.md#agent-variables). This results in initializing a new, local Git repository for every build.
 
 ---
 
@@ -349,7 +349,7 @@ In the **Tag format** you can use user-defined and predefined variables that hav
 $(Build.DefinitionName)_$(Build.DefinitionVersion)_$(Build.BuildId)_$(Build.BuildNumber)_$(My.Variable)
 ```
 
-The first four variables are predefined. `My.Variable` can be defined by you on the [variables tab](../../build/variables.md).
+The first four variables are predefined. `My.Variable` can be defined by you on the [variables tab](../../variables/reference.md).
 
 The pipeline labels your sources with a [Git tag](https://git-scm.com/book/en/v2/Git-Basics-Tagging).
 
