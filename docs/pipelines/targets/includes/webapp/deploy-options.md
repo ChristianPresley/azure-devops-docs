@@ -38,4 +38,4 @@ View the YAML snippets in each of the following tasks for some examples:
 
 * [Azure PowerShell task](/azure/devops/pipelines/tasks/reference/azure-powershell-v5)
 * [Azure CLI task](/azure/devops/pipelines/tasks/reference/azure-cli-v2)
-* [FTP task](../../../tasks/utility/ftp-upload.md)
+* [FTP task](/azure/devops/pipelines/tasks/reference/ftp-upload-v1)
