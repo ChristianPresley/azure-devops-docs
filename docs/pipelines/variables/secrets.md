@@ -30,21 +30,21 @@ Choose the narrowest secret storage method that still supports your scenario.
 | A script must consume a secret | Map the secret with `env:` on the task | Secret variables aren't automatically exported as environment variables. |
 | A script discovers a temporary value that must be masked later in the same job | Use `task.setvariable` with `issecret=true` only when necessary | This approach is less secure than defining secrets before the run. |
 
-For a compact comparison of variable syntax, scope, output variables, and secret handling, see [Variables quick reference](variables-quick-reference.md).
+For a compact comparison of variable syntax, scope, output variables, and secret handling, see [Variables quick reference](quick-reference.md).
 
 ## Secret variable in the UI
 
-Set secret variables in the pipeline editor when you edit an individual pipeline. Encrypt and make a pipeline variable secret by selecting the lock icon. 
+Set secret variables in the pipeline editor when you edit an individual pipeline. Encrypt and make a pipeline variable secret by selecting the lock icon.
 
-Set secret variables the same way for YAML and Classic. 
+Set secret variables the same way for YAML and Classic.
 
-[!INCLUDE [set secret variable in UI](includes/set-secrets.md)]
+[!INCLUDE [set secret variable in UI](../process/includes/set-secrets.md)]
 
 ## Use a secret variable in the UI
 
 #### [YAML](#tab/yaml/)
 
-To reference secret variables in YAML pipelines, map them as environment variables. In this example, the UI defines two secret variables, `SecretOne` and `SecretTwo`. The value of `SecretOne` is `foo`, and the value of `SecretTwo` is `bar`. 
+To reference secret variables in YAML pipelines, map them as environment variables. In this example, the UI defines two secret variables, `SecretOne` and `SecretTwo`. The value of `SecretOne` is `foo`, and the value of `SecretTwo` is `bar`.
 
 ```yml
 steps:
@@ -61,7 +61,7 @@ steps:
         echo "Strings are not equal."
     fi
   env:
-    FOO_TWO: $(SecretTwo) 
+    FOO_TWO: $(SecretTwo)
 ```
 
 The pipeline outputs:
@@ -73,9 +73,9 @@ My second secret variable: ***
 Strings are equal.
 ```
 
-[!INCLUDE [secrets masked](./includes/masked-secrets.md)]
+[!INCLUDE [secrets masked](../process/includes/masked-secrets.md)]
 
-For a more detailed example, see [Define variables](variables.md#secret-variables).
+For a more detailed example, see [Define variables](index.md#secret-variables).
 
 #### [Classic](#tab/classic/)
 
@@ -83,11 +83,11 @@ Unlike a normal variable, the system doesn't automatically decrypt secret variab
 
 In this example, set the variable `mySecret` on the Variables tab. The value of `mySecret` is `foo`.
 
-:::image type="content" source="media/variables/set-secret-var-classic.png" alt-text="Screenshot of the Variables tab in Classic pipeline editor with a secret variable named mySecret being configured with the lock icon.":::
+:::image type="content" source="../process/media/variables/set-secret-var-classic.png" alt-text="Screenshot of the Variables tab in Classic pipeline editor with a secret variable named mySecret being configured with the lock icon.":::
 
-Each task that uses the secret as an environment variable needs to remap the variable. If you want to use the secret variable `mySecret` in a script, use the **Environment Variables** section of the task. Set the environment variable name to `FOO_ONE`, and set the value to `$(mySecret)`. 
+Each task that uses the secret as an environment variable needs to remap the variable. If you want to use the secret variable `mySecret` in a script, use the **Environment Variables** section of the task. Set the environment variable name to `FOO_ONE`, and set the value to `$(mySecret)`.
 
-:::image type="content" source="media/variables/secret-passed-variable-classic.png" alt-text="Screenshot of the Environment Variables section in a Classic task showing FOO_ONE mapped to the mySecret variable.":::
+:::image type="content" source="../process/media/variables/secret-passed-variable-classic.png" alt-text="Screenshot of the Environment Variables section in a Classic task showing FOO_ONE mapped to the mySecret variable.":::
 
 The script outputs `True`.
 
@@ -95,7 +95,7 @@ The script outputs `True`.
 
 ## Set a secret variable in a variable group
 
-You can add secrets to a variable group or link secrets from an existing [Azure Key Vault](/azure/key-vault/general/basic-concepts). 
+You can add secrets to a variable group or link secrets from an existing [Azure Key Vault](/azure/key-vault/general/basic-concepts).
 
 ### Create new variable groups
 
@@ -103,20 +103,20 @@ To create a variable group and add secret variables, see [Manage variable groups
 
 ### Link secrets from an Azure Key Vault
 
-To link a variable group to an existing Azure Key Vault so that secrets are fetched at runtime, see [Link a variable group to secrets in Azure Key Vault](../library/link-variable-groups-to-key-vaults.md).
+To link a variable group to an existing Azure Key Vault so that secrets are fetched at runtime, see [Link a variable group to secrets in Azure Key Vault](../library/variable-groups.md#link-a-variable-group-to-azure-key-vault).
 
 ## Use the Azure Key Vault task
 
 Use the Azure Key Vault task to include secrets in your pipeline. By using this task, your pipeline can connect to your Key Vault and retrieve secrets to use as pipeline variables.
 
-1. In the pipeline editor, select **Show assistant** to expand the assistant panel. 
+1. In the pipeline editor, select **Show assistant** to expand the assistant panel.
 
-1. Search for `vault` and select the [Key Vault task](/azure/devops/pipelines/tasks/reference/azure-key-vault-v2). 
+1. Search for `vault` and select the [Key Vault task](/azure/devops/pipelines/tasks/reference/azure-key-vault-v2).
 
     :::image type="content" source="../release/media/azure-key-vault/configure-azure-key-vault-task.png" alt-text="Screenshot of the task assistant panel with vault search results showing the Azure Key Vault task option.":::
- 
-For more information about the Key Vault task, see [Use Azure Key Vault secrets in Azure Pipelines](../release/azure-key-vault.md). 
- 
+
+For more information about the Key Vault task, see [Use Azure Key Vault secrets in Azure Pipelines](../release/azure-key-vault.md).
+
 
 ## Set secret variable in a script by using logging commands
 
@@ -125,7 +125,7 @@ Use the `task.setvariable` logging command to set variables in PowerShell and Ba
 > [!WARNING]
 > **Security Risk**: Setting secret variables in scripts by using logging commands is inherently less secure. Anyone with access to your pipeline definition, build logs, or source code can see the logging command and potentially expose the secret. Use this method only for debugging purposes in secure, trusted environments. Always prefer UI-based configuration, variable groups, or Azure Key Vault integration for production scenarios.
 
-To set a variable as a script by using a logging command, pass the `issecret` flag. 
+To set a variable as a script by using a logging command, pass the `issecret` flag.
 
 When a later script needs a secret variable, map it explicitly with `env:` instead of relying on automatic environment variable mapping. This pattern limits the secret to the task that needs it.
 
@@ -136,13 +136,13 @@ steps:
         DEPLOY_TOKEN: $(deploymentToken)
 ```
 
-[!INCLUDE [set secret variable in UI](includes/secret-variables-logging.md)]
+[!INCLUDE [set secret variable in UI](../process/includes/secret-variables-logging.md)]
 
-For more information, see [setting and using variables in scripts](set-variables-scripts.md). 
+For more information, see [setting and using variables in scripts](scripts.md).
 
 ## Related articles
 
-- [Define variables](variables.md)
-- [Use variables in a variable group](../scripts/cli/pipeline-variable-group-secret-nonsecret-variables.md)
-- [Use predefined variables](../build/variables.md)
-- [Set variables in scripts](set-variables-scripts.md)
+- [Define variables](index.md)
+- [Use variables in a variable group](../library/variable-groups.md#manage-variables-in-variable-groups)
+- [Variables reference](reference.md)
+- [Set variables in scripts](scripts.md)
