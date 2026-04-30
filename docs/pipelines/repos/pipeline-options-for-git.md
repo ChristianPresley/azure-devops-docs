@@ -150,7 +150,7 @@ If your sources are in GitHub, then this option publishes the status of your bui
 
 ### Other types of Git remote repositories
 
-If your source is in any other type of remote repository, then you cannot use Azure Pipelines or TFS to automatically publish the build status to that repository. However, you can use a [build badge](../build/options.md) as a way to integrate and show build status within your version control experiences.
+If your source is in any other type of remote repository, then you cannot use Azure Pipelines or TFS to automatically publish the build status to that repository. However, you can use a [build badge](../create-first-pipeline.md#display-a-status-badge-on-your-website) as a way to integrate and show build status within your version control experiences.
 
 ::: moniker range="<=azure-devops"
 

@@ -349,6 +349,9 @@ Follow these steps to run the continuous integration and continuous delivery (CI
 
 The `data_pipeline_ci_cd.yml` file orchestrates the deployment of your data factory and Databricks resources. Here's an example structure of what the pipeline contains:
 
+> [!NOTE]
+> The `AzureDataFactoryPublish@1` task used in the deployment stages is provided by a Visual Studio Marketplace extension; it isn't an in-box pipeline task. Install [Deploy Azure Data Factory by SQLPlayer](https://marketplace.visualstudio.com/items?itemName=SQLPlayer.DataFactoryTools) (or an equivalent ADF deployment extension) before you run this pipeline. As an alternative, you can use the [AzureResourceManagerTemplateDeployment@3](/azure/devops/pipelines/tasks/reference/azure-resource-manager-template-deployment-v3) task to deploy ADF ARM templates produced by `npm run build export`.
+
 ```yaml
 trigger:
   - main

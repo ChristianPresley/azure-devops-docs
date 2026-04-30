@@ -253,11 +253,11 @@ To see how it looks, save and queue the build, and then watch the build run. Obs
 
 #### Usage
 
-Finish the timeline record for the current task, set task result and current operation. When result not provided, set result to succeeded.
+Finish the timeline record for the current task, set task result and current operation. The `result` property is required; if it isn't provided or doesn't match one of the supported values, the agent fails the step with an `InvalidCommandResult` error.
 
 #### Properties
 
-* `result` =
+* `result` (required) =
   - `Succeeded` The task succeeded.
   - `SucceededWithIssues` The task ran into problems. The build will be completed as partially succeeded at best.
   - `Failed` The build will be completed as failed. (If the **Control Options: Continue on error** option is selected, the build will be completed as partially succeeded at best.)

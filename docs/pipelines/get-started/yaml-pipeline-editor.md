@@ -231,5 +231,5 @@ Post validation, you can go into the template by choosing **View template**, whi
 
 ## Related articles
 
-* [Learn how to navigate and view your pipelines](multi-stage-pipelines-experience.md)
+* [Learn how to navigate and view your pipelines](../process/runs.md)
 * [Create your first pipeline](../create-first-pipeline.md)

@@ -304,12 +304,12 @@ steps:
 - task: DownloadPipelineArtifact@2
   displayName: 'Download Pipeline Artifact'
   inputs:
-    buildType: specific
+    source: 'specific'
     project: 'xxxxxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx'
-    definition: 79
-    buildVersionToDownload: specific
-    pipelineId: 597
-    artifactName: drop
+    pipeline: 79
+    runVersion: 'specific'
+    runId: 597
+    artifact: drop
 ```
 
 # [Classic](#tab/classic)

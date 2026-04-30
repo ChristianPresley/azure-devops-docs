@@ -277,27 +277,28 @@ az pipelines agent show --agent-id
 
 You can run tasks by using Windows authentication to access an external service. The agent must run under an account with access to that service in pipelines or variable groups when it's exchanged with the agent.
 
-The payload of the messages exchanged between the agent and Azure Pipelines is secured by using asymmetric encryption. Each agent has a public-private key pair, and the public key is exchanged with the server during registration. The server uses the public key to encrypt the payload of the job before it sends it to the agent. The agent decrypts the job content by using its private key. `gentCloudRequest": null,`
+The payload of the messages exchanged between the agent and Azure Pipelines is secured by using asymmetric encryption. Each agent has a public-private key pair, and the public key is exchanged with the server during registration. The server uses the public key to encrypt the payload of the job before it sends it to the agent. The agent decrypts the job content by using its private key.
+
+The following example shows a partial response from `az pipelines agent show`:
 
 ```json
-
-  <Some properties omitted for space>
-
+{
+  "agentCloudRequest": null,
   "status": "offline",
   "statusChangedOn": null,
   "systemCapabilities": {
     "ANDROID_HOME": "",
     "ANDROID_NDK_HOME": "",
     "Agent.Name": "Hosted Agent",
-    "Agent.Version": "2.160.1",
-
-    <Some capabilities omitted for space>
-
+    "Agent.Version": "4.273.0",
     "sh": "",
     "subversion": "",
-    "svn": "",
-    "To run tasks using Windows authentication to access an external service, the agent must run under an account with access to that service.
+    "svn": ""
+  }
+}
 ```
+
+To run tasks using Windows authentication to access an external service, the agent must run under an account with access to that service.
 
 If you're running UI tests like Selenium, or Coded UI tests that require a browser, the browser opens in the context of the agent account.
 

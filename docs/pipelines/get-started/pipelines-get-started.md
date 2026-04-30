@@ -17,7 +17,7 @@ Azure Pipelines enables developers to automate a wide variety of tasks, ranging 
 Azure Pipelines supports a wide range of languages, platforms, and tools, and offers two types of pipelines to choose from: [YAML-based](yaml-pipeline-editor.md) and [Classic pipeline](../release/define-multistage-release-process.md) editors.
 
 > [!NOTE]
-> If you are new to Azure Pipelines, it is recommended to start with YAML pipelines. For existing Classic pipelines, you can choose to continue using them or [migrate to YAML pipelines](../migrate/from-classic-pipelines.md).
+> If you are new to Azure Pipelines, it is recommended to start with YAML pipelines. For existing Classic pipelines, you can choose to continue using them or [migrate to YAML pipelines](../release/from-classic-pipelines.md).
 
 ## Define pipelines using YAML
 

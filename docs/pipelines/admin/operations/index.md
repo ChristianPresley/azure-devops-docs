@@ -27,7 +27,7 @@ Use this guide to keep Azure Pipelines healthy after you set them up. It covers 
 - [Agent pool security](../../policies/permissions.md#set-agent-pool-security-in-azure-pipelines) — control which projects and pipelines can use a pool.
 - [Microsoft-hosted agent images](../../agents/hosted.md#software) — what's preinstalled on each Microsoft-hosted image.
 - [Self-hosted agent installation](../../agents/agents.md#install) — Linux, macOS, Windows, and Docker.
-- [Update agents](../../agents/agents.md#update-agents) and the [agent deprecation schedule](../../agents/agents.md#agent-version-and-upgrades).
+- [Update agents](../../agents/agents.md#to-update-self-hosted-agents) and the [agent deprecation schedule](../../agents/agents.md#agent-version-and-upgrades).
 
 ## Monitor pipelines and agents
 
