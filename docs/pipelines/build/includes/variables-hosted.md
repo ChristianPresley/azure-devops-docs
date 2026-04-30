@@ -4,7 +4,7 @@ ms.service: azure-devops-pipelines
 ms.manager: wiwagn
 ms.author: rabououn
 author: ramiMSFT
-ms.date: 04/08/2025
+ms.date: 04/30/2026
 ---
 <a id="agent-variables"></a>
 
@@ -17,15 +17,20 @@ ms.date: 04/08/2025
 | Variable | Description |
 |:---------|:------------|
 | Agent.BuildDirectory | The local path on the agent where all folders for a given build pipeline are created. This variable has the same value as `Pipeline.Workspace`. For example: `/home/vsts/work/1`. For more information about the agent directory structure, see [Agent directory structure](../../agents/agents.md#agent-directory-structure). |
+| Agent.CloudId | The ID of the agent cloud the agent belongs to. Empty for self-hosted agents. |
+| Agent.ContainerId | When the job runs inside a container, the Docker container ID assigned to that job's container. Empty when the job runs directly on the agent host. |
 | Agent.ContainerMapping | A mapping from container resource names in YAML to their Docker IDs at runtime.<br><br>Example follows table. |
+| Agent.ContainerNetwork | When the job runs inside a container, the Docker network the agent created for the job. Empty when the job runs directly on the agent host. |
 | Agent.HomeDirectory | The directory the agent is installed into. This variable contains the agent software. For example: `c:\agent`. For more information about the agent directory structure, see [Agent directory structure](../../agents/agents.md#agent-directory-structure).|
 | Agent.Id | The ID of the agent. |
+| Agent.IsSelfHosted | Set to `1` when the job runs on a self-hosted agent and `0` when it runs on a Microsoft-hosted agent. |
 | Agent.JobName | The name of the running job. This name is usually `Job`; or `__default`, but in multi-config scenarios, it's the configuration. |
 | Agent.JobStatus | The status of the build.<br><ul><li>`Canceled`<li>`Failed`<li>`Succeeded`<li>`SucceededWithIssues` (partially successful)<li>`Skipped` (last job) </ul>The environment variable should be referenced as `AGENT_JOBSTATUS`. The older `agent.jobstatus` is available for backwards compatibility. |
 | Agent.MachineName | The name of the machine on which the agent is installed. |
 | Agent.Name | The name of the agent that is registered with the pool.<br><br>If you're using a self-hosted agent, you specify the name. See [agents](../../agents/agents.md). |
 | Agent.OS | The operating system of the agent host. Valid values are:<br><ul><li>`Windows_NT`<li>`Darwin`<li>`Linux`</ul>If you're running in a container, the agent host and container can  run different operating systems. |
-| Agent.OSArchitecture | The operating system processor architecture of the agent host. Valid values are:<br><ul><li>`X86`<li>`X64`<li>`ARM`</ul> |
+| Agent.OSArchitecture | The operating system processor architecture of the agent host. Valid values are:<br><ul><li>`X86`<li>`X64`<li>`ARM`<li>`ARM64`</ul> |
+| Agent.OSVersion | The OS version reported by the agent host (for example, `10.0.20348` on Windows or `22.04` on Ubuntu). |
 | Agent.TempDirectory | A temporary folder that is cleaned after each pipeline job. This directory is used by tasks such as [.NET Core CLI task](/azure/devops/pipelines/tasks/reference/dotnet-core-cli-v2) to hold temporary items like test results before they're published.<br><br>For example: `/home/vsts/work/_temp` for Ubuntu. |
 | Agent.ToolsDirectory | The directory used by tasks such as [Node Tool Installer](/azure/devops/pipelines/tasks/reference/node-tool-v0) and [Use Python Version](/azure/devops/pipelines/tasks/reference/use-python-version-v0) to switch between multiple versions of a tool.<br><br>These tasks add tools from this directory to `PATH` so that subsequent build steps can use them.<br><br>Learn about [managing this directory on a self-hosted agent](https://go.microsoft.com/fwlink/?linkid=2008884). |
 | Agent.WorkFolder | The working directory for this agent.<br><br>For example: `c:\agent_work`.<br><br>Note: This directory isn't guaranteed to be writable by pipeline tasks (for example, when mapped into a container). For more information about the agent directory structure, see [Agent directory structure](../../agents/agents.md#agent-directory-structure). |
@@ -47,7 +52,7 @@ Example of **Agent.ContainerMapping**:
 
 <a id="build-variables"></a>
 
-When you use a variable in a template that isn't marked as available in templates, the variable doesn't render. The variable doesn't render because its value isn't accessible within the template's scope. 
+When you use a variable in a template that isn't marked as available in templates, the variable doesn't render. The variable doesn't render because its value isn't accessible within the template's scope.
 
 | Variable | Description | Available in [templates](../../process/templates.md)? |
 |:---------|:------------|:------------------------------------------------------|
@@ -77,6 +82,7 @@ When you use a variable in a template that isn't marked as available in template
 | Build.SourceBranchName | The name of the branch in the triggering repo the build was queued for.<br><ul><li>Git repo branch, pull request, or tag: The last path segment in the ref. For example, in `refs/heads/main` this value is `main`. In `refs/heads/feature/tools`, this value is `tools`. In `refs/tags/your-tag-name`, the value is `your-tag-name`.</li><li>TFVC repo branch: The last path segment in the root server path for the workspace. For example, in `$/teamproject/main` this value is `main`.</li><li>TFVC repo gated check-in or shelveset build is the name of the shelveset. For example, `Gated_2016-06-06_05.20.51.4369;username@live.com` or `myshelveset;username@live.com`.</li></ul>Note: In TFVC, if you're running a gated check-in build or manually building a shelveset, you can't use this variable in your build number format. | Yes |
 | Build.SourcesDirectory | The local path on the agent where your source code files are downloaded. For example: `c:\agent_work\1\s`.<br><br>On self-hosted agents, new build pipelines update only the changed files. For more information about the agent directory structure, see [Agent directory structure](../../agents/agents.md#agent-directory-structure).<br><br>Important note: If you check out only one Git repository, this path is the exact path to the code. If you check out multiple repositories, it reverts to its default value, which is `$(Pipeline.Workspace)/s`, even if the self (primary) repository is checked out to a custom path different from its multi-checkout default path `$(Pipeline.Workspace)/s/<RepoName>` (in this respect, the variable differs from the behavior of the Build.Repository.LocalPath variable).<br><br>This variable is agent-scoped, and can be used as an environment variable in a script and as a parameter in a build task. It can't be used as part of the build number or as a version control tag. | No |
 | Build.SourceVersion | The latest version control change of the triggering repo that is included in this build.<br><ul><li>Git: The [commit](../../../repos/git/commits.md) ID.</li><li>TFVC: the [changeset](../../../repos/tfvc/find-view-changesets.md).</li></ul>This variable is agent-scoped, and can be used as an environment variable in a script and as a parameter in a build task. It can't be used as part of the build number or as a version control tag. | Yes |
+| Build.SourceVersionAuthor | The display name of the author of the triggering commit (Git) or the user who created the changeset (TFVC). | No |
 | Build.SourceVersionMessage | The comment of the commit or changeset for the triggering repo. We truncate the message to the first line or 200 characters, whichever is shorter.<br><br>The `Build.SourceVersionMessage` corresponds to the message on `Build.SourceVersion` commit. The `Build.SourceVersion` commit for a PR build is the merge commit (not the commit on the source branch).<br><br>This variable is agent-scoped, and can be used as an environment variable in a script and as a parameter in a build task. It can't be used as part of the build number or as a version control tag.<br><br>Also, this variable is only available on the step level and isn't available in the job or stage levels. That is, the message isn't extracted until the job starts and the code is checked out.<br><br>Note: The **Build.SourceVersionMessage** variable doesn't work with classic build pipelines in Bitbucket repositories when **Batch changes while a build is in progress** is enabled. | No |
 | Build.StageRequestedBy | The person who triggered the stage when the stage runs manually, or `Microsoft.VisualStudio.Services.TFS` otherwise. <br><br>Note: This value can contain whitespace or other invalid label characters.  | No |
 | Build.StageRequestedForId | The GUID of identity of the person who triggered the stage when the stage runs manually, or `00000002-0000-8888-8000-000000000000` otherwise. | No |
@@ -98,12 +104,12 @@ When you use a variable in a template that isn't marked as available in template
 | Pipeline.Workspace | Workspace directory for a particular pipeline. This variable has the same value as `Agent.BuildDirectory`. For example, `/home/vsts/work/1`. For more information about the agent directory structure, see [Agent directory structure](../../agents/agents.md#agent-directory-structure).|
 
 > [!TIP]
-> If you're using classic release pipelines, you can use [classic releases and artifacts variables](../../release/variables.md) to store and access data throughout your pipeline.
+> If you're using classic release pipelines, you can use [classic releases and artifacts variables](../../variables/reference.md) to store and access data throughout your pipeline.
 
 ##  Deployment job variables
 
 
-These variables are scoped to a specific [Deployment job](../../process/deployment-jobs.md) and is resolved only at job execution time. 
+These variables are scoped to a specific [Deployment job](../../process/deployment-jobs.md) and is resolved only at job execution time.
 
 | Variable | Description |
 |:---------|:------------|
@@ -114,18 +120,19 @@ These variables are scoped to a specific [Deployment job](../../process/deployme
 | Strategy.Name | The name of the deployment strategy: `canary`, `runOnce`, or `rolling`. |
 | Strategy.CycleName | The current cycle name in a deployment. Options are `PreIteration`, `Iteration`, or `PostIteration`. |
 
-## System variables 
+## System variables
 
-When you use a variable in a template that isn't marked as available in templates, the variable doesn't render. The variable doesn't render because its value isn't accessible within the template's scope. 
+When you use a variable in a template that isn't marked as available in templates, the variable doesn't render. The variable doesn't render because its value isn't accessible within the template's scope.
 
 | Variable | Description | Available in [templates](../../process/templates.md)? |
 |:---------|:------------|:------------------------------------------------------|
-| System.AccessToken | [Use the OAuth token to access the REST API](../../scripts/powershell.md#example-powershell-script-access-rest-api).<br><br>[Use System.AccessToken from YAML scripts](../variables.md#systemaccesstoken).<br><br>This variable is agent-scoped, and can be used as an environment variable in a script and as a parameter in a build task. It can't be used as part of the build number or as a version control tag. | Yes |
+| System.AccessToken | [Use the OAuth token to access the REST API](../../scripts/powershell.md#example-powershell-script-access-rest-api).<br><br>[Use System.AccessToken from YAML scripts](../../variables/reference.md#systemaccesstoken).<br><br>This variable is agent-scoped, and can be used as an environment variable in a script and as a parameter in a build task. It can't be used as part of the build number or as a version control tag. | Yes |
 | System.CollectionId | The GUID of the Azure DevOps organization or collection. | Yes |
 | System.CollectionUri | The URI of the Azure DevOps organization or collection. For example: `https://dev.azure.com/fabrikamfiber/`. | Yes |
 | System.DefaultWorkingDirectory | [!INCLUDE [include](../includes/variables-build-sources-directory.md)] | Yes |
 | System.DefinitionId | The ID of the build pipeline. | Yes |
 | System.HostType | Set to `build` if the pipeline is a build. For a release, the values are `deployment` for a Deployment group job, `gates` during evaluation of gates, and `release` for other (Agent and Agentless) jobs. | Yes |
+| System.ServerType | The kind of server hosting the pipeline. For Azure DevOps Services this value is `Hosted`; for Azure DevOps Server it's `OnPremises`. | Yes |
 | System.JobAttempt | Set to 1 the first time this job is attempted, and increments every time the job is retried. | No |
 | System.JobDisplayName | The human-readable name given to a job. | No |
 | System.JobId | A unique identifier for a single attempt of a single job. The value is unique to the current pipeline. | No |
@@ -138,9 +145,8 @@ When you use a variable in a template that isn't marked as available in template
 | System.PullRequest.IsFork | If the pull request is from a fork of the repository, this variable is set to `True`.<br><br>Otherwise, it's set to `False`. | Yes |
 | System.PullRequest.PullRequestId | The ID of the pull request that caused this build. For example: `17`. (This variable is initialized only if the build ran because of a [Git PR affected by a branch policy](../../../repos/git/branch-policies.md#build-validation)). | No |
 | System.PullRequest.PullRequestNumber | The number of the pull request that caused this build. This variable is populated for pull requests from GitHub that have a different pull request ID and pull request number. This variable is only available in a YAML pipeline if a branch policy affects the PR. | No |
-| System.PullRequest.targetBranchName | The name of the target branch for a pull request. This variable can be used in a pipeline to conditionally execute tasks or steps based on the target branch of the pull request. For example, you might want to trigger a different set of tests or code analysis tools depending on the branch that the changes are being merged into. | No |
 | System.PullRequest.SourceBranch | The branch that is being reviewed in a pull request. For example: `refs/heads/users/raisa/new-feature` for Azure Repos. (This variable is initialized only if the build ran because of a [Git PR affected by a branch policy](../../../repos/git/branch-policies.md#build-validation)). This variable is only available in a YAML pipeline if a branch policy affects the PR. | No |
-| System.PullRequest.SourceCommitId | The commit that is being reviewed in a pull request. (This variable is initialized only if the build ran because of a [Git PR affected by a branch policy](../../../repos/git/branch-policies.md#build-validation)). This variable is only available in a YAML pipeline if a branch policy affects the PR. |
+| System.PullRequest.SourceCommitId | The commit that is being reviewed in a pull request. (This variable is initialized only if the build ran because of a [Git PR affected by a branch policy](../../../repos/git/branch-policies.md#build-validation)). This variable is only available in a YAML pipeline if a branch policy affects the PR. | No |
 | System.PullRequest.SourceRepositoryUri | The URL to the repo that contains the pull request. For example: `https://dev.azure.com/ouraccount/_git/OurProject`.  | No |
 | System.PullRequest.TargetBranch | The branch that is the target of a pull request. For example: `refs/heads/main` when your repository is in Azure Repos and `main` when your repository is in GitHub. This variable is initialized only if the build ran because of a [Git PR affected by a branch policy](../../../repos/git/branch-policies.md#build-validation). This variable is only available in a YAML pipeline if a branch policy affects the PR. | No |
 | System.StageAttempt | Set to 1 the first time this stage is attempted, and increments every time the stage is retried. | No |
