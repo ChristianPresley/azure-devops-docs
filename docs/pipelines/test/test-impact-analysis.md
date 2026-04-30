@@ -1,7 +1,7 @@
 ---
 title: Use Test Impact Analysis
 description: Speed up testing by using Test Impact Analysis (TIA) in Azure Pipelines or TFS with a build or release pipeline.
-ms.assetid: BBDD071F-4017-4AF0-AB59-71F8FEFF1E37
+ms.assetid: 6CCF8F30-1947-4D1E-AC2E-9E27ED4C9F44
 ms.topic: concept-article
 ms.custom: continuous-test, cross-service
 ms.author: alexpysanets
@@ -43,10 +43,9 @@ However, be aware of the following caveats when using TIA with Visual Studio 201
 
  Test Impact Analysis (TIA) is supported for the following scenarios:
 
-* TFS 2017 Update 1 onwards, and Azure Pipelines
+* Azure Pipelines (Azure DevOps Services and Azure DevOps Server 2022 and later)
 * Version 2.* of the [Visual Studio Test](/azure/devops/pipelines/tasks/reference/vstest-v2) task in the build pipeline
 * Build vNext, with multiple VSTest Tasks
-* VS2015 Update 3 onwards on the build agent
 * Local and hosted build agents
 * CI and in PR workflows
 * Git, GitHub, Other Git, TFVC repos (including partially mapped TFVC repositories with a [workaround](../../repos/tfvc/test-impact-for-partially-mapped-tfvc-repositories.md))
@@ -63,7 +62,7 @@ TIA is **not** supported for the following scenarios:
 * .NET Core
 * UWP
 
-[More information about TIA scope and applications](https://blogs.msdn.microsoft.com/devops/2017/05/16/accelerated-continuous-testing-with-test-impact-analysis-part-2/)
+[More information about TIA scope and applications](https://devblogs.microsoft.com/devops/accelerated-continuous-testing-with-test-impact-analysis-part-2/)
 
 <a name="enabletia"></a>
 
@@ -111,7 +110,7 @@ TIA is integrated into existing test reporting at both the summary and details l
 
 ![Reporting Tests page includes TIA integration](media/test-impact-analysis/tia-reports-2.png)
 
-[More information about TIA and Azure Pipelines integration](https://blogs.msdn.microsoft.com/devops/2017/03/02/accelerated-continuous-testing-with-test-impact-analysis-part-1/)
+[More information about TIA and Azure Pipelines integration](https://devblogs.microsoft.com/devops/accelerated-continuous-testing-with-test-impact-analysis-part-1/)
 
 ## Manage Test Impact Analysis behavior
 
@@ -132,13 +131,13 @@ To evaluate whether TIA is selecting the appropriate tests:
 * Manually validate the selection. A developer who knows how the SUT and tests are architected could manually validate the test selection using the [TIA reporting capabilities](#tiareports).
 * Run TIA selected tests and then all tests in sequence. In a build pipeline, use two test tasks - one that runs only impacted Tests (T1) and one that runs all tests (T2). If T1 passes, check that T2 passes as well. If there was a failing test in T1, check that T2 reports the same set of failures.
 
-[More information about TIA advanced configuration](https://blogs.msdn.microsoft.com/devops/2017/06/13/accelerated-continuous-testing-with-test-impact-analysis-part-3/)
+[More information about TIA advanced configuration](https://devblogs.microsoft.com/devops/accelerated-continuous-testing-with-test-impact-analysis-part-3/)
 
 ## Provide custom dependency mappings
 
 TIA uses dependency maps of the following form.
 
-``` map
+``` text
 TestMethod1
   dependency1
   dependency2
@@ -159,13 +158,13 @@ The XML file should be checked into your repository, typically at the root level
 For example, if the file is named **TIAmap.xml**,
 set the variable to **$(System.DefaultWorkingDirectory)/TIAmap.xml**.
 
-For an example of the XML file format, see [TIA custom dependency mapping](https://blogs.msdn.microsoft.com/devops/2017/08/04/accelerated-continuous-testing-with-test-impact-analysis-part-4/).
+For an example of the XML file format, see [TIA custom dependency mapping](https://devblogs.microsoft.com/devops/accelerated-continuous-testing-with-test-impact-analysis-part-4/).
 
 ## See Also
 
-* [TIA overview and VSTS integration](https://blogs.msdn.microsoft.com/devops/2017/03/02/accelerated-continuous-testing-with-test-impact-analysis-part-1/)
-* [TIA scope and applications](https://blogs.msdn.microsoft.com/devops/2017/05/16/accelerated-continuous-testing-with-test-impact-analysis-part-2/)
-* [TIA advanced configuration](https://blogs.msdn.microsoft.com/devops/2017/06/13/accelerated-continuous-testing-with-test-impact-analysis-part-3/)
-* [TIA custom dependency mapping](https://blogs.msdn.microsoft.com/devops/2017/08/04/accelerated-continuous-testing-with-test-impact-analysis-part-4/)
+* [TIA overview and VSTS integration](https://devblogs.microsoft.com/devops/accelerated-continuous-testing-with-test-impact-analysis-part-1/)
+* [TIA scope and applications](https://devblogs.microsoft.com/devops/accelerated-continuous-testing-with-test-impact-analysis-part-2/)
+* [TIA advanced configuration](https://devblogs.microsoft.com/devops/accelerated-continuous-testing-with-test-impact-analysis-part-3/)
+* [TIA custom dependency mapping](https://devblogs.microsoft.com/devops/accelerated-continuous-testing-with-test-impact-analysis-part-4/)
 
 [!INCLUDE [help-and-support-footer](includes/help-and-support-footer.md)]
