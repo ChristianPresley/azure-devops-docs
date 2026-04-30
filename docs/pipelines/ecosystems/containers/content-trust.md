@@ -43,13 +43,13 @@ Docker Content Trust (DCT) lets you use digital signatures for data sent to and 
      containerRegistryServiceConnection: serviceConnectionName
      imageRepository: foobar/content-trust
      tag: test
-    
+
    steps:
    - task: Docker@2
      inputs:
        command: login
        containerRegistry: $(containerRegistryServiceConnection)
-    
+
    - task: DownloadSecureFile@1
      name: privateKey
      inputs:
@@ -57,7 +57,7 @@ Docker Content Trust (DCT) lets you use digital signatures for data sent to and 
    - script: |
        mkdir -p $(DOCKER_CONFIG)/trust/private
        cp $(privateKey.secureFilePath) $(DOCKER_CONFIG)/trust/private
-    
+
    - task: Docker@2
      inputs:
        command: build
@@ -66,7 +66,7 @@ Docker Content Trust (DCT) lets you use digital signatures for data sent to and 
        repository: $(imageRepository)
        tags: |
          $(tag)
-    
+
     - task: Docker@2
       inputs:
         command: push
@@ -79,6 +79,6 @@ Docker Content Trust (DCT) lets you use digital signatures for data sent to and 
         DOCKER_CONTENT_TRUST_ROOT_PASSPHRASE: $(rootPassphrase)
    ```
 
-   In the previous example, the `DOCKER_CONFIG` variable is set by the `login` command in the Docker task. Set up `DOCKER_CONTENT_TRUST_REPOSITORY_PASSPHRASE` and `DOCKER_CONTENT_TRUST_ROOT_PASSPHRASE` as [secret variables](../../process/variables.md#secret-variables) for your pipeline. 
+   In the previous example, the `DOCKER_CONFIG` variable is set by the `login` command in the Docker task. Set up `DOCKER_CONTENT_TRUST_REPOSITORY_PASSPHRASE` and `DOCKER_CONTENT_TRUST_ROOT_PASSPHRASE` as [secret variables](../../variables/index.md#secret-variables) for your pipeline.
 
     `DOCKER_CONTENT_TRUST_REPOSITORY_PASSPHRASE` in this example refers to the private key's passphrase (not the repository passphrase). We only need the private key's passphrase in this example because the repository has been initiated already (prerequisites).
