@@ -52,6 +52,8 @@ Flaky test management supports system and custom detection.
 
 - **System detection**: Azure DevOps has a built-in mechanism for detecting flaky tests. This involves rerunning failed tests within the same pipeline execution. If a test case fails initially but passes on a rerun, it is marked as flaky. This detection is tightly coupled with the **VSTest** task, which reruns failed tests within the same task execution. Another method involves rerunning failed jobs in the pipeline (manually by clicking on "rerun failed jobs" in any pipeline run). If a test passes in the rerun, it is marked as flaky.
 
+   In addition to rerun signals, the system aggregates pass/fail history per test case to compute a **Test Weighted Score (TWS)**. A test is classified as flaky when its score crosses the configured threshold and its rerun count, failure rate, pass rate, and result variance are within the supported windows. The thresholds are server-side defaults and aren't user-configurable today; they are tuned periodically as part of the service.
+
    > [!Note]
    > Once a test is marked as flaky, the data is available for all pipelines for that branch to assist with troubleshooting in every pipeline. 
 

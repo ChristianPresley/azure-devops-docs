@@ -3,7 +3,7 @@ title: Configure for UI testing
 description: Continuous testing. Things to consider when running UI tests and FAQ.
 ms.assetid: 1B7C890E-FB67-4BEF-A48E-20C9453BD54A
 ms.topic: concept-article
-ms.date: 04/25/2024
+ms.date: 04/30/2026
 monikerRange: '<= azure-devops'
 ms.custom: continuous-test, sfi-image-nochange
 ---

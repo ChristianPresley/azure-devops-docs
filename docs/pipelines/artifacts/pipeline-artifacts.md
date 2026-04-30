@@ -45,6 +45,20 @@ steps:
 - **targetPath**: the path to the folder or file you want to publish.
 - **artifactName**: the name of the artifact that you want to create.
 
+#### Publish to a file share (Windows only)
+
+`PublishPipelineArtifact@1` can also copy the contents of `targetPath` to an SMB file share instead of uploading to Azure Pipelines. Set `artifactType` to `filepath` and provide the destination as `fileSharePath`. This option is only supported on Windows agents; the agent throws `FileShareOperatingSystemNotSupported` on Linux or macOS.
+
+```yaml
+steps:
+- task: PublishPipelineArtifact@1
+  inputs:
+    targetPath: $(System.DefaultWorkingDirectory)/bin/WebApp
+    artifactName: WebApp
+    artifactType: filepath
+    fileSharePath: '\\fileserver\share\artifacts'
+```
+
 # [Classic](#tab/classic)
 
 - Add the :::image type="icon" source="../tasks/utility/media/publish-pipeline-artifact.png" border="false"::: **Publish Pipeline Artifact** task.

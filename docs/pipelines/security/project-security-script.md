@@ -1,7 +1,7 @@
 ---
 title: Use a script to update security settings
 description: Learn how to use PowerShell scripts to automate Azure DevOps pipeline security settings. Configure project-level settings with secure-by-default recommendations.
-ms.date: 08/12/2025
+ms.date: 04/30/2026
 monikerRange: "<=azure-devops"
 ai-usage: ai-assisted
 ms.topic: how-to

@@ -2,7 +2,7 @@
 title: Securely use variables and parameters
 description: Find out how to safely accept input from pipeline users in Azure Pipelines.
 ms.assetid: ada3e166-c606-48b3-8e5e-7d83b1c1c962
-ms.date: 08/15/2025
+ms.date: 04/30/2026
 monikerRange: "<=azure-devops"
 #customer intent: As an Azure Pipeline administrator, I want to understand how to securely accept user input so I can avoid security risks from variable and parameter usage in my pipelines.
 ms.topic: best-practice

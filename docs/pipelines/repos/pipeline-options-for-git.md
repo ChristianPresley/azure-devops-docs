@@ -3,7 +3,7 @@ title: Options for Git repositories
 description: Options available when using a Git repository with Azure Pipelines
 ms.topic: reference
 ms.assetid: a74b3efe-d7bd-438a-be32-47d036556f74
-ms.date: 01/25/2023
+ms.date: 04/30/2026
 monikerRange: '<= azure-devops'
 ---
 

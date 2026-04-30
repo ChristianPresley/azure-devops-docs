@@ -4,7 +4,7 @@ ms.service: azure-devops-pipelines
 ms.manager: wiwagn
 ms.author: sdanie
 author: steved0x
-ms.date: 04/17/2024
+ms.date: 04/30/2026
 ---
 
 To configure an agent, it must know the URL to your organization or collection and credentials of someone authorized to set up agents.

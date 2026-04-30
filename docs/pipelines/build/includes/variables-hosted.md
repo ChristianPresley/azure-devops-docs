@@ -4,7 +4,7 @@ ms.service: azure-devops-pipelines
 ms.manager: wiwagn
 ms.author: rabououn
 author: ramiMSFT
-ms.date: 04/08/2025
+ms.date: 04/30/2026
 ---
 <a id="agent-variables"></a>
 
