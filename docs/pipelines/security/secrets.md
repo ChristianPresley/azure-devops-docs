@@ -34,9 +34,9 @@ Never store sensitive values as plain text in an *azure-pipelines.yml* file. You
 - It's best to securely manage secret variables in [Azure Key Vault](/azure/key-vault/). You can also set secret variables in the pipeline definition UI or in a variable group.
 - Don't use a logging command to set a secret variable, because anyone who can access your pipeline can also see the secret.
 - Never echo secrets as output, and don't pass secrets on the command line. Instead, it's best to map your secrets into environment variables.
-- When you create a secret, follow [variable naming guidelines](../process/variables.md#variable-naming-restrictions), and make sure your secret name doesn't disclose sensitive information.
+- When you create a secret, follow [variable naming guidelines](../variables/index.md#variable-naming-restrictions), and make sure your secret name doesn't disclose sensitive information.
 
-To learn more about setting secrets in variables, see [Set secret variables](../process/set-secret-variables.md).
+To learn more about setting secrets in variables, see [Set secret variables](../variables/secrets.md).
 
 ### Limit access to secret variables
 
@@ -73,7 +73,7 @@ To audit and rotate secrets, follow these best practices:
 - Keep [personal access token (PAT)](../../organizations/accounts/use-personal-access-tokens-to-authenticate.md) duration short and choose the minimal permissions needed.
 - Regularly rotate secrets to minimize the amount of time that a compromised secret could be exploited. Changing secrets periodically enhances security.
 
-## Use YAML templates 
+## Use YAML templates
 
 Instead of including inline scripts with secret parameters directly in your pipeline YAML, use [templates](templates.md). This approach enhances security by abstracting sensitive information away from the main pipeline.
 
