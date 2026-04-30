@@ -91,7 +91,7 @@ You can use both predefined and user-defined variables in your run number. For e
 $(Build.DefinitionName)_$(Build.DefinitionVersion)_$(Build.RequestedFor)_$(Build.BuildId)_$(My.Variable)
 ```
 
-For more information about predefined variables, see [Use predefined variables](../build/variables.md). For information on how to define user variables, see [Define variables](variables.md).
+For more information about predefined variables, see [Use predefined variables](../variables/reference.md). For information on how to define user variables, see [Define variables](../variables/index.md).
 
 ## FAQ
 
@@ -148,7 +148,7 @@ You can reference the run number directly as `$(Build.BuildNumber)` in your scri
 
 ```yaml
 # Set MyRunNumber
-variables: 
+variables:
   MyRunNumber: '1.0.0-CI+$(Build.BuildNumber)'
 
 steps:
@@ -161,5 +161,5 @@ steps:
 <!-- ENDSECTION -->
 ## Related content
 
-- [Define variables](variables.md)
-- [Use predefined variables](../build/variables.md)
+- [Define variables](../variables/index.md)
+- [Use predefined variables](../variables/reference.md)
