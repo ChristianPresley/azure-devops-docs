@@ -18,7 +18,7 @@ Bitbucket and Azure Pipelines are two independent services that integrate well t
 
 # [YAML](#tab/yaml/)
 
-You create a new pipeline by first selecting a Bitbucket Cloud repository and then a YAML file in that repository. The repository in which the YAML file is present is called `self` repository. By default, this is the repository that your pipeline builds. 
+You create a new pipeline by first selecting a Bitbucket Cloud repository and then a YAML file in that repository. The repository in which the YAML file is present is called `self` repository. By default, this is the repository that your pipeline builds.
 
 You can later configure your pipeline to check out a different repository or multiple repositories. To learn how to do this, see [multi-repo checkout](multi-repo-checkout.md).
 
@@ -44,7 +44,7 @@ OAuth is the simplest authentication type to get started with for repositories i
 To use OAuth, login to Bitbucket when prompted during pipeline creation. Then, click **Authorize** to authorize with OAuth. An OAuth connection will be saved in your Azure DevOps project for later use, as well as used in the pipeline being created.
 
 > [!NOTE]
-> The maximum number of Bitbucket repositories that the Azure DevOps Services user interface can load is 2,000. 
+> The maximum number of Bitbucket repositories that the Azure DevOps Services user interface can load is 2,000.
 
 ### Password authentication
 
@@ -69,7 +69,7 @@ Continuous integration (CI) triggers cause a pipeline to run whenever you push a
 # [Classic](#tab/classic/)
 
 > [!NOTE]
-> The **Build.SourceVersionMessage** variable does not work with Bitbucket repositories when **Batch changes while a build is in progress** is enabled.  
+> The **Build.SourceVersionMessage** variable does not work with Bitbucket repositories when **Batch changes while a build is in progress** is enabled.
 
 [!INCLUDE [ci-triggers](includes/ci-triggers4.md)]
 
@@ -79,14 +79,7 @@ Continuous integration (CI) triggers cause a pipeline to run whenever you push a
 
 ### Skipping CI for individual commits
 
-You can also tell Azure Pipelines to skip running a pipeline that a push would normally trigger. Just include `[skip ci]` in the message or description of any of the commits that are part of a push, and Azure Pipelines will skip running CI for this push. You can also use any of the following variations.
-
-- `[skip ci]` or `[ci skip]`
-- `skip-checks: true` or `skip-checks:true`
-- `[skip azurepipelines]` or `[azurepipelines skip]`
-- `[skip azpipelines]` or `[azpipelines skip]`
-- `[skip azp]` or `[azp skip]`
-- `***NO_CI***`
+[!INCLUDE [skip-ci-tokens](includes/skip-ci-tokens.md)]
 
 [!INCLUDE [ci-triggers](includes/ci-triggers5.md)]
 
@@ -101,7 +94,7 @@ or when updates are made to such a pull request.
 
 You can specify the target branches when validating your pull requests.
 For example, to validate pull requests that
-target `master` and `releases/*`, you can use the following `pr` trigger. 
+target `master` and `releases/*`, you can use the following `pr` trigger.
 
 ```yaml
 pr:
@@ -114,15 +107,15 @@ This configuration starts a new run the first time a new pull request is created
 You can specify the full name of the branch (for example, `master`) or a wildcard (for example, `releases/*`).
 
 > [!NOTE]
-> You cannot use [variables](../process/variables.md) in triggers, as variables are evaluated at runtime (after the trigger has fired).
+> You cannot use [variables](../variables/index.md) in triggers, as variables are evaluated at runtime (after the trigger has fired).
 
 > [!NOTE]
 > If you use [templates](../process/templates.md) to author YAML files, then you can only specify triggers in the main YAML file for the pipeline. You cannot specify triggers in the template files.
 
 Each new run builds the latest commit from the source branch of the pull request. This is different from how Azure Pipelines builds pull requests in other repositories (e.g., Azure Repos or GitHub), where it builds the merge commit. Unfortunately, Bitbucket does not expose information about the merge commit, which contains the merged code between the source and target branches of the pull request.
 
-If no `pr` triggers appear in your YAML file, pull request validations are automatically enabled for all 
-branches, as if you wrote the following `pr` trigger. This configuration triggers a build when any 
+If no `pr` triggers appear in your YAML file, pull request validations are automatically enabled for all
+branches, as if you wrote the following `pr` trigger. This configuration triggers a build when any
 pull request is created, and when commits come into the source branch of any active pull request.
 
 ```yaml
@@ -173,7 +166,7 @@ pr:
 >  * If you exclude a path, you cannot also include it unless you qualify it to a deeper folder. For example if you exclude _/tools_ then you could include _/tools/trigger-runs-on-these_
 >  * The order of path filters doesn't matter.
 >  * Paths in Git *are case-sensitive*. Be sure to use the same case as the real folders.
->  * You cannot use [variables](../process/variables.md) in paths, as variables are evaluated at runtime (after the trigger has fired).
+>  * You cannot use [variables](../variables/index.md) in paths, as variables are evaluated at runtime (after the trigger has fired).
 
 ### Multiple PR updates
 
