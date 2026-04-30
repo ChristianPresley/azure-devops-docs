@@ -156,7 +156,7 @@ When you use a variable in a template that isn't marked as available in template
 | System.TeamProject | The name of the project that contains this build. | Yes |
 | System.TeamProjectId | The ID of the project that this build belongs to. | Yes |
 | System.TimelineId | A string-based identifier for the execution details and logs of a single pipeline run. | No |
-| TF_BUILD | Set to `True` if a build task runs the script.<br><br>This variable is agent-scoped, and can be used as an environment variable in a script and as a parameter in a build task. It can't be used as part of the build number or as a version control tag. | No |
+| TF_BUILD | Set to `True` for any pipeline task running on the agent (build, release, or deployment).<br><br>This variable is agent-scoped, and can be used as an environment variable in a script and as a parameter in a build task. It can't be used as part of the build number or as a version control tag. | No |
 
 ## Checks variables (DevOps Services)
 
