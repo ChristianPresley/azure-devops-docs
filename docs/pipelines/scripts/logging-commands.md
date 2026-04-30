@@ -4,7 +4,7 @@ description: How scripts can request work from the agent
 ms.topic: reference
 ms.custom: doc-kit-assisted
 ms.assetid: 3ec13da9-e7cf-4895-b5b8-735c1883cc7b
-ms.date: 03/05/2026
+ms.date: 04/26/2026
 monikerRange: '<= azure-devops'
 ai-usage: ai-assisted
 ---
@@ -15,11 +15,13 @@ ai-usage: ai-assisted
 
 Logging commands are how [tasks](../process/tasks.md) and scripts communicate with the Azure Pipelines agent. When a pipeline step writes a specially formatted string to standard output (stdout), the agent intercepts it and performs the requested action—such as setting a variable, uploading an artifact, or marking the step as failed. Logging commands are useful for customizing pipeline behavior and troubleshooting.
 
+For help choosing variable syntax, output variable patterns, and secret handling, see [Variables quick reference](../variables/quick-reference.md).
+
 > [!IMPORTANT]
 > We make an effort to mask secrets from appearing in Azure Pipelines output, but you still need to take precautions. Never echo secrets as output.
 > Some operating systems log command line arguments. Never pass secrets on the command line.
 > Instead, we suggest that you map your secrets into environment variables.
-> 
+>
 > We never mask substrings of secrets. If, for example, "abc123" is set as a secret, "abc" isn't masked from the logs.
 > This is to avoid masking secrets at too granular of a level, making the logs unreadable.
 > For this reason, secrets shouldn't contain structured data. If, for example, "{ "foo": "bar" }" is set as a secret,
@@ -43,14 +45,14 @@ The Azure Pipelines agent processes logging commands by scanning **standard outp
 > ./my-external-tool 2>&1 | while IFS= read -r line; do echo "$line"; done
 > ```
 
-|Type  |Commands  |
-|---------|---------|
-|Task commands     |    [AddAttachment](#addattachment-attach-a-file-to-the-build), [Complete](#complete-finish-timeline), [LogDetail](#logdetail-create-or-update-a-timeline-record-for-a-task), [LogIssue](#logissue-log-an-error-or-warning), [PrependPath](#prependpath-prepend-a-path-to-the--path-environment-variable), [SetEndpoint](#setendpoint-modify-a-service-connection-field), [SetProgress](#setprogress-show-percentage-completed), [SetVariable](#setvariable-initialize-or-modify-the-value-of-a-variable), [SetSecret](#setsecret-register-a-value-as-a-secret), [UploadFile](#uploadfile-upload-a-file-that-can-be-downloaded-with-task-logs), [UploadSummary](#uploadsummary-add-some-markdown-content-to-the-build-summary) |
-|Artifact commands     |   [Associate](#associate-initialize-an-artifact), [Upload](#upload-upload-an-artifact)      |
-|Build commands     |  [AddBuildTag](#addbuildtag-add-a-tag-to-the-build), [UpdateBuildNumber](#updatebuildnumber-override-the-automatically-generated-build-number), [UploadLog](#uploadlog-upload-a-log) |
-|Release commands     |    [UpdateReleaseName](#updatereleasename-rename-current-release)     |
+| Type | Commands |
+| --- | --- |
+| Task commands | [AddAttachment](#addattachment-attach-a-file-to-the-build), [Complete](#complete-finish-timeline), [LogDetail](#logdetail-create-or-update-a-timeline-record-for-a-task), [LogIssue](#logissue-log-an-error-or-warning), [PrependPath](#prependpath-prepend-a-path-to-the--path-environment-variable), [SetEndpoint](#setendpoint-modify-a-service-connection-field), [SetProgress](#setprogress-show-percentage-completed), [SetVariable](#setvariable-initialize-or-modify-the-value-of-a-variable), [SetSecret](#setsecret-register-a-value-as-a-secret), [UploadFile](#uploadfile-upload-a-file-that-can-be-downloaded-with-task-logs), [UploadSummary](#uploadsummary-add-some-markdown-content-to-the-build-summary) |
+| Artifact commands | [Associate](#associate-initialize-an-artifact), [Upload](#upload-upload-an-artifact) |
+| Build commands | [AddBuildTag](#addbuildtag-add-a-tag-to-the-build), [UpdateBuildNumber](#updatebuildnumber-override-the-automatically-generated-build-number), [UploadLog](#uploadlog-upload-a-log) |
+| Release commands | [UpdateReleaseName](#updatereleasename-rename-current-release) |
 
-## Logging command format 
+## Logging command format
 
 The general format for a logging command is:
 
@@ -89,7 +91,7 @@ File paths should be given as absolute paths: rooted to a drive on Windows, or b
 ## Formatting commands
 
 > [!NOTE]
-> Use UTF-8 encoding for logging commands. 
+> Use UTF-8 encoding for logging commands.
 
 These commands are messages to the log formatter in Azure Pipelines.
 They mark specific log lines as errors, warnings, collapsible sections, and so on.
@@ -106,7 +108,7 @@ The formatting commands are:
 ##[endgroup]
 ```
 
-You can use the formatting commands in a bash or PowerShell task. 
+You can use the formatting commands in a bash or PowerShell task.
 
 # [Bash](#tab/bash)
 
@@ -139,7 +141,7 @@ steps:
 Those commands render in the logs like this:
 
 ![Screenshot of logs with custom formatting options](media/log-formatting.png)
- 
+
 That block of commands can also be collapsed, and looks like this:
 
 ![Screenshot of collapsed section of logs](media/log-formatting-collapsed.png)
@@ -149,6 +151,9 @@ That block of commands can also be collapsed, and looks like this:
 ### LogIssue: Log an error or warning
 
 `##vso[task.logissue]error/warning message`
+
+> [!NOTE]
+> The agent also accepts the short alias `##vso[task.issue]` for this command. Both forms behave identically; prefer the explicit `task.logissue` form in new pipelines.
 
 #### Usage
 
@@ -181,7 +186,7 @@ exit 1
 ---
 
 > [!TIP]
-> 
+>
 > `exit 1` is optional, but is often a command you'll issue soon after an error is logged. If you select **Control Options: Continue on error**, then the `exit 1` will result in a partially successful build instead of a failed build. As an alternative, you can also use `task.logissue type=error`.
 
 #### Example: Log a warning about a specific place in a file
@@ -251,18 +256,18 @@ To see how it looks, save and queue the build, and then watch the build run. Obs
 
 #### Usage
 
-Finish the timeline record for the current task, set task result and current operation. When result not provided, set result to succeeded.
+Finish the timeline record for the current task, set task result and current operation. The `result` property is required; if it isn't provided or doesn't match one of the supported values, the agent fails the step with an `InvalidCommandResult` error.
 
 #### Properties
 
-* `result` = 
+* `result` (required) =
   - `Succeeded` The task succeeded.
   - `SucceededWithIssues` The task ran into problems. The build will be completed as partially succeeded at best.
   - `Failed` The build will be completed as failed. (If the **Control Options: Continue on error** option is selected, the build will be completed as partially succeeded at best.)
-   
+
 #### Example
 
-Log a task as succeeded. 
+Log a task as succeeded.
 
 ```
 ##vso[task.complete result=Succeeded;]DONE
@@ -296,31 +301,31 @@ The logging system keeps track of the GUID for each timeline record, so any new 
 #### Properties
 
 * `id` = Timeline record GUID (Required)
-* `parentid` = Parent timeline record GUID 
+* `parentid` = Parent timeline record GUID
 * `type` = Record type (Required for first time, can't overwrite)
 * `name` = Record name (Required for first time, can't overwrite)
 * `order` = order of timeline record (Required for first time, can't overwrite)
 * `starttime` = `Datetime`
 * `finishtime` = `Datetime`
-* `progress` = percentage of completion 
-* `state` = `Unknown` | `Initialized` | `InProgress` | `Completed` 
+* `progress` = percentage of completion
+* `state` = `Unknown` | `Initialized` | `InProgress` | `Completed`
 * `result` = `Succeeded` | `SucceededWithIssues` | `Failed`
 
 #### Examples
 
-Create new root timeline record: 
+Create new root timeline record:
 
 ```
 ##vso[task.logdetail id=new guid;name=project1;type=build;order=1]create new timeline record
 ```
 
-Create new nested timeline record: 
+Create new nested timeline record:
 
 ```
 ##vso[task.logdetail id=new guid;parentid=exist timeline record guid;name=project1;type=build;order=1]create new nested timeline record
 ```
 
-Update exist timeline record: 
+Update exist timeline record:
 
 ```
 ##vso[task.logdetail id=existing timeline record guid;progress=15;state=InProgress;]update timeline record
@@ -336,9 +341,9 @@ Sets a variable in the variable service of taskcontext. The first task can set a
 
 When `isSecret` is set to `true`, the value of the variable will be saved as secret and masked out from log. Secret variables aren't passed into tasks as environment variables and must instead be passed as inputs.
 
-When `isOutput` is set to `true` the syntax to reference the set variable varies based on whether you're accessing that variable in the same job, a future job, or a future stage. Additionally, if `isOutput` is set to `false` the syntax for using that variable within the same job is distinct. See [levels of output variables](../process/set-variables-scripts.md#levels-of-output-variables) to determine the appropriate syntax for each use case.
+When `isOutput` is set to `true` the syntax to reference the set variable varies based on whether you're accessing that variable in the same job, a future job, or a future stage. Additionally, if `isOutput` is set to `false` the syntax for using that variable within the same job is distinct. See [levels of output variables](../variables/scripts.md#levels-of-output-variables) to determine the appropriate syntax for each use case.
 
-For more information about output variables, see [set variables in scripts](../process/set-variables-scripts.md) and [define variables](../process/variables.md#set-variables-in-scripts).
+For more information about output variables, see [set variables in scripts](../variables/scripts.md), [define variables](../variables/index.md#set-variables-in-scripts), and [Variables quick reference](../variables/quick-reference.md#output-variable-syntax).
 
 #### Properties
 
@@ -348,7 +353,7 @@ For more information about output variables, see [set variables in scripts](../p
 * `isOutput` = boolean (Optional, defaults to false)
 * `isReadOnly` = boolean (Optional, defaults to false)
 ::: moniker-end
-   
+
 
 #### Examples
 
@@ -411,7 +416,7 @@ Console output:
 ::: moniker range="<=azure-devops"
 ```
 Non-secrets automatically mapped in, sauce is crushed tomatoes
-Secrets are not automatically mapped in, secretSauce is 
+Secrets are not automatically mapped in, secretSauce is
 You can use macro replacement to get secrets, and they'll be masked in the log: ***
 Future jobs can also see canned goods
 Future jobs can also see canned goods
@@ -426,7 +431,7 @@ Future jobs can also see canned goods
 
 The value is registered as a secret for the duration of the job. The value will be masked out from the logs from this point forward. This command is useful when a secret is transformed (for example, base64 encoded) or derived.
 
-Note: Previous occurrences of the secret value won't be masked. 
+Note: Previous occurrences of the secret value won't be masked.
 
 #### Examples
 
@@ -517,7 +522,7 @@ Upload and attach attachment to current timeline record. These files aren't avai
 
 * `type` = attachment type (Required)
 * `name` = attachment name (Required)
-  
+
 #### Example
 
 ```
@@ -530,7 +535,7 @@ Upload and attach attachment to current timeline record. These files aren't avai
 
 #### Usage
 
-Upload and attach summary Markdown from an .md file in the repository to current timeline record. This summary shall be added to the build/release summary and not available for download with logs. The summary should be in UTF-8 or ASCII format. The summary appears on the **Extensions** tab of your pipeline run. Markdown rendering on the Extensions tab is different from Azure DevOps wiki rendering. For more information on Markdown syntax, see the [Markdown Guide](https://www.markdownguide.org/basic-syntax/). 
+Upload and attach summary Markdown from an .md file in the repository to current timeline record. This summary shall be added to the build/release summary and not available for download with logs. The summary should be in UTF-8 or ASCII format. The summary appears on the **Extensions** tab of your pipeline run. Markdown rendering on the Extensions tab is different from Azure DevOps wiki rendering. For more information on Markdown syntax, see the [Markdown Guide](https://www.markdownguide.org/basic-syntax/).
 
 #### Examples
 
@@ -573,6 +578,40 @@ The updated environment variable will be reflected in subsequent tasks.
 ##vso[task.prependpath]c:\my\directory\path
 ```
 
+### Debug: Log a debug message
+
+`##vso[task.debug]debug message`
+
+#### Usage
+
+Write a debug-level message to the live log. The message is shown only when [`system.debug`](../build/variables.md) is set to `true` for the run; otherwise the agent records the line in the diagnostic log but suppresses it from the timeline view. Use `task.debug` to add diagnostic context that's available on demand without bloating normal pipeline logs.
+
+#### Example
+
+```
+##vso[task.debug]Resolved package path: $(System.DefaultWorkingDirectory)/build
+```
+
+### SetTaskVariable: Set a variable scoped to the current task
+
+`##vso[task.settaskvariable variable=name;]value`
+
+#### Usage
+
+Set a variable that is visible to subsequent steps in the same task only. Unlike [`task.setvariable`](#setvariable-initialize-or-modify-the-value-of-a-variable), values set with `task.settaskvariable` aren't promoted to job-scoped environment variables and are not available to other tasks in the job.
+
+#### Properties
+
+* `variable` = variable name (Required)
+* `issecret` = `true` to register the value with the secret masker (Optional)
+* `isreadonly` = `true` to mark the variable read-only for later steps in the task (Optional)
+
+#### Example
+
+```
+##vso[task.settaskvariable variable=interimResult;issecret=true]$(generatedToken)
+```
+
 ## Artifact commands
 
 Artifact publishing is not supported in Classic release pipelines.
@@ -580,7 +619,7 @@ Artifact publishing is not supported in Classic release pipelines.
 ### Associate: Initialize an artifact
 
 `##vso[artifact.associate]artifact location`
-                
+
 #### Usage
 
 Create a link to an existing Artifact. Artifact location must be a file container path, VC path or UNC share path.
@@ -659,7 +698,7 @@ Upload user interested log to build's container "`logs\tool`" folder.
 ```
 ##vso[build.uploadlog]c:\msbuild.log
 ```
-        
+
 ### UpdateBuildNumber: Override the automatically generated build number
 
 `##vso[build.updatebuildnumber]build number`
@@ -680,7 +719,7 @@ You can automatically generate a build number from tokens you specify in the [pi
 
 #### Usage
 
-Add a tag for current build. You can expand the tag with a predefined or user-defined variable. For example, here a new tag gets added in a Bash task with the value `last_scanned-$(currentDate)`. You can't use a colon with AddBuildTag. 
+Add a tag for current build. You can expand the tag with a predefined or user-defined variable. For example, here a new tag gets added in a Bash task with the value `last_scanned-$(currentDate)`. You can't use a colon with AddBuildTag.
 
 #### Example
 
