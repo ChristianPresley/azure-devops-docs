@@ -107,7 +107,7 @@ To grant permissions to users or teams for specific pipelines in a DevOps projec
 
 # [YAML](#tab/yaml/)
 
-You create a new pipeline by first selecting a GitHub repository and then a YAML file in that repository. The repository in which the YAML file is present is called `self` repository. By default, this is the repository that your pipeline builds. 
+You create a new pipeline by first selecting a GitHub repository and then a YAML file in that repository. The repository in which the YAML file is present is called `self` repository. By default, this is the repository that your pipeline builds.
 
 You can later configure your pipeline to check out a different repository or multiple repositories. To learn how to do this, see [multi-repo checkout](multi-repo-checkout.md).
 
@@ -145,7 +145,7 @@ Installation of Azure Pipelines GitHub app requires you to be a GitHub organizat
 
 - If the repo is in someone else's personal GitHub account, the other person must install the Azure Pipelines GitHub App in their personal GitHub account. You must be added as a collaborator in the repository's settings under "Collaborators". Accept the invitation to be a collaborator using the link that is emailed to you. Once you’ve done so, you can create a pipeline for that repository.
 
-- If the repo is in a GitHub organization that you own, install the Azure Pipelines GitHub App in the GitHub organization. You must also be added as a collaborator, or your team must be added, in the repository's settings under "Collaborators and teams". 
+- If the repo is in a GitHub organization that you own, install the Azure Pipelines GitHub App in the GitHub organization. You must also be added as a collaborator, or your team must be added, in the repository's settings under "Collaborators and teams".
 
 - If the repo is in a GitHub organization that someone else owns, a GitHub organization owner or repository admin must install the Azure Pipelines GitHub App in the organization. You must be added as a collaborator, or your team must be added, in the repository's settings under "Collaborators and teams". Accept the invitation to be a collaborator using the link that is emailed to you.
 
@@ -197,7 +197,7 @@ To create a pipeline for a GitHub repository with continuous integration and pul
 
 - If the repo is in someone else's personal GitHub account, at least once, the other person must authenticate to GitHub with OAuth using their personal GitHub account credentials. This can be done in Azure DevOps project settings under Pipelines > Service connections > New service connection > GitHub > Authorize. The other person must grant Azure Pipelines access to their repositories under "Permissions" [here](https://github.com/settings/connections/applications/0d4949be3b947c3ce4a5). You must be added as a collaborator in the repository's settings under "Collaborators". Accept the invitation to be a collaborator using the link that is emailed to you.
 
-- If the repo is in a GitHub organization that you own, at least once, authenticate to GitHub with OAuth using your personal GitHub account credentials. This can be done in Azure DevOps project settings under Pipelines > Service connections > New service connection > GitHub > Authorize. Grant Azure Pipelines access to your organization under "Organization access" [here](https://github.com/settings/connections/applications/0d4949be3b947c3ce4a5). You must be added as a collaborator, or your team must be added, in the repository's settings under "Collaborators and teams". 
+- If the repo is in a GitHub organization that you own, at least once, authenticate to GitHub with OAuth using your personal GitHub account credentials. This can be done in Azure DevOps project settings under Pipelines > Service connections > New service connection > GitHub > Authorize. Grant Azure Pipelines access to your organization under "Organization access" [here](https://github.com/settings/connections/applications/0d4949be3b947c3ce4a5). You must be added as a collaborator, or your team must be added, in the repository's settings under "Collaborators and teams".
 
 - If the repo is in a GitHub organization that someone else owns, at least once, a GitHub organization owner must authenticate to GitHub with OAuth using their personal GitHub account credentials. This can be done in Azure DevOps project settings under Pipelines > Service connections > New service connection > GitHub > Authorize. The organization owner must grant Azure Pipelines access to the organization under "Organization access" [here](https://github.com/settings/connections/applications/0d4949be3b947c3ce4a5). You must be added as a collaborator, or your team must be added, in the repository's settings under "Collaborators and teams". Accept the invitation to be a collaborator using the link that is emailed to you.
 
@@ -221,7 +221,7 @@ To create a pipeline for a GitHub repository with continuous integration and pul
 
 - If the repo is in someone else's personal GitHub account, the PAT must have the required access scopes under [Personal access tokens](https://github.com/settings/tokens): `repo`, `admin:repo_hook`, `read:user`, and `user:email`. You must be added as a collaborator in the repository's settings under "Collaborators". Accept the invitation to be a collaborator using the link that is emailed to you.
 
-- If the repo is in a GitHub organization that you own, the PAT must have the required access scopes under [Personal access tokens](https://github.com/settings/tokens): `repo`, `admin:repo_hook`, `read:user`, and `user:email`. You must be added as a collaborator, or your team must be added, in the repository's settings under "Collaborators and teams". 
+- If the repo is in a GitHub organization that you own, the PAT must have the required access scopes under [Personal access tokens](https://github.com/settings/tokens): `repo`, `admin:repo_hook`, `read:user`, and `user:email`. You must be added as a collaborator, or your team must be added, in the repository's settings under "Collaborators and teams".
 
 - If the repo is in a GitHub organization that someone else owns, the PAT must have the required access scopes under [Personal access tokens](https://github.com/settings/tokens): `repo`, `admin:repo_hook`, `read:user`, and `user:email`. You must be added as a collaborator, or your team must be added, in the repository's settings under "Collaborators and teams". Accept the invitation to be a collaborator using the link that is emailed to you.
 
@@ -251,14 +251,7 @@ Continuous integration (CI) triggers cause a pipeline to run whenever you push a
 
 ### Skipping CI for individual commits
 
-You can also tell Azure Pipelines to skip running a pipeline that a push would normally trigger. Just include `[skip ci]` in the message or description of any of the commits that are part of a push, and Azure Pipelines will skip running CI for this push. You can also use any of the following variations.
-
-- `[skip ci]` or `[ci skip]`
-- `skip-checks: true` or `skip-checks:true`
-- `[skip azurepipelines]` or `[azurepipelines skip]`
-- `[skip azpipelines]` or `[azpipelines skip]`
-- `[skip azp]` or `[azp skip]`
-- `***NO_CI***`
+[!INCLUDE [skip-ci-tokens](includes/skip-ci-tokens.md)]
 
 [!INCLUDE [ci-triggers](includes/ci-triggers5.md)]
 
@@ -273,7 +266,7 @@ or when updates are made to such a pull request.
 
 You can specify the target branches when validating your pull requests.
 For example, to validate pull requests that
-target `main` and `releases/*`, you can use the following `pr` trigger. 
+target `main` and `releases/*`, you can use the following `pr` trigger.
 
 ```yaml
 pr:
@@ -286,15 +279,15 @@ This configuration starts a new run the first time a new pull request is created
 You can specify the full name of the branch (for example, `main`) or a wildcard (for example, `releases/*`).
 
 > [!NOTE]
-> You cannot use [variables](../process/variables.md) in triggers, as variables are evaluated at runtime (after the trigger has fired).
+> You cannot use [variables](../variables/index.md) in triggers, as variables are evaluated at runtime (after the trigger has fired).
 
 > [!NOTE]
 > If you use [templates](../process/templates.md) to author YAML files, then you can only specify triggers in the main YAML file for the pipeline. You cannot specify triggers in the template files.
 
 GitHub creates a new _ref_ when a pull request is created. The ref points to a _merge commit_, which is the merged code between the source and target branches of the pull request. The PR validation pipeline builds the commit that this _ref_ points to. This means that the YAML file that is used to run the pipeline is also a merge between the source and the target branch. As a result, the changes you make to the YAML file in source branch of the pull request can override the behavior defined by the YAML file in target branch.
 
-If no `pr` triggers appear in your YAML file, pull request validations are automatically enabled for all 
-branches, as if you wrote the following `pr` trigger. This configuration triggers a build when any 
+If no `pr` triggers appear in your YAML file, pull request validations are automatically enabled for all
+branches, as if you wrote the following `pr` trigger. This configuration triggers a build when any
 pull request is created, and when commits come into the source branch of any active pull request.
 
 ```yaml
@@ -307,7 +300,7 @@ pr:
 >[!IMPORTANT]
 >When you specify a `pr` trigger with a subset of branches, a pipeline is triggered only when updates are pushed to those branches.
 
-For more complex triggers that need to exclude certain branches, you must use the full syntax as shown in the following example. In this example, pull requests are validated that target `main` or `releases/*` and the branch `releases/old*` is excluded. 
+For more complex triggers that need to exclude certain branches, you must use the full syntax as shown in the following example. In this example, pull requests are validated that target `main` or `releases/*` and the branch `releases/old*` is excluded.
 
 ```yaml
 # specific branch
@@ -345,7 +338,7 @@ pr:
 >  * If you exclude a path, you cannot also include it unless you qualify it to a deeper folder. For example if you exclude _/tools_ then you could include _/tools/trigger-runs-on-these_
 >  * The order of path filters doesn't matter.
 >  * Paths in Git *are case-sensitive*. Be sure to use the same case as the real folders.
->  * You cannot use [variables](../process/variables.md) in paths, as variables are evaluated at runtime (after the trigger has fired).
+>  * You cannot use [variables](../variables/index.md) in paths, as variables are evaluated at runtime (after the trigger has fired).
 >  * Azure Pipelines posts a neutral status back to GitHub when it decides not to run a validation build because of a path exclusion rule.
 
 ### Multiple PR updates
@@ -407,7 +400,7 @@ If you have an open PR and you push changes to its source branch, multiple pipel
  - The pipelines that have a PR trigger on the PR's target branch will run on the _merge commit_ (the merged code between the source and target branches of the pull request), regardless if there exist pushed commits whose messages or descriptions contain `[skip ci]` (or any of its variants).
  - The pipelines triggered by changes to the PR's source branch, if there are **no** pushed commits whose messages or descriptions contain `[skip ci]` (or any of its variants). If at least one pushed commit contains `[skip ci]`, the pipelines will not run.
 
- Finally, after you merge the PR, Azure Pipelines will run the CI pipelines triggered by pushes to the target branch, if the merge commit's message or description doesn't contain `[skip ci]` (or any of its variants). 
+ Finally, after you merge the PR, Azure Pipelines will run the CI pipelines triggered by pushes to the target branch, if the merge commit's message or description doesn't contain `[skip ci]` (or any of its variants).
 
 ### Protected branches
 
@@ -463,7 +456,7 @@ By default with GitHub pipelines, secrets associated with your build pipeline ar
 * These items, if your pipeline uses them:
   * [Service connection](../library/service-endpoints.md) credentials
   * Files from the [secure files library](../library/secure-files.md)
-  * Build [variables](../process/variables.md#secret-variables) marked **secret**
+  * Build [variables](../variables/index.md#secret-variables) marked **secret**
 
 To bypass this precaution on GitHub pipelines, enable the **Make secrets available to builds of forks** check box. Be aware of this setting's effect on security.
 
@@ -496,9 +489,9 @@ A GitHub user can fork your repository, change it, and create a pull request to 
 * Leak secrets from your pipeline. To mitigate this risk, don’t enable the **Make secrets available to builds of forks** check box if your repository is public or untrusted users can submit pull requests that automatically trigger builds. This option is disabled by default.
 
 * Compromise the machine running the agent to steal code or secrets from other pipelines. To mitigate this:
-  
+
   * Use a [Microsoft-hosted agent pool](../agents/hosted.md) to build pull requests from forks. Microsoft-hosted agent machines are immediately deleted after they complete a build, so there’s no lasting impact if they're compromised.
-  
+
   * If you must use a [self-hosted agent](../agents/agents.md#install), don’t store any secrets or perform other builds and releases that use secrets on the same agent, unless your repository is private and you trust pull request creators.
 
 ## Comment triggers
@@ -506,12 +499,12 @@ A GitHub user can fork your repository, change it, and create a pull request to 
 Repository collaborators can comment on a pull request to manually run a pipeline. Here are a few common reasons for why you might want to do this:
 
 - You may not want to automatically build pull requests from unknown users until their changes can be reviewed. You want one of your team members to first review their code and then run the pipeline. This is commonly used as a security measure when building contributed code from forked repositories.
-- You may want to run an optional test suite or one more validation build. 
+- You may want to run an optional test suite or one more validation build.
 
 To enable comment triggers, you must follow the following two steps:
 
 1. Enable pull request triggers for your pipeline, and make sure that you didn’t exclude the target branch.
-2. In the Azure Pipelines web portal, edit your pipeline and choose **More actions**, **Triggers**. Then, under **Pull request validation**, enable **Require a team member's comment before building a pull request**. 
+2. In the Azure Pipelines web portal, edit your pipeline and choose **More actions**, **Triggers**. Then, under **Pull request validation**, enable **Require a team member's comment before building a pull request**.
     * Choose **On all pull requests** to require a team member's comment before building a pull request. With this workflow, a team member reviews the pull request and triggers the build with a comment once the pull request is deemed safe.
     * Choose **Only on pull requests from non-team members** to require a team member's comment only when a PR is made by a non-team member. In this workflow, a team member doesn't need a secondary team member's review to trigger a build.
 
@@ -546,7 +539,7 @@ Learn more about [informational runs](../process/information-run.md).
 
 ## Pre-defined variables
 
-When you build a GitHub repository, most of the [predefined variables](../build/variables.md) are available to your jobs. However, since Azure Pipelines doesn’t recognize the identity of a user making an update in GitHub, the following variables are set to system identity instead of user's identity:
+When you build a GitHub repository, most of the [predefined variables](../variables/reference.md) are available to your jobs. However, since Azure Pipelines doesn’t recognize the identity of a user making an update in GitHub, the following variables are set to system identity instead of user's identity:
 
 * `Build.RequestedFor`
 * `Build.RequestedForId`
@@ -556,7 +549,7 @@ When you build a GitHub repository, most of the [predefined variables](../build/
 
 There are two types of statuses that Azure Pipelines posts back to GitHub - basic statuses and GitHub Check Runs. GitHub Checks functionality is only available with GitHub Apps.
 
-Pipeline statuses show up in various places in the GitHub UI. 
+Pipeline statuses show up in various places in the GitHub UI.
 
 * For PRs, they’re displayed on the PR conversations tab.
 * For individual commits, they’re displayed when hovering over the status mark after the commit time on the repo's commits tab.
@@ -599,8 +592,8 @@ Problems related to GitHub integration fall into the following categories:
 
 Troubleshooting problems with triggers very much depends on the type of GitHub connection you use in your pipeline. There are two ways to determine the type of connection - from GitHub and from Azure Pipelines.
 
-* From GitHub: If a repo is set up to use the GitHub app, then the statuses on PRs and commits will be Check Runs. If the repo has Azure Pipelines set up with OAuth or PAT connections, the statuses will be the "old" style of statuses. A quick way to determine if the statuses are Check Runs or simple statuses is to look at the "conversation" tab on a GitHub PR. 
-  * If the "Details" link redirects to the Checks tab, it’s a Check Run and the repo is using the app. 
+* From GitHub: If a repo is set up to use the GitHub app, then the statuses on PRs and commits will be Check Runs. If the repo has Azure Pipelines set up with OAuth or PAT connections, the statuses will be the "old" style of statuses. A quick way to determine if the statuses are Check Runs or simple statuses is to look at the "conversation" tab on a GitHub PR.
+  * If the "Details" link redirects to the Checks tab, it’s a Check Run and the repo is using the app.
   * If the "Details" link redirects to the Azure DevOps pipeline, then the status is an "old style" status and the repo isn’t using the app.
 
 * From Azure Pipelines: You can also determine the type of connection by inspecting the pipeline in Azure Pipelines UI. Open the editor for the pipeline. Select **Triggers** to open the classic editor for the pipeline. Then, select **YAML** tab and then the **Get sources** step. You'll notice a banner **Authorized using connection:** indicating the service connection that was used to integrate the pipeline with GitHub. The name of the service connection is a hyperlink. Select it to navigate to the service connection properties. The properties of the service connection will indicate the type of connection being used:
@@ -634,8 +627,8 @@ Depending on the authentication type and ownership of the repository, specific p
 
 This means that your repository is already associated with a pipeline in a different organization. CI and PR events from this repository won't work as they’ll be delivered to the other organization. Here are the steps you should take to remove the mapping to the other organization before proceeding to create a pipeline.
 
-  1. Open a pull request in your GitHub repository, and make the comment `/azp where`. This reports back the Azure DevOps organization that the repository is mapped to. 
-  
+  1. Open a pull request in your GitHub repository, and make the comment `/azp where`. This reports back the Azure DevOps organization that the repository is mapped to.
+
   2. To change the mapping, uninstall the app from the GitHub organization, and reinstall it. As you reinstall it, make sure to select the correct organization when you’re redirected to Azure DevOps.
 
 ### Failing triggers
@@ -644,8 +637,8 @@ This means that your repository is already associated with a pipeline in a diffe
 
 * Are you using the GitHub app connection to connect the pipeline to GitHub? See [Connection types](#connection-types) to determine the type of connection you have. If you’re using a GitHub app connection, follow these steps:
 
-  * Is the mapping set up properly between GitHub and Azure DevOps? Open a pull request in your GitHub repository, and make the comment `/azp where`. This reports back the Azure DevOps organization that the repository is mapped to. 
-  
+  * Is the mapping set up properly between GitHub and Azure DevOps? Open a pull request in your GitHub repository, and make the comment `/azp where`. This reports back the Azure DevOps organization that the repository is mapped to.
+
     * If no organizations are set up to build this repository using the app, go to `https://github.com/<org_name>/<repo_name>/settings/installations` and complete the configuration of the app.
 
     * If a different Azure DevOps organization is reported, then someone has already established a pipeline for this repo in a different organization. We currently have the limitation that we can only map a GitHub repo to a single DevOps org. Only the pipelines in the first Azure DevOps org can be automatically triggered. To change the mapping, uninstall the app from the GitHub organization, and reinstall it. As you reinstall it, make sure to select the correct organization when you’re redirected to Azure DevOps.
@@ -653,7 +646,7 @@ This means that your repository is already associated with a pipeline in a diffe
 * Are you using OAuth or PAT to connect the pipeline to GitHub? See [Connection types](#connection-types) to determine the type of connection you have. If you’re using a GitHub connection, follow these steps:
 
   1. OAuth and PAT connections rely on webhooks to communicate updates to Azure Pipelines. In GitHub, navigate to the settings for your repository, then to Webhooks. Verify that the webhooks exist. Usually you should see three webhooks - push, pull_request, and issue_comment. If you don't, then you must re-create the service connection and update the pipeline to use the new service connection.
-  
+
   2. Select each of the webhooks in GitHub and verify that the payload that corresponds to the user's commit exists and was sent successfully to Azure DevOps. You may see an error here if the event couldn’t be communicated to Azure DevOps.
 
 * The traffic from Azure DevOps could be throttled by GitHub. When Azure Pipelines receives a notification from GitHub, it tries to contact GitHub and fetch more information about the repo and YAML file. If you have a repo with a large number of updates and pull requests, this call may fail due to such throttling. In this case, see if you can reduce the frequency of builds by using batching or stricter path/branch filters.
