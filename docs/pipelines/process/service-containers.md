@@ -63,7 +63,7 @@ steps:
 
 You can also use service containers in noncontainer jobs. The pipeline starts the latest containers, but because the job doesn't run in a container, there's no automatic name resolution. Instead, you reach services by using `localhost`. The following example pipeline explicitly specifies the `8080:80` port for `nginx`.
 
-An alternative approach is to assign a random port dynamically at runtime. To allow the job to access the port, the pipeline creates a [variable](variables.md) of the form `agent.services.<serviceName>.ports.<port>`. You can access the dynamic port by using this [environment variable](variables.md#environment-variables) in a Bash script.
+An alternative approach is to assign a random port dynamically at runtime. To allow the job to access the port, the pipeline creates a [variable](../variables/index.md) of the form `agent.services.<serviceName>.ports.<port>`. You can access the dynamic port by using this [environment variable](../variables/index.md#environment-variables) in a Bash script.
 
 In the following pipeline, `redis` gets a random available port on the host, and the `agent.services.redis.ports.6379` variable contains the port number.
 
