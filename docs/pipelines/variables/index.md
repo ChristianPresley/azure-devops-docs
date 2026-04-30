@@ -12,7 +12,7 @@ ai-usage: ai-assisted
 
 [!INCLUDE [version-lt-eq-azure-devops](../../includes/version-lt-eq-azure-devops.md)]
 
-Variables provide a convenient way to include key data in various parts of the pipeline. The most common use of variables is to define a value that you can use throughout your pipeline. All variables are strings and are mutable. The value of a variable can change from run to run or job to job in your pipeline.
+Variables provide a convenient way to include key data in various parts of the pipeline. The most common use of variables is to define a value that you can use throughout your pipeline. User-defined variables are strings and are mutable; predefined system variables are read-only, with the exceptions of `Build.Clean` and `System.Debug`. The value of a user-defined variable can change from run to run or job to job in your pipeline.
 
 For a compact comparison of syntax, scope, output variable patterns, secrets, and variable groups, see [Variables quick reference](quick-reference.md).
 
