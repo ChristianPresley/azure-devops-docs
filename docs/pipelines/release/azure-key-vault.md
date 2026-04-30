@@ -12,10 +12,10 @@ ms.custom: devx-track-azurecli, arm2024, sfi-image-nochange
 
 [!INCLUDE [version-lt-eq-azure-devops](../../includes/version-lt-eq-azure-devops.md)]
 
-Azure Key Vault  is a cloud service that helps developers securely store and manage sensitive information such as API keys, credentials, and certificates. 
-Azure Key Vault service supports two types of containers: vaults and managed HSM (Hardware Security Module) pools. Vaults can store both software and HSM-backed keys, secrets, and certificates, while managed HSM pools exclusively support HSM-backed keys. 
+Azure Key Vault  is a cloud service that helps developers securely store and manage sensitive information such as API keys, credentials, and certificates.
+Azure Key Vault service supports two types of containers: vaults and managed HSM (Hardware Security Module) pools. Vaults can store both software and HSM-backed keys, secrets, and certificates, while managed HSM pools exclusively support HSM-backed keys.
 
-In this article, you’ll learn how to create an Azure Key Vault, add a secret, configure access policies, and then use that secret in Azure Pipelines. This tutorial uses a key vault with public network access. If you need to access a private key vault from your pipeline, see [Access a private key vault from your pipeline](key-vault-access.md). To link Azure Key Vault secrets to variable groups, see [Link a variable group to secrets in Azure Key Vault](../library/link-variable-groups-to-key-vaults.md).
+In this article, you’ll learn how to create an Azure Key Vault, add a secret, configure access policies, and then use that secret in Azure Pipelines. This tutorial uses a key vault with public network access. If you need to access a private key vault from your pipeline, see [Access a private key vault from your pipeline](key-vault-access.md). To link Azure Key Vault secrets to variable groups, see [Link a variable group to secrets in Azure Key Vault](../library/variable-groups.md#link-a-variable-group-to-azure-key-vault).
 
 ## Prerequisites
 
@@ -127,25 +127,25 @@ Now that you've created your Azure Key Vault, the next step is to set up authent
 1. Under **Step 1: Managed identity details**, provide the following information:
 
     - **Subscription for managed identity**: Select the subscription that contains your managed identity.
-    
+
     - **Resource group for managed identity**: Select the resource group that hosts your managed identity.
-    
+
     - **Managed Identity**: Select your managed identity from the dropdown list.
 
 1. For **Step 2: Azure Scope**, provide the following information:
 
     - **Scope level for service connection**: Select **Subscription**.
-    
+
     - **Subscription for service connection**: Select the subscription the managed identity will access.
-    
+
     - **Resource group for Service connection**: (Optional) Specify a resource group to limit the managed identity’s access to one resource group.
 
 1. For **Step 3: Service connection details**, provide the following information:
 
     - **Service connection name**: Enter a name for the service connection.
-    
+
     - **Service Management Reference**: (Optional) Context information from an ITSM database.
-    
+
     - **Description**: (Optional) Enter a description.
 
 1. Under **Security**, the **Grant access permission to all pipelines** option allows all pipelines to use this service connection. This option isn't recommended. Instead, [authorize each pipeline individually to use the service connection](../library/service-endpoints.md#authorize-pipelines).
@@ -186,10 +186,10 @@ Follow these steps to grant Reader access at the subscription level:
 
 1. On the **Role** tab, select **Reader**, and then select **Next**.
 
-1. Select **User, group, or service principal**, and then select **Select members**. 
+1. Select **User, group, or service principal**, and then select **Select members**.
 
 1. Paste the *Object ID* of your service principal into the search bar, select it, and then select **Select**.
- 
+
 1. Select **Review + assign**, review the settings, and then select **Review + assign** again to apply the role assignment.
 
 ## Create a service connection
@@ -258,10 +258,10 @@ Follow these steps to grant Reader access at the subscription level:
     ```yml
     trigger:
     - main
-    
+
     pool:
       vmImage: ubuntu-latest
-    
+
     steps:
     - task: AzureKeyVault@2
       displayName: Azure Key Vault
@@ -277,10 +277,10 @@ Follow these steps to grant Reader access at the subscription level:
     ```YAML
     trigger:
     - main
-    
+
     pool:
       vmImage: ubuntu-latest
-    
+
     steps:
     - task: AzureKeyVault@2
       displayName: Azure Key Vault
@@ -289,12 +289,12 @@ Follow these steps to grant Reader access at the subscription level:
         KeyVaultName: 'KEY_VAULT_NAME'
         SecretsFilter: '*'
         RunAsPreJob: false
-    
+
     - task: CmdLine@2
       displayName: Create file
       inputs:
         script: 'echo $(SECRET_NAME) > secret.txt'
-    
+
     - task: CopyFiles@2
       displayName: Copy file
       inputs:
@@ -342,7 +342,7 @@ Follow these steps to grant Reader access at the subscription level:
     :::image type="content" border="false" source="media/delete-tasks.png" alt-text="A screenshot showing how to delete multiple pipeline tasks.":::
 
 1. Select **+** to add a new task. Search for the **Command line** task, select it, and then select **Add**. Configure the task as follows:
-    
+
     - **Display name**: Create file
     - **Script**: `echo $(SECRET_NAME) > secret.txt`
 
@@ -354,11 +354,11 @@ Follow these steps to grant Reader access at the subscription level:
     - **Azure subscription**: Select the service connection you created earlier
     - **Key vault**: Select your Key Vault
     - **Secret filter**: Enter a comma‑separated list of secret names, or use * to download all secrets
-    
+
     :::image type="content" border="false" source="media/azure-key-vault-classic-task-setup.png" alt-text="A screenshot showing how to set up the Azure Key Vault task in classic pipelines.":::
 
 1. Select the **Copy files** task and configure the following fields:
-    
+
     - **Display name**: Copy File
     - **Contents**: secret.txt
     - **Target Folder**: $(build.artifactstagingdirectory)
@@ -371,7 +371,7 @@ Follow these steps to grant Reader access at the subscription level:
     - **Path to publish**: $(build.artifactstagingdirectory)
     - **Artifact name**: drop
     - **Artifact publish location**: Azure Pipelines
-    
+
     :::image type="content" border="false" source="media/publish-artifacts-classic-pipeline.png" alt-text="A screenshot showing how to set up the publish artifacts task in classic pipelines.":::
 
 1. Select **Save and queue**, and then select **Run** to start the pipeline.
