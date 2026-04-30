@@ -23,4 +23,4 @@ See [Create and manage agent pools](../agents/pools-queues.md).
 
 You can fix this issue by adding a trusted root certificate. Either add the `NODE_EXTRA_CA_CERTS=file` environment variable to your build agent, or add the `NODE.EXTRA.CA.CERTS=file` task variable in your pipeline.
 
-For more information about this variable, see [NODE_EXTRA_CA_CERTS=file](https://nodejs.org/api/cli.html#cli_node_extra_ca_certs_file) in the Node.js documentation. For instructions on setting a variable in your pipeline, see [Set variables in a pipeline](../process/variables.md#set-variables-in-pipeline).
+For more information about this variable, see [NODE_EXTRA_CA_CERTS=file](https://nodejs.org/api/cli.html#cli_node_extra_ca_certs_file) in the Node.js documentation. For instructions on setting a variable in your pipeline, see [Set variables in a pipeline](../variables/index.md#set-variables-in-pipeline).
