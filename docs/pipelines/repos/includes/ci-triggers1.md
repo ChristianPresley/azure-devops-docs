@@ -23,7 +23,7 @@ You can specify the full name of the branch (for example, `main`) or a wildcard 
 See [Wildcards](#wildcards) for information on the wildcard syntax.
 
 > [!NOTE]
-> You cannot use [variables](../../process/variables.md) in triggers, as variables are evaluated at runtime (after the trigger has fired).
+> You cannot use [variables](../../variables/index.md) in triggers, as variables are evaluated at runtime (after the trigger has fired).
 
 > [!NOTE]
 > If you use [templates](../../process/templates.md) to author YAML files, then you can only specify triggers in the main YAML file for the pipeline. You cannot specify triggers in the template files.
@@ -41,7 +41,7 @@ trigger:
     - releases/old*
 ```
 
-In the above example, the pipeline will be triggered if a change is pushed to `main` or to any releases branch. However, it won't be triggered if a change is made to a releases branch that starts with `old`. 
+In the above example, the pipeline will be triggered if a change is pushed to `main` or to any releases branch. However, it won't be triggered if a change is made to a releases branch that starts with `old`.
 
 If you specify an `exclude` clause without an `include` clause, then it is equivalent to specifying `*` in the `include` clause.
 
@@ -85,7 +85,7 @@ trigger:
 > [!NOTE]
 > `batch` is not supported in repository resource triggers.
 
-To clarify this example, let us say that a push `A` to `main` caused the above pipeline to run. While that pipeline is running, additional pushes `B` and `C` occur into the repository. These updates do not start new independent runs immediately. But after the first run is completed, all pushes until that point of time are batched together and a new run is started. 
+To clarify this example, let us say that a push `A` to `main` caused the above pipeline to run. While that pipeline is running, additional pushes `B` and `C` occur into the repository. These updates do not start new independent runs immediately. But after the first run is completed, all pushes until that point of time are batched together and a new run is started.
 
 >[!NOTE]
 > If the pipeline has multiple jobs and stages, then the first run should still reach a terminal state by completing or skipping all its jobs and stages before the second run can start. For this reason, you must exercise caution when using this feature in a pipeline with multiple stages or approvals. If you wish to batch your builds in such cases, it is recommended that you split your CI/CD process into two pipelines - one for build (with batching) and one for deployments.
@@ -123,4 +123,4 @@ Wildcards are supported for path filters. For instance, you can include all path
 * If you exclude a path, you cannot also include it unless you qualify it to a deeper folder. For example if you exclude _/tools_ then you could include _/tools/trigger-runs-on-these_
 * The order of path filters doesn't matter.
 * Paths in Git *are case-sensitive*. Be sure to use the same case as the real folders.
-* You cannot use [variables](../../process/variables.md) in paths, as variables are evaluated at runtime (after the trigger has fired).
+* You cannot use [variables](../../variables/index.md) in paths, as variables are evaluated at runtime (after the trigger has fired).
