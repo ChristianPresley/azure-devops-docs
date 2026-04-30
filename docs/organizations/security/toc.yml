@@ -184,7 +184,7 @@
     href: about-security-roles.md
   - name: Set pipeline permissions
     displayName: access, user, group, security
-    href: ../../pipelines/policies/set-permissions.md?toc=/azure/devops/organizations/security/toc.json
+    href: ../../pipelines/policies/permissions.md?toc=/azure/devops/organizations/security/toc.json
   - name: Pipelines security walkthrough
     displayName: about, overview, access, permissions
     href: ../../pipelines/security/overview.md?toc=/azure/devops/organizations/security/toc.json
