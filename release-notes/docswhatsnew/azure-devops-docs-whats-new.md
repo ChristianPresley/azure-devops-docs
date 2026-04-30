@@ -177,7 +177,7 @@ Welcome to what's new in the Azure DevOps docs from March 1, 2026 through March 
 - [Customize your pipeline](/azure/devops/pipelines/customize-pipeline)
 - [Key Azure Pipelines concepts](/azure/devops/pipelines/get-started/key-pipelines-concepts)
 - [Logging commands](/azure/devops/pipelines/scripts/logging-commands)
-- [Define variables](/azure/devops/pipelines/process/variables)
+- [Define variables](/azure/devops/pipelines/variables/index)
 - [Check out multiple repositories in your pipeline](/azure/devops/pipelines/repos/multi-repo-checkout)
 
 ## Azure Repos
