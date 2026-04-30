@@ -100,7 +100,7 @@ You can define pipelines by using [YAML-based](yaml-pipeline-editor.md) or [Clas
 
 A [release](../release/releases.md) is a versioned set of artifacts specified in a Classic pipeline. The release includes a snapshot of all the information needed to run the release pipeline, such as stages, tasks, triggers, approval policies, and deployment options. You can create a release manually, with a deployment trigger, or with the REST API.
 
-In YAML pipelines, the build and release stages are all included in the [multistage pipeline definition](multi-stage-pipelines-experience.md).
+In YAML pipelines, the build and release stages are all included in the [multistage pipeline definition](../process/stages.md).
 
 ### Runs
 
