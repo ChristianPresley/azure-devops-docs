@@ -20,4 +20,4 @@ In the **Label format** you can use user-defined and predefined variables that h
 $(Build.DefinitionName)_$(Build.DefinitionVersion)_$(Build.BuildId)_$(Build.BuildNumber)_$(My.Variable)
 ```
 
-The first four variables are predefined. `My.Variable` can be defined by you on the [variables tab](../../build/variables.md).
+The first four variables are predefined. `My.Variable` can be defined by you on the [variables tab](../../variables/reference.md).
