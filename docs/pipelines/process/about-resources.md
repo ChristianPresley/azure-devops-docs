@@ -27,7 +27,7 @@ Resources offer the following benefits:
 
 Share resources across pipelines by configuring them within the pipelines UI. Then, reference those resources in a task. You can also access some shared resources by using the [`resources` YAML pipeline syntax](resources.md).
 
-Examples of sharing resources with the pipelines UI include [secure files](../library/secure-files.md), [variable groups](../library/variable-groups.md), and [service connections](../../extend/develop/service-endpoints.md). Examples of sharing resources by using the `resources` syntax include accessing pipelines themselves, repositories, and packages.  
+Examples of sharing resources with the pipelines UI include [secure files](../library/secure-files.md), [variable groups](../library/variable-groups.md), and [service connections](../../extend/develop/service-endpoints.md). Examples of sharing resources by using the `resources` syntax include accessing pipelines themselves, repositories, and packages.
 
 How you use a resource in a pipeline depends on the type of pipeline and type of resource.
 
@@ -44,7 +44,7 @@ For example, to use variable groups in a pipeline, add your variables at **Pipel
 ```yml
 variables:
 - group: my-variable-group
-``` 
+```
 
 To call a second pipeline from your pipeline by using the `resources` syntax, reference `pipelines`.
 
@@ -57,7 +57,7 @@ resources:
 
 #### [Classic](#tab/classic)
 
-You can reference [service connections](../library/service-endpoints.md), [variable groups](../library/variable-groups.md), and [secure files](../library/secure-files.md) by using the classic editor. For example, the `Deploy Azure App Service` task in the following section uses the `MyAzureApp` service connection as an input. 
+You can reference [service connections](../library/service-endpoints.md), [variable groups](../library/variable-groups.md), and [secure files](../library/secure-files.md) by using the classic editor. For example, the `Deploy Azure App Service` task in the following section uses the `MyAzureApp` service connection as an input.
 
 :::image type="content" source="../library/media/ui-connection-setting.png" alt-text="Screenshot of service connection selection in the classic editor.":::
 
@@ -103,8 +103,8 @@ For Classic release pipelines, [deployment groups](../release/deployment-groups/
 
 ## Related articles
 
-* [Define variables](variables.md)
-* [Add and use variable groups](../scripts/cli/pipeline-variable-group-secret-nonsecret-variables.md)
+* [Define variables](../variables/index.md)
+* [Add and use variable groups](../library/variable-groups.md#manage-variables-in-variable-groups)
 * [Use secure files](../library/secure-files.md)
 * [Library for Azure Pipelines](../library/index.md)
 * [Service connections](../library/service-endpoints.md)
