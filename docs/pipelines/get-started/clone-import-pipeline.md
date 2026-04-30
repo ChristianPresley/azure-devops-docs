@@ -20,7 +20,7 @@ For Classic pipelines, if the source pipeline is in the same project as your new
 
 :::moniker range="azure-devops"
 
-To migrate a Classic build pipeline to a YAML pipeline by using **Export to YAML**, see [Migrate from Classic pipelines](../migrate/from-classic-pipelines.md).
+To migrate a Classic build pipeline to a YAML pipeline by using **Export to YAML**, see [Migrate from Classic pipelines](../release/from-classic-pipelines.md).
 
 :::moniker-end
 
