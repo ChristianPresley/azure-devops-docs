@@ -22,7 +22,7 @@ Azure Pipelines supports a wide range of repositories, services, and CI/CD platf
 
 :::image type="content" source="media/classic-release-pipeline-add-artifact-souce.png" alt-text="A screenshot that shows how to add an artifact to a classic release pipeline.":::
 
-If you link multiple artifacts, you can specify which one is the primary source (default). The primary artifact source is used to set several predefined [variables](variables.md#release-artifacts-variables) and can also be used for naming releases.
+If you link multiple artifacts, you can specify which one is the primary source (default). The primary artifact source is used to set several predefined [variables](../variables/reference.md#release-artifacts-variables) and can also be used for naming releases.
 
 :::image type="content" source="media/classic-release-pipeline-set-primary-souce.png" alt-text="A screenshot that shows how to set a primary source artifact.":::
 
@@ -30,7 +30,7 @@ The **Default version** dropdown options depend on the source type of the linked
 
 The following sections describe how to work with the different types of artifact sources:
 
->[!div class="checklist"]  
+>[!div class="checklist"]
 > - [Azure Pipelines](#azure-pipelines)
 > - [Azure Repos, GitHub, and TFVC](#azure-repos-github-and-tfvc)
 > - [Azure Artifacts](#azure-artifacts)
@@ -47,7 +47,7 @@ You can link your Classic release pipeline to any pipeline artifact. Additionall
 | Feature | Description                      |
 |---------|----------------------------------|
 | Auto-trigger releases | New releases can be created automatically when a new artifact is available (including XAML builds). See [Classic release triggers](triggers.md) for more details.|
-| Artifact variables | A number of [artifact variables](variables.md#release-artifacts-variables) are supported for artifacts referenced in a Classic release. |
+| Artifact variables | A number of [artifact variables](../variables/reference.md#release-artifacts-variables) are supported for artifacts referenced in a Classic release. |
 | Work items and commits | Link work items to see them displayed in the release details. Commits will be shown when using Git or TFVC.|
 | [Artifact download](#artifact-download) | By default, pipeline artifacts are downloaded to the agent running the pipeline. You can also configure a step in your stage to [skip downloading](/azure/devops/pipelines/yaml-schema/steps-download) the artifact if needed. |
 | Deployment stages | The pipeline summary lists all the deployment stages where the artifact has been deployed. |
@@ -85,7 +85,7 @@ By default, releases run with an organization-level job authorization scope, all
 
     :::image type="content" source="media/authorization-scope-project-level.png" alt-text="A screenshot that shows how to set the job authorization scope for a project.":::
 
-> [!NOTE] 
+> [!NOTE]
 > If the scope is set at the organization level, it can't be changed individually in each project.
 
 ::: moniker-end
@@ -120,7 +120,7 @@ The following features are available when using Azure Repos, Git, and TFVC as an
 | Feature | Description                      |
 |---------|----------------------------------|
 | Auto-trigger releases | New releases can be created automatically when a new artifact is available (including XAML builds). See [Release triggers](triggers.md) for more details.|
-| Artifact variables | A number of [artifact variables](variables.md#release-artifacts-variables) are supported for artifacts referenced in a Classic release. |
+| Artifact variables | A number of [artifact variables](../variables/reference.md#release-artifacts-variables) are supported for artifacts referenced in a Classic release. |
 | Work items and commits | Link work items to see them displayed in the release details. Commits will be shown when using Git or TFVC.|
 | [Artifact download](#artifact-download) | By default, pipeline artifacts are downloaded to the agent running the pipeline. You can also configure a step in your stage to [skip downloading](/azure/devops/pipelines/yaml-schema/steps-download) the artifact if needed. |
 
@@ -153,7 +153,7 @@ The following features are available when using Azure Artifacts as an artifact s
 | Feature | Description                      |
 |---------|----------------------------------|
 | Auto-trigger releases | New releases can be created automatically when a new artifact is available (including XAML builds). See [Release triggers](triggers.md) for more details.|
-| Artifact variables | A number of [artifact variables](variables.md#release-artifacts-variables) are supported for artifacts referenced in a Classic release. |
+| Artifact variables | A number of [artifact variables](../variables/reference.md#release-artifacts-variables) are supported for artifacts referenced in a Classic release. |
 | Work items and commits | Link work items to see them displayed in the release details. Commits will be shown when using Git or TFVC.|
 | [Artifact download](#artifact-download) | By default, pipeline artifacts are downloaded to the agent running the pipeline. You can also configure a step in your stage to [skip downloading](/azure/devops/pipelines/yaml-schema/steps-download) the artifact if needed. |
 
@@ -179,7 +179,7 @@ The following features are available when using Azure Container Repository or Do
 | Feature | Description                      |
 |---------|----------------------------------|
 | Auto-trigger releases | New releases can be created automatically when a new artifact is available (including XAML builds). See [Release triggers](triggers.md) for more details.|
-| Artifact variables | A number of [artifact variables](variables.md#release-artifacts-variables) are supported for artifacts referenced in a Classic release. |
+| Artifact variables | A number of [artifact variables](../variables/reference.md#release-artifacts-variables) are supported for artifacts referenced in a Classic release. |
 | Work items and commits | Link work items to see them displayed in the release details. Commits will be shown when using Git or TFVC.|
 | [Artifact download](#artifact-download) | By default, pipeline artifacts are downloaded to the agent running the pipeline. You can also configure a step in your stage to [skip downloading](/azure/devops/pipelines/yaml-schema/steps-download) the artifact if needed. |
 
@@ -194,7 +194,7 @@ The following features are available when using Jenkins as an artifact source:
 | Feature | Description                      |
 |---------|----------------------------------|
 | Auto-trigger releases | New releases can be created automatically when a new artifact is available (including XAML builds). See [Release triggers](triggers.md) for more details.|
-| Artifact variables | A number of [artifact variables](variables.md#release-artifacts-variables) are supported for artifacts referenced in a Classic release. |
+| Artifact variables | A number of [artifact variables](../variables/reference.md#release-artifacts-variables) are supported for artifacts referenced in a Classic release. |
 | Work items and commits | Link work items to see them displayed in the release details. Commits will be shown when using Git or TFVC.|
 | [Artifact download](#artifact-download) | By default, pipeline artifacts are downloaded to the agent running the pipeline. You can also configure a step in your stage to [skip downloading](/azure/devops/pipelines/yaml-schema/steps-download) the artifact if needed. |
 
@@ -237,4 +237,4 @@ To skip automatic artifact downloads, navigate to your **Release pipeline** > **
 
 - [Deploy from multiple branches](deploy-multiple-branches.md)
 - [Publish and download pipeline Artifacts](../artifacts/pipeline-artifacts.md)
-- [Artifacts variables](variables.md)
+- [Artifacts variables](../variables/reference.md)
