@@ -56,7 +56,7 @@ A: Build artifacts are files produced during the build process. See [Build Artif
 
 #### Q: Can I delete pipeline artifacts when rerunning failed jobs?
 
-A: Pipeline artifacts cannot be deleted or overwritten. To regenerate artifacts when rerunning a failed job, include the job ID in the artifact name using the variable `$(System.JobId)`. See [System variables](../build/variables.md#system-variables) to learn more about predefined variables.
+A: Pipeline artifacts cannot be deleted or overwritten. To regenerate artifacts when rerunning a failed job, include the job ID in the artifact name using the variable `$(System.JobId)`. See [System variables](../variables/reference.md#system-variables) to learn more about predefined variables.
 
 #### Q: How can I access Artifacts feeds behind a firewall?
 
