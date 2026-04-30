@@ -14,7 +14,7 @@ monikerRange: '<= azure-devops'
 
 This article describes the different conditions that allow an Azure Pipelines stage, job, or step to run, and how to set those conditions in a YAML pipeline definition.
 
-For help choosing variable syntax and output variable patterns for conditions, see [Variables quick reference](variables-quick-reference.md) and [Expressions](expressions.md#dependencies).
+For help choosing variable syntax and output variable patterns for conditions, see [Variables quick reference](../variables/quick-reference.md) and [Expressions](expressions.md#dependencies).
 
 > [!NOTE]
 > This article discusses YAML pipeline capabilities. For Classic pipelines, you can specify some conditions under which tasks or jobs run in the **Control Options** of each task, and in the **Additional options** for a job in a release pipeline.
@@ -48,7 +48,7 @@ jobs:
     condition: always() # this step runs even if the build is canceled
   - script: |
       echo "This task will fail."
-      exit job1 
+      exit job1
 - job: job2
   dependsOn: job1
   condition: failed() # this job runs only if job1 fails
@@ -105,7 +105,7 @@ jobs:
 
 ### Job output variables used in other job conditions
 
-You can create a variable in a job that other jobs in the same stage can specify in conditions. Variables available to dependent jobs must be marked as [multi-job output variables](variables.md#set-a-multi-job-output-variable) by using `isOutput=true`, as in the following code:
+You can create a variable in a job that other jobs in the same stage can specify in conditions. Variables available to dependent jobs must be marked as [multi-job output variables](../variables/index.md#set-a-multi-job-output-variable) by using `isOutput=true`, as in the following code:
 
 ```yaml
 jobs:
@@ -128,8 +128,8 @@ You can create a variable in a step that future steps in the same job can specif
 
 Variables created in a step in a job have the following limitations:
 
-- Are [scoped](variables.md#set-a-job-scoped-variable-from-a-script) to the steps in the same job.
-- Are available in subsequent steps only as [environment variables](variables.md#environment-variables).
+- Are [scoped](../variables/index.md#set-a-job-scoped-variable-from-a-script) to the steps in the same job.
+- Are available in subsequent steps only as [environment variables](../variables/index.md#environment-variables).
 - Can't be used in the same step that defines them.
 
 The following example creates a pipeline variable in a step and uses the variable in a later step's script condition.
@@ -262,7 +262,7 @@ jobs:
   steps:
   - script: sleep 30
 - job: B
-  dependsOn: A 
+  dependsOn: A
   condition: eq(variables['Build.SourceBranch'], 'refs/heads/main')
   steps:
     - script: echo step 2.1
@@ -272,7 +272,7 @@ If you want job `B` to run only when job `A` succeeds and the build source is `m
 
 #### Job example 2
 
-In the following YAML pipeline, job `B` depends on job `A` succeeding. Job `B` has a `condition` set to run whenever job `A` succeeds and the build source branch is `main`. 
+In the following YAML pipeline, job `B` depends on job `A` succeeding. Job `B` has a `condition` set to run whenever job `A` succeeds and the build source branch is `main`.
 
 If you queue a build on the `main` branch and cancel it while job `A` is running, job `B` doesn't run, even though it has one `condition` that evaluates to `true`. The condition on job `B` evaluates to `false` because job `A` didn't succeed. Therefore, job `B` and its steps are skipped.
 
@@ -282,7 +282,7 @@ jobs:
   steps:
   - script: sleep 30
 - job: B
-  dependsOn: A 
+  dependsOn: A
   steps:
     - script: echo step 2.1
   condition: and(eq(variables['Build.SourceBranch'], 'refs/heads/main'), succeeded())
@@ -356,7 +356,7 @@ For more template parameter examples, see the [Template usage reference](templat
 
 <!-- BEGINSECTION class="md-qanda" -->
 
-### How can I trigger a job if a previous job succeeded with issues? 
+### How can I trigger a job if a previous job succeeded with issues?
 
 You can use the result of the previous job in a condition. In the following YAML, the condition `eq(dependencies.A.result,'SucceededWithIssues')` sets job `B` to run after job `A` succeeded with issues.
 
@@ -367,7 +367,7 @@ jobs:
   - script: echo Job A ran
 - job: B
   dependsOn: A
-  condition: eq(dependencies.A.result,'SucceededWithIssues') # targets the result of the previous job 
+  condition: eq(dependencies.A.result,'SucceededWithIssues') # targets the result of the previous job
   steps:
   - script: echo Job A had issues
 ```
@@ -380,6 +380,6 @@ You can experience this issue if a condition configured in a stage doesn't inclu
 
 ## Related content
 
-- [Specify jobs in your pipeline](phases.md)  
+- [Specify jobs in your pipeline](phases.md)
 - [Add stages, dependencies, and conditions](stages.md)
 - [Use template parameters](template-parameters.md)
