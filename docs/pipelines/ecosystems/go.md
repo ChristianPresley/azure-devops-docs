@@ -81,7 +81,7 @@ pool:
 steps: 
 - task: GoTool@0
   inputs:
-    version: '1.22'  # Use a currently supported Go version
+    version: '1.23'  # Use a currently supported Go version
 - task: Go@0
   inputs:
     command: 'get'
