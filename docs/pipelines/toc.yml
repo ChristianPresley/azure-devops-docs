@@ -384,6 +384,9 @@
     - name: Define variables
       displayName: secrets, expressions, queue time, expansion,system, environment variables, macro syntax, template syntax
       href: variables/index.md
+    - name: Use variables in template expressions
+      displayName: compile time, scope, predefined variables, ${{ variables }}, document order, stage, job
+      href: variables/template-expressions.md
     - name: Variables reference
       displayName: build variables, agent variables, pipeline variables, system variables, release variables, classic release variables, artifacts variables
       href: variables/reference.md
