@@ -123,7 +123,7 @@ use the following steps.
 
 Specify the `parallel` strategy in the `job` and indicate how many jobs should be dispatched. You can specify as many as 99 agents to scale up testing for large test suites.
 
-```YAML
+```yaml
 jobs:
 - job: ParallelTesting
   strategy:

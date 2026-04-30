@@ -137,7 +137,7 @@ To evaluate whether TIA is selecting the appropriate tests:
 
 TIA uses dependency maps of the following form.
 
-``` map
+``` text
 TestMethod1
   dependency1
   dependency2
