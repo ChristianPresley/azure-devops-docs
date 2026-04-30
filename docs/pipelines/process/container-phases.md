@@ -57,13 +57,13 @@ The following example defines a Windows or Linux single-job container.
 
 ### [Linux](#tab/linux)
 
-This example tells the system to fetch the `ubuntu` image tagged `18.04` from [Docker Hub](https://hub.docker.com) and then start the container. The `printenv` command runs inside the `ubuntu:18.04` container.
+This example tells the system to fetch the `ubuntu` image tagged `24.04` from [Docker Hub](https://hub.docker.com) and then start the container. The `printenv` command runs inside the `ubuntu:24.04` container.
 
 ```yaml
 pool:
   vmImage: 'ubuntu-latest'
 
-container: ubuntu:18.04
+container: ubuntu:24.04
 
 steps:
 - script: printenv
@@ -71,13 +71,13 @@ steps:
 
 ### [Windows](#tab/windows)
 
-For Windows, the kernel version of the host and container must match. Since the following example uses a Windows 2019 host image, it uses the `2019` tag for the container.
+For Windows, the kernel version of the host and container must match. Since the following example uses a Windows 2022 host image, it uses the `ltsc2022` tag for the container.
 
 ```yaml
 pool:
-  vmImage: 'windows-2019'
+  vmImage: 'windows-2022'
 
-container: mcr.microsoft.com/windows/servercore:ltsc2019
+container: mcr.microsoft.com/windows/servercore:ltsc2022
 
 steps:
 - script: set
@@ -95,12 +95,10 @@ pool:
 
 strategy:
   matrix:
-    ubuntu16:
-      containerImage: ubuntu:16.04
-    ubuntu18:
-      containerImage: ubuntu:18.04
-    ubuntu20:
-      containerImage: ubuntu:20.04
+    ubuntu22:
+      containerImage: ubuntu:22.04
+    ubuntu24:
+      containerImage: ubuntu:24.04
 
 container: $[ variables['containerImage'] ]
 
@@ -127,7 +125,7 @@ You can use the `options` property to specify options for container startup.
 
 ```yaml
 container:
-  image: ubuntu:18.04
+  image: ubuntu:24.04
   options: --hostname container-test --ip 192.168.0.1
 
 steps:
@@ -145,14 +143,11 @@ The following YAML example defines the containers in the `resources` section, an
 ```yaml
 resources:
   containers:
-  - container: u16
-    image: ubuntu:16.04
+  - container: u22
+    image: ubuntu:22.04
 
-  - container: u18
-    image: ubuntu:18.04
-
-  - container: u20
-    image: ubuntu:20.04
+  - container: u24
+    image: ubuntu:24.04
 
 jobs:
 - job: RunInContainer
@@ -161,12 +156,10 @@ jobs:
 
   strategy:
     matrix:
-      ubuntu16:
-        containerResource: u16
-      ubuntu18:
-        containerResource: u18
-      ubuntu20:
-        containerResource: u20
+      ubuntu22:
+        containerResource: u22
+      ubuntu24:
+        containerResource: u24
 
   container: $[ variables['containerResource'] ]
 
@@ -182,7 +175,7 @@ Private Docker Hub connection:
 
 ```yaml
 container:
-  image: registry:ubuntu1804
+  image: registry:ubuntu2404
   endpoint: private_dockerhub_connection
 ```
 
