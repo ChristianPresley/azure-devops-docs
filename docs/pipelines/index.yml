@@ -1,227 +1,232 @@
 ### YamlMime:Landing
 
 title: Azure Pipelines documentation
-summary: Implement continuous integration and continuous delivery (CI/CD) for the app and platform of your choice.
+summary: Administer, secure, author, and operate continuous integration and continuous delivery (CI/CD) with Azure Pipelines.
 
 metadata:
   title: Azure Pipelines documentation
   titleSuffix: Azure DevOps
-  description: Configure and manage continuous integration and continuous delivery (CI/CD) for the app and platform of your choice.
+  description: Administer, secure, author, and operate CI/CD pipelines with Azure Pipelines.
   ms.assetid: 00f4ed452-fbb8-45f9-8f0a-343702aac5b8
   ms.topic: landing-page
   author: steved0x
   ms.author: sdanie
-  ms.date: 09/27/2021
+  ms.date: 04/29/2026
 
 # linkListType: architecture | concept | deploy | download | get-started | how-to-guide | learn | overview | quickstart | reference | tutorial | video | whats-new
 
 landingContent:
-# Cards and links should be based on top customer tasks or top subjects
-# Start card title with a verb
-  # Card (optional)
   - title: Get started
     linkLists:
-      - linkListType: concept
+      - linkListType: overview
         links:
           - text: What is Azure Pipelines?
             url: ./get-started/what-is-azure-pipelines.md
-          - text: Use Azure Pipelines
-            url: ./get-started/pipelines-get-started.md
-          - text: Key concepts for user new to Azure Pipelines
+          - text: Key concepts for Azure Pipelines
             url: ./get-started/key-pipelines-concepts.md
-          - text: Classic release pipelines
-            url: ./release/index.md
+          - text: YAML vs Classic pipelines
+            url: ./get-started/pipelines-get-started.md
       - linkListType: quickstart
         links:
-          - text: Sign up for free
+          - text: Sign up for Azure Pipelines
             url: ./get-started/pipelines-sign-up.md
           - text: Create your first pipeline
-            url: create-first-pipeline.md
-          - text: Clone or import a pipeline
-            url: ./get-started/clone-import-pipeline.md
+            url: ./create-first-pipeline.md
           - text: Customize your pipeline
-            url: customize-pipeline.md
-  - title: Build, deploy, test-any language, any ecosystem
+            url: ./customize-pipeline.md
+          - text: Build a pipeline with stages
+            url: ./process/run-stages.md
+  - title: Administer and govern
     linkLists:
-      - linkListType: tutorial
+      - linkListType: overview
         links:
-          - text: Container image
-            url: ./ecosystems/containers/build-image.md
-          - text: .NET Core apps
-            url: ./ecosystems/dotnet-core.md
-          - text: Anaconda
-            url: ./ecosystems/anaconda.md
-          - text: Android
-            url: ./ecosystems/android.md
-          - text: Azure Kubernetes Service
-            url: ./ecosystems/kubernetes/aks-template.md
-          - text: Java
-            url: ./ecosystems/java.md
-          - text: JavaScript & Node.js apps
-            url: ./ecosystems/javascript.md
-          - text: Python apps
-            url: ./ecosystems/python.md
-          - text: PHP
-            url: ./ecosystems/php.md
-          - text: "See more >"
-            url: ./ecosystems/ecosystems.md
-  - title: Key concepts
+          - text: Administration overview
+            url: ./admin/index.md
+      - linkListType: how-to-guide
+        links:
+          - text: Configure and pay for parallel jobs
+            url: ./licensing/concurrent-jobs.md
+          - text: Create and manage agent pools
+            url: ./agents/pools-queues.md
+          - text: Manage pipeline permissions
+            url: ./policies/permissions.md
+          - text: Set retention policies
+            url: ./policies/retention.md
+          - text: Define approvals and checks
+            url: ./process/approvals.md
+  - title: Manage agents and capacity
     linkLists:
       - linkListType: concept
         links:
-          - text: Agents
+          - text: Azure Pipelines agents
             url: ./agents/agents.md
-          - text: Conditions
-            url: ./process/conditions.md
-          - text: Expressions
-            url: ./process/expressions.md
-          - text: Environments
+          - text: Microsoft-hosted agents
+            url: ./agents/hosted.md
+          - text: Self-hosted Linux agents
+            url: ./agents/linux-agent.md
+          - text: Self-hosted Windows agents
+            url: ./agents/windows-agent.md
+          - text: Self-hosted macOS agents
+            url: ./agents/osx-agent.md
+          - text: Scale set agents
+            url: ./agents/scale-set-agents.md
+      - linkListType: how-to-guide
+        links:
+          - text: View agent pool consumption
+            url: ./agents/pool-consumption-report.md
+          - text: Register an agent with a personal access token
+            url: ./agents/personal-access-token-agent-registration.md
+  - title: Configure service connections and resources
+    linkLists:
+      - linkListType: how-to-guide
+        links:
+          - text: Manage service connections
+            url: ./library/service-endpoints.md
+          - text: Connect to Azure with an Azure Resource Manager service connection
+            url: ./library/connect-to-azure.md
+          - text: Access Azure DevOps with Microsoft Entra workload identity
+            url: ./library/add-devops-entra-service-connection.md
+          - text: Manage variable groups
+            url: ./library/variable-groups.md
+          - text: Use secure files
+            url: ./library/secure-files.md
+          - text: Define and target environments
             url: ./process/environments.md
-          - text: Jobs
-            url: ./process/phases.md
-          - text: Runtime parameters
-            url: ./process/runtime-parameters.md
-          - text: Stages
+  - title: Secure pipelines
+    linkLists:
+      - linkListType: how-to-guide
+        links:
+          - text: Secure Azure Pipelines
+            url: ./security/overview.md
+          - text: Approach to securing YAML pipelines
+            url: ./security/approach.md
+          - text: Secure access to Azure repositories from pipelines
+            url: ./security/secure-access-to-repos.md
+          - text: Protect secrets
+            url: ./security/secrets.md
+          - text: Use security through templates
+            url: ./security/templates.md
+          - text: Manage job access tokens
+            url: ./process/access-tokens.md
+  - title: Author YAML pipelines
+    linkLists:
+      - linkListType: concept
+        links:
+          - text: Supported repositories
+            url: ./repos/index.md
+          - text: Stages, jobs, and steps
             url: ./process/stages.md
-          - text: Tasks
-            url: ./process/tasks.md
           - text: Templates
             url: ./process/templates.md
+          - text: Variables
+            url: ./variables/index.md
+          - text: Conditions
+            url: ./process/conditions.md
           - text: Triggers
             url: ./build/triggers.md
-  - title: Reference guidance
-    linkLists:
       - linkListType: reference
         links:
           - text: YAML schema
             url: /azure/devops/pipelines/yaml-schema/
-          - text: Predefined variables
-            url: ./variables/reference.md
-          - text: Classic release and artifacts variables
-            url: ./variables/reference.md#classic-release-variables
-          - text: Variable groups
-            url: ./library/variable-groups.md
           - text: Task index
-            url: ./tasks/index.md
-  - title: Build any repository
+            url: /azure/devops/pipelines/tasks/reference/
+  - title: Build and package
     linkLists:
       - linkListType: how-to-guide
         links:
-          - text: GitHub
-            url: ./repos/github.md
-          - text: Azure Repos Git
-            url: ./repos/azure-repos-git.md
-          - text: Team Foundation version control
-            url: ./repos/tfvc.md
-          - text: Bitbucket Cloud
-            url: ./repos/pipeline-options-for-git.md
-          - text: Subversion
-            url: ./repos/pipeline-options-for-git.md
-          - text: Generic Git
-            url: ./repos/pipeline-options-for-git.md
-      - linkListType: tutorial
-        links:
-          - text: Build multiple Git branches
+          - text: Build multiple branches
             url: ./build/ci-build-git.md
-  - title: Deploy to Azure
-    linkLists:
-      - linkListType: overview
-        links:
-          - text: Deploy to Azure
-            url: overview-azure.md
-      - linkListType: tutorial
-        links:
-          - text: Connect to Azure
-            url: ./library/connect-to-azure.md
-          - text: Deploy to Azure SQL Database
-            url: ./targets/azure-sqldb.md
-          - text: Deploy to Azure Kubernetes Service
-            url: ./ecosystems/kubernetes/aks-template.md
-          - text: Use secrets from Azure Key Vault
-            url: ./release/azure-key-vault.md
-  - title: Manage agents & self-hosted agents
+          - text: Configure build run numbers
+            url: ./process/run-number.md
+          - text: Reduce build time using caching
+            url: ./release/caching.md
+          - text: Publish and download pipeline artifacts
+            url: ./artifacts/pipeline-artifacts.md
+          - text: Publish and download build artifacts
+            url: ./artifacts/build-artifacts.md
+          - text: Artifacts in Azure Pipelines
+            url: ./artifacts/artifacts-overview.md
+  - title: Test and analyze
     linkLists:
       - linkListType: how-to-guide
         links:
-          - text: Deploy on Windows
-            url: ./agents/v2-windows.md
-          - text: Microsoft-hosted agents
-            url: ./agents/hosted.md
-          - text: Self-hosted Linux agents
-            url: ./agents/v2-linux.md
-          - text: Self-hosted macOS agents
-            url: ./agents/v2-osx.md
-  - title: Set up continuous testing
-    linkLists:
-      - linkListType: tutorial
-        links:
-          - text: Configure for UI testing
+          - text: About pipeline tests
+            url: ./test/test-glossary.md
+          - text: Set up parallel testing
+            url: ./test/parallel-testing-vstest.md
+          - text: Enable flaky test management
+            url: ./test/flaky-test-management.md
+          - text: Run UI tests
             url: ./test/ui-testing-considerations.md
-          - text: UI testing using Selenium
-            url: ./test/continuous-test-selenium.md
-          - text: Review & configure code coverage results
-            url: ./test/review-code-coverage-results.md
           - text: Review test results
             url: ./test/review-continuous-test-results-after-build.md
-          - text: Manage flaky tests
-            url: ./test/flaky-test-management.md
-          - text: Analyze test results
+          - text: Review test analytics
             url: ./test/test-analytics.md
-  - title: Configure resources
+  - title: Deploy
     linkLists:
-      - linkListType: how-to-guide
+      - linkListType: deploy
         links:
-          - text: Create and manage agent pools
-            url: ./agents/pools-queues.md?toc=/azure/devops/organizations/toc.json
-          - text: Create and manage deployment groups
-            url: ./release/deployment-groups/index.md?toc=/azure/devops/organizations/toc.json
-          - text: Create and manage service connections
-            url: ./library/service-endpoints.md?toc=/azure/devops/organizations/toc.json
-          - text: Set build and release retention policies
-            url: ./policies/retention.md?toc=/azure/devops/organizations/toc.json
-  - title: Troubleshoot
+          - text: Deploy to Azure
+            url: ./overview-azure.md
+          - text: Deployment jobs
+            url: ./process/deployment-jobs.md
+          - text: Deploy to Kubernetes
+            url: ./ecosystems/kubernetes/deploy.md
+          - text: Build and push container images
+            url: ./ecosystems/containers/push-image.md
+          - text: Deploy to Azure SQL Database
+            url: ./targets/azure-sqldb.md
+          - text: Classic release pipelines
+            url: ./release/index.md
+  - title: Monitor and troubleshoot
     linkLists:
       - linkListType: how-to-guide
         links:
           - text: Troubleshoot pipeline runs
             url: ./troubleshooting/troubleshooting.md
-          - text: Troubleshoot pipeline failure to start
+          - text: Pipeline queues but never starts
             url: ./troubleshooting/troubleshoot-start.md
           - text: Troubleshoot pipeline triggers
             url: ./troubleshooting/troubleshoot-triggers.md
-          - text: Run a release in debug mode
-            url: ./variables/reference.md#run-a-release-in-debug-mode
           - text: Troubleshoot Azure Resource Manager service connections
             url: ./release/azure-rm-endpoint.md
-          - text: Troubleshoot workload identity service connections
-            url: ./release/troubleshoot-workload-identity.md
-          - text: All troubleshooting guides & FAQs
-            url: ../troubleshoot/index.yml
-  - title: Publish packages
+          - text: Review logs
+            url: ./troubleshooting/review-logs.md
+          - text: View pipeline reports
+            url: ./reports/pipelinereport.md
+  - title: Examples by language and platform
     linkLists:
       - linkListType: tutorial
         links:
-          - text: Publish & download artifacts
-            url: artifacts/pipeline-artifacts.md
-          - text: Publish NuGet packages
-            url: ./artifacts/nuget.md
-          - text: Publish npm packages
-            url: ./artifacts/npm.md
-          - text: Publish Python packages
-            url: ./artifacts/pypi.md
-          - text: Publish and download Universal Packages
-            url: ./artifacts/universal-packages.md
-          - text: Publish Maven Packages
-            url: ../artifacts/get-started-maven.md
-          - text: Publish symbols for debugging
-            url: ./artifacts/symbols.md
-  - title: Integrate with other apps
+          - text: .NET Core apps
+            url: ./ecosystems/dotnet-core.md
+          - text: JavaScript and Node.js apps
+            url: ./ecosystems/javascript.md
+          - text: Python apps
+            url: ./ecosystems/python.md
+          - text: Java apps
+            url: ./ecosystems/java.md
+          - text: Android
+            url: ./ecosystems/android.md
+          - text: Xcode
+            url: ./ecosystems/xcode.md
+          - text: See more examples
+            url: ./ecosystems/ecosystems.md
+  - title: Integrate, migrate, and reference
     linkLists:
       - linkListType: how-to-guide
         links:
+          - text: Configure pipelines to support work tracking
+            url: ./integrations/configure-pipelines-work-tracking.md
           - text: Integrate with Slack
             url: ./integrations/slack.md
-          - text: Integrate with Microsoft Teams
-            url: ./integrations/microsoft-teams.md
-          - text: Integrate with service hooks
-            url: ../service-hooks/overview.md
+          - text: Migrate Classic pipelines to YAML
+            url: ./release/from-classic-pipelines.md
+          - text: Migrate from Jenkins
+            url: ./migrate/from-jenkins.md
+      - linkListType: reference
+        links:
+          - text: Azure DevOps CLI
+            url: ../cli/index.md
+          - text: REST API reference
+            url: /rest/api/azure/devops/
