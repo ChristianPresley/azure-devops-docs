@@ -181,25 +181,10 @@ If your pipeline is failing immediately with `Could not find a project that corr
 #### Team Foundation Version Control (TFVC) issues
 
 * [Get sources not downloading some files](#get-sources-not-downloading-some-files)
-* [Get sources through Team Foundation Proxy](#get-sources-through-team-foundation-proxy)
 
 ##### Get sources not downloading some files
 
 You might see a message in the log "All files up to date" from the `tf get` command. Verify the built-in service identity has permission to download the sources. Either the identity *Project Collection Build Service* or *Project Build Service* need permission to download the sources, depending on the selected authorization scope on General tab of the build pipeline. In the version control web UI, you can browse the project files at any level of the folder hierarchy and check the security settings.
-
-##### Get sources through Team Foundation Proxy
-
-The easiest way to configure the agent to get sources through a Team Foundation Proxy is to set environment variables `TFSPROXY` that point to the TFVC proxy server for the agent's run as user.
-
-Windows:
-```cmd
-    set TFSPROXY=http://tfvcproxy:8081
-    setx TFSPROXY=http://tfvcproxy:8081 // If the agent service is running as NETWORKSERVICE or any service account you can't easily set user level environment variable
-```
-macOS/Linux:
-```bash
-    export TFSPROXY=http://tfvcproxy:8081
-```
 
 ### My pipeline is failing on a command-line step such as MSBUILD
 
@@ -243,7 +228,7 @@ steps:
 
 ```yaml
 # Script for Windows
-pool: { vmImage: windows-2019 } # or whatever pool you use
+pool: { vmImage: windows-latest } # or whatever pool you use
 steps:
 - checkout: none
 - powershell: |
