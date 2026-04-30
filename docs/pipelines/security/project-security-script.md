@@ -1,7 +1,7 @@
 ---
 title: Use a script to update security settings
 description: Learn how to use PowerShell scripts to automate Azure DevOps pipeline security settings. Configure project-level settings with secure-by-default recommendations.
-ms.date: 08/12/2025
+ms.date: 04/30/2026
 monikerRange: "<=azure-devops"
 ai-usage: ai-assisted
 ms.topic: how-to
@@ -96,12 +96,13 @@ $response = Invoke-RestMethod -Uri $projectsUrl -Method Get -Headers $headers
 
 # Define the request body for updating settings
 $body = @{
-    enforceReferencedRepoScopedTokens = $true
+    enforceReferencedRepoScopedToken = $true
     enableShellTasksArgsSanitizing = $true
+    enableShellTasksArgsSanitizingAudit = $true
     disableClassicBuildPipelineCreation = $true
     disableClassicReleasePipelineCreation = $true
     forkProtectionEnabled = $true
-    buildsEnabledForForks = $true
+    buildsEnabledForForks = $false
     enforceJobAuthScopeForForks = $true
     enforceNoAccessToSecretsFromForks = $true
     isCommentRequiredForPullRequest = $true
@@ -156,13 +157,13 @@ disableClassicBuildPipelineCreation               : True
 disableClassicReleasePipelineCreation             : True
 forkProtectionEnabled                             : True
 buildsEnabledForForks                             : False
-enforceJobAuthScopeForForks                       : False
-enforceNoAccessToSecretsFromForks                 : False
-isCommentRequiredForPullRequest                   : False
-requireCommentsForNonTeamMembersOnly              : False
-requireCommentsForNonTeamMemberAndNonContributors : False
-enableShellTasksArgsSanitizing                    : False
-enableShellTasksArgsSanitizingAudit               : False
+enforceJobAuthScopeForForks                       : True
+enforceNoAccessToSecretsFromForks                 : True
+isCommentRequiredForPullRequest                   : True
+requireCommentsForNonTeamMembersOnly              : True
+requireCommentsForNonTeamMemberAndNonContributors : True
+enableShellTasksArgsSanitizing                    : True
+enableShellTasksArgsSanitizingAudit               : True
 disableImpliedYAMLCiTrigger                       : True
 statusBadgesArePrivate                            : True
 enforceSettableVar                                : True
