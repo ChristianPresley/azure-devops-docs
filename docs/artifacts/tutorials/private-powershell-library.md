@@ -15,10 +15,10 @@ ms.topic: how-to
 
 [!INCLUDE [version-eq-azure-devops](../../includes/version-eq-azure-devops.md)]
 
-Azure Artifacts provides a convenient solution for sharing PowerShell scripts. By using Azure Artifacts feeds, you can seamlessly publish your PowerShell modules from the command line and control access to them through your feed settings. 
+Azure Artifacts provides a convenient solution for sharing PowerShell scripts. By using Azure Artifacts feeds, you can seamlessly publish your PowerShell modules from the command line and control access to them through your feed settings.
 This article guides you through setting up your Azure Artifacts feed as a private PowerShell repository to store and share your PowerShell modules.
 
-::: zone pivot="psresourceget"  
+::: zone pivot="psresourceget"
 
 In this article, you'll learn how to:
 
@@ -120,7 +120,7 @@ If you don't have your own module, follow the instructions in this section to cr
 
     ```powershell
     PS > Get-SecretInfo
-    
+
     Name            Type         VaultName
     ----            ----         ---------
     MyCredential    PSCredential MySecretVault
@@ -303,17 +303,17 @@ If you don't have your own module, follow the instructions in this section to cr
 1. Run the following command to add your feed source URL. Make sure that you use V2 in your feed source URL, as NuGet V3 is not supported.
 
     - Organization-scoped feed:
-    
+
         ```powershell
         nuget sources Add -Name "<FEED_NAME>" -Source "https://pkgs.dev.azure.com/<ORGANIZATION_NAME>/_packaging/<FEED_NAME>/nuget/v2" -username "<USER_NAME>" -password "<PERSONAL_ACCESS_TOKEN>"
         ```
 
     - Project-scoped feed:
-    
+
         ```powershell
         nuget sources Add -Name "<FEED_NAME>" -Source "https://pkgs.dev.azure.com/<ORGANIZATION_NAME>/<PROJECT_NAME>/_packaging/<FEED_NAME>/nuget/v2" -username "<USER_NAME>" -password "<PERSONAL_ACCESS_TOKEN>"
         ```
-    
+
 1. Publish the package to your feed:
 
     ```powershell
@@ -363,7 +363,7 @@ This section guides you through authenticating with a feed as a PowerShell repos
     - Organization-scoped feed:
 
         ```powershell
-        Register-PackageSource -Name <REPOSITORY_NAME> -Location "https://pkgs.dev.azure.com/<ORGANIZATION_NAME>/_packaging/<FEED_NAME>/nuget/v2" -ProviderName NuGet -Trusted -SkipValidate -Credential $credsAzureDevopsServices 
+        Register-PackageSource -Name <REPOSITORY_NAME> -Location "https://pkgs.dev.azure.com/<ORGANIZATION_NAME>/_packaging/<FEED_NAME>/nuget/v2" -ProviderName NuGet -Trusted -SkipValidate -Credential $credsAzureDevopsServices
         ```
 
     > [!NOTE]
@@ -395,8 +395,8 @@ This example walks you through authenticating with an Azure Artifacts feed and i
 
 1. Select **Variables** at the top right corner, and then select **New variable**.
 
-1. Enter a **Name** for your variable, and then paste your personal access token into the **Value** textbox. 
- 
+1. Enter a **Name** for your variable, and then paste your personal access token into the **Value** textbox.
+
 1. Make sure that you select the **Keep this value secret** checkbox. Select **Ok** when you're done.
 
 1. Add a second variable for your *userName*. Enter a **Name** for your variable, then input your userName in the **Value** textbox.
@@ -428,7 +428,7 @@ steps:
   displayName: 'Install module'
 ```
 
-For enterprise deployments and enhanced security, independent from named user accounts, the [SYSTEM_ACCESSTOKEN](../../pipelines/build/variables.md#systemaccesstoken) can be used to access the Azure Artifact feed. A username is not required in this context and can be any arbitrary string to fulfill the parameter requirements.
+For enterprise deployments and enhanced security, independent from named user accounts, the [SYSTEM_ACCESSTOKEN](../../pipelines/variables/reference.md#systemaccesstoken) can be used to access the Azure Artifact feed. A username is not required in this context and can be any arbitrary string to fulfill the parameter requirements.
 
 ```yaml
 steps:
