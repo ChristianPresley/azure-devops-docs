@@ -415,6 +415,168 @@
     - name: Use tasks to increase run retention
       displayName: retention, pipelines, runs
       href: build/run-retention.md
+    - name: Create Classic pipelines
+      href: release/create-classic-pipelines.md
+      displayName: classic pipelines
+    - name: View Classic pipeline history
+      displayName: history
+      href: release/history.md
+    - name: Classic pipelines configuration
+      displayName: classic, build options
+      href: release/options.md
+    - name: Publish & download pipeline artifacts
+      displayName: publish, download, artifacts
+      href: artifacts/pipeline-artifacts.md
+    - name: Publish & download build artifacts
+      displayName: build, download, publish, artifacts
+      href: artifacts/build-artifacts.md
+  - name: Deploy
+    items:
+    - name: Deploy to Azure
+      items:
+      - name: Overview
+        href: overview-azure.md
+      - name: Connect to Azure
+        items:
+        - name: Azure Resource Manager service connection
+          displayName: resource manager, service connection, service principal
+          href: library/connect-to-azure.md
+        - name: Azure Resource Manager special cases
+          displayName: agent-assigned identity, publish profile
+          href: library/azure-resource-manager-alternate-approaches.md
+        - name: Manually configure an ARM service connection with a secret
+          href: release/configure-app-secret.md
+        - name: Manually configure workload identity service connections
+          href: release/configure-workload-identity.md
+        - name: Troubleshoot workload identity service connections
+          href: release/troubleshoot-workload-identity.md
+        - name: Troubleshoot Azure Resource Manager service connections
+          displayName: service connection, service principal, Azure resource manager, azure
+          href: release/azure-rm-endpoint.md
+        - name: Use scripts to automate Azure Resource Manager service connections
+          displayName: service connection, service principal, Azure resource manager, azure
+          href: release/automate-service-connections.md
+      - name: Azure App Service (Web Apps)
+        items:
+        - name: Deploy to App Service using Azure Pipelines
+          href: /azure/app-service/deploy-azure-pipelines
+        - name: Azure Web App for Containers
+          displayName: containers, docker, azure web app
+          href: apps/cd/deploy-docker-webapp.md
+        - name: Create a multistage pipeline
+          displayName: multi stage, multi stage pipelines
+          href: process/create-multistage-pipeline.md
+        - name: Troubleshoot deployment
+          href: troubleshooting/troubleshoot-azure-web-app-deploy.md
+      - name: Azure Resource Manager (ARM) templates
+        items:
+        - name: Use a Resource Manager template to deploy
+          displayName: Resource Manager, ARM, azure
+          href: apps/cd/azure/deploy-arm-template.md
+      - name: Azure Databricks
+        items:
+        - name: Data pipeline overview
+          displayName: data science, machine learning
+          href: apps/cd/azure/cicd-data-overview.md
+        - name: Build a data pipeline
+          href: apps/cd/azure/build-data-pipeline.md
+      - name: Azure Databases
+        items:
+        - name: Azure SQL database
+          href: targets/azure-sqldb.md
+        - name: Azure MySQL database
+          href: /azure/mysql/single-server/azure-pipelines-mysql-deploy
+      - name: Azure Virtual Machine Scale Set
+        items:
+        - name: Deploy a virtual machine scale set
+          displayName: vmss, custom image
+          href: apps/cd/azure/deploy-virtual-scale-set-java.md
+      - name: Deploy apps using VMs
+        items:
+        - name: Linux virtual machines
+          href: ecosystems/deploy-linux-vm.md
+      - name: Azure Container Registry
+        items:
+        - name: Build and push to Azure Container Registry with a Docker template
+          href: ecosystems/containers/acr-template.md
+        - name: Build and push to Azure Container Registry - Managed Service Identity
+          href: ecosystems/containers/publish-to-acr.md
+      - name: Azure Kubernetes Service
+        items:
+        - name: Build and deploy to Azure Kubernetes Service
+          href: /azure/aks/devops-pipeline
+      - name: Azure Functions
+        href: /azure/azure-functions/functions-how-to-azure-devops
+      - name: Azure Stack
+        href: targets/azure-stack.md
+      - name: Azure Machine Learning
+        href: /azure/machine-learning/how-to-devops-machine-learning
+    - name: Deploy apps using containers
+      items:
+      - name: Build images
+        displayName: docker, compose, docker-compose, arm, buildkit, image
+        href: ecosystems/containers/build-image.md
+      - name: Build and push container images to registries
+        displayName: container registry, acr, docker hub, azure container registry
+        href: ecosystems/containers/push-image.md
+      - name: Content trust
+        displayName: docker content trust, dct
+        href: ecosystems/containers/content-trust.md
+      - name: Kubernetes
+        items:
+        - name: Overview
+          displayName: kubernetes, aks, gke, eks, canary
+          href: ecosystems/kubernetes/deploy.md
+        - name: Deploy to Azure Kubernetes Service
+          href: release/deploy-kubernetes.md
+          displayName: AKS, Kubernetes, deploy, deployment, Azure
+        - name: Use a canary deployment strategy
+          href: ecosystems/kubernetes/canary-demo.md
+    - name: Deploy apps (Classic)
+      items:
+      - name: Release pipelines overview
+        displayName: release, deploy, deployment
+        href: release/index.md
+      - name: Create a Classic release
+        displayName: release artifacts, deployment artifacts
+        href: release/releases.md
+      - name: Create a multi-stage release
+        displayName: classic release, classic deployment
+        href: release/define-multistage-release-process.md
+      - name: Artifact sources
+        displayName: artifacts, source, release artifacts
+        href: release/artifacts.md
+      - name: Release variables
+        displayName: release, deploy, variables
+        href: release/variables.md
+      - name: Release triggers (Classic)
+        displayName: release trigger, stage trigger, deploy PR, scheduled trigger
+        href: release/triggers.md
+      - name: Deploy pull request Artifacts
+        displayName: pr release, deployment
+        href: release/deploy-pull-request-builds.md
+      - name: Deploy from multiple branches
+        displayName: multiple branches, deployment
+        href: release/deploy-multiple-branches.md
+      - name: Deploy to a Windows VM
+        displayName: windows vm, deployment vm
+        href: release/deploy-webdeploy-iis-deploygroups.md
+      - name: Stage templates in Azure Pipelines
+        displayName: environment, templates, stages
+        href: release/env-templates.md
+      - name: Azure Policy Compliance (Classic)
+        displayName: policy, compliance
+        href: /azure/governance/policy/tutorials/policy-devops-pipelines
+      - name: Deployment groups (Classic)
+        items:
+        - name: Use deployment groups in Classic releases
+          href: release/deployment-groups/index.md
+        - name: Provision agents for deployment groups
+          href: release/deployment-groups/howto-provision-deployment-group-agents.md
+        - name: Deployment group jobs
+          href: release/deployment-group-phases.md
+        - name: Deploy web apps to Azure VMs with deployment groups
+          href: release/deployment-groups/deploying-azure-vms-deployment-groups.md
   - name: Artifacts
     items:
     - name: Artifacts in Azure Pipelines
