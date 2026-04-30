@@ -80,7 +80,7 @@ The task assistant provides a method for adding tasks to your YAML pipeline.
 
    :::image type="content" source="media/yaml-pipeline-editor/yaml-pipeline-task-assistant-hide.png" alt-text="Hide task assistant for editing YAML pipelines.":::
 
-- To use the task assistant, browse or search for tasks in the **Tasks** pane. 
+- To use the task assistant, browse or search for tasks in the **Tasks** pane.
 
    :::image type="content" source="media/yaml-pipeline-editor/yaml-pipeline-task-assistant-search.png" alt-text="Task assistant search.":::
 
@@ -146,7 +146,7 @@ To manage pipeline variables, do the following steps.
 
 2. Choose from the following functions:
     - **New variable**: to add your first variable.
-    - **Add** :::image type="icon" source="../../media/icons/add-dark-icon.png":::: to add subsequent variables. 
+    - **Add** :::image type="icon" source="../../media/icons/add-dark-icon.png":::: to add subsequent variables.
     - *Variable name* to edit a variable.
     - **Delete** :::image type="icon" source="../../media/icons/delete-icon-bin.png":::: to delete a variable.
 
@@ -162,7 +162,7 @@ To manage pipelines variables in the pipeline settings UI, do the following step
 
    :::image type="content" source="media/yaml-pipeline-editor/yaml-pipeline-settings-ui-variables.png" alt-text="Pipeline settings UI for variables.":::
 
-For more information on working with pipeline variables, see [Define variables](../process/variables.md).
+For more information on working with pipeline variables, see [Define variables](../variables/index.md).
 
 ## Configure the default agent pool
 
