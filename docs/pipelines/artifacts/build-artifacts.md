@@ -172,7 +172,7 @@ You can add multiple **Publish Build Artifacts** tasks to your pipelines. Make s
 * * *
 
 > [!NOTE]
-> If you're using a deployment task, you can reference your build artifacts using **$(Agent.BuildDirectory)**. See [Agent variables](../build/variables.md#agent-variables) for more details.
+> If you're using a deployment task, you can reference your build artifacts using **$(Agent.BuildDirectory)**. See [Agent variables](../variables/reference.md#agent-variables) for more details.
 
 ::: moniker range="<=azure-devops"
 
@@ -237,7 +237,7 @@ Add the :::image type="icon" source="../tasks/utility/media/downloadbuildartifac
 
 - `Build.ArtifactStagingDirectory` path is cleaned up after each build.
 
-- Deleting a build associated with packages published to a file share will result in the deletion of all Artifacts in that UNC path.  
+- Deleting a build associated with packages published to a file share will result in the deletion of all Artifacts in that UNC path.
 
 - If you're publishing your packages to a file share, make sure you provide access to the build agent.
 
