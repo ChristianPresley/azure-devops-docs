@@ -99,7 +99,7 @@ Output:
 ```output
 ID    Name                        Status    Default Queue
 ----  --------------------------  --------  ------------------
-12    updatedname.pipelines-java  enabled   Hosted Ubuntu 1604
+12    updatedname.pipelines-java  enabled   ubuntu-22.04
 ```
 
 For the complete command reference, see [az pipelines update](/cli/azure/pipelines#az-pipelines-update).
