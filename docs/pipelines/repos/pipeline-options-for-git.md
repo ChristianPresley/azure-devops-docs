@@ -3,7 +3,7 @@ title: Options for Git repositories
 description: Options available when using a Git repository with Azure Pipelines
 ms.topic: reference
 ms.assetid: a74b3efe-d7bd-438a-be32-47d036556f74
-ms.date: 01/25/2023
+ms.date: 04/30/2026
 monikerRange: '<= azure-devops'
 ---
 
@@ -13,17 +13,17 @@ monikerRange: '<= azure-devops'
 
 While editing a pipeline that uses a Git repo&mdash;in an Azure DevOps project, GitHub, GitHub Enterprise Server, Bitbucket Cloud, or another Git repo&mdash;you have the following options.
 
-| Feature | Azure Pipelines | Azure DevOps Server 2019 and higher | TFS 2018 |
-|---|---|---|---|
-| Branch | Yes | Yes | Yes |
-| Clean | Yes | Yes | Yes |
-| Tag or label sources | Project; Classic only | Team project | Team project |
-| Report build status | Yes | Yes | Yes |
-| Check out submodules | Yes | Yes | Yes |
-| Check out files from LFS | Yes | Yes | Yes |
-| Clone a second repo | Yes | Yes | Yes |
-| Don't sync sources | Yes | Yes | Yes |
-| Shallow fetch | Yes | Yes | Yes |
+| Feature | Azure Pipelines | Azure DevOps Server 2022 and higher |
+|---|---|---|
+| Branch | Yes | Yes |
+| Clean | Yes | Yes |
+| Tag or label sources | Project; Classic only | Team project |
+| Report build status | Yes | Yes |
+| Check out submodules | Yes | Yes |
+| Check out files from LFS | Yes | Yes |
+| Clone a second repo | Yes | Yes |
+| Don't sync sources | Yes | Yes |
+| Shallow fetch | Yes | Yes |
 
 > [!NOTE]
 > Click **Advanced settings** in the **Get Sources** task to see some of the above options.
@@ -38,7 +38,7 @@ This is the branch that you want to be the default when you manually queue this 
 
 ::: moniker range="azure-devops"
 > [!NOTE]
-> Cleaning is not effective if you're using a [Microsoft-hosted agent](../agents/hosted.md) because you'll get a new agent every time. 
+> Cleaning is not effective if you're using a [Microsoft-hosted agent](../agents/hosted.md) because you'll get a new agent every time.
 > When using self-hosted agents, depending on how your agents pools are configured, you may get a new agent for subsequent pipeline runs (or stages or jobs in the same pipeline), so **not** cleaning is not a guarantee that subsequent runs, jobs, or stages will be able to access outputs from previous runs, jobs, or stages.
 ::: moniker-end
 
@@ -62,11 +62,11 @@ There are several different clean options available for YAML pipelines.
 * The pipeline settings UI has a **Clean** setting, that when set to true is equivalent of specifying `clean: true` for every `checkout` step in your pipeline. To configure the **Clean** setting:
   1. Edit your pipeline, choose **...**, and select **Triggers**.
 
-      :::image type="content" source="../process/media/pipeline-triggers/edit-triggers.png" alt-text="Edit triggers."::: 
+      :::image type="content" source="../process/media/pipeline-triggers/edit-triggers.png" alt-text="Edit triggers.":::
 
-  2. Select **YAML**, **Get sources**, and configure your desired **Clean** setting. The default is **true**. 
+  2. Select **YAML**, **Get sources**, and configure your desired **Clean** setting. The default is **true**.
 
-      :::image type="content" source="../process/media/clean-setting.png" alt-text="Clean setting."::: 
+      :::image type="content" source="../process/media/clean-setting.png" alt-text="Clean setting.":::
 
 To override clean settings when manually running a pipeline, you can use [runtime parameters](../process/runtime-parameters.md). In the following example, a runtime parameter is used to configure the checkout clean setting.
 
@@ -97,7 +97,7 @@ By default, `clean` is set to `true` but can be overridden when manually running
 
 #### [Classic](#tab/classic/)
 
-### Azure Pipelines, TFS 2018, TFS 2017.2, TFS 2017.3
+### Azure Pipelines and Azure DevOps Server 2022 and newer
 
 [//]: # (TODO: build.clean variable still works and overrides if clean is set to false)
 
@@ -127,9 +127,9 @@ Some build variables might yield a value that is not a valid label. For example,
 
 After the sources are tagged by your build pipeline, an artifact with the Git ref `refs/tags/{tag}` is automatically added to the completed build. This gives your team additional traceability and a more user-friendly way to navigate from the build to the code that was built. The tag is considered a build artifact since it is produced by the build. When the build is deleted either manually or through a retention policy, the tag is also deleted.
 
-[//]: # (TODO: confirm I got this next section right; e.g. GitHub not in TFS 2018 Update 1)
+[//]: # (TODO: confirm I got this next section right; e.g. GitHub may not be supported on older on-prem versions)
 
-## Report build status (Azure Pipelines, TFS 2018 and newer)
+## Report build status
 
 You've got the option to give your team a view of the build status from your remote source repository.
 
@@ -150,7 +150,7 @@ If your sources are in GitHub, then this option publishes the status of your bui
 
 ### Other types of Git remote repositories
 
-If your source is in any other type of remote repository, then you cannot use Azure Pipelines or TFS to automatically publish the build status to that repository. However, you can use a [build badge](../build/options.md) as a way to integrate and show build status within your version control experiences.
+If your source is in any other type of remote repository, then you cannot use Azure Pipelines or TFS to automatically publish the build status to that repository. However, you can use a [build badge](../create-first-pipeline.md#display-a-status-badge-on-your-website) as a way to integrate and show build status within your version control experiences.
 
 ::: moniker range="<=azure-devops"
 
@@ -163,7 +163,7 @@ If you are using multiple `checkout` steps and checking out multiple repositorie
 Please note that the checkout path value cannot be set to go up any directory levels above `$(Agent.BuildDirectory)`, so `path\..\anotherpath` will result in a valid checkout path (i.e. `C:\agent\_work\1\anotherpath`), but a value like `..\invalidpath` will not (i.e. `C:\agent\_work\invalidpath`).
 
 If you are using multiple `checkout` steps and checking out multiple repositories, and want to explicitly specify the folder using `path`,
-consider avoiding setting path which is subfolder of another checkout step's path (i.e. `C:\agent\_work\1\s\repo1` and `C:\agent\_work\1\s\repo1\repo2`), otherwise, the subfolder of the checkout step will be cleared by another repo's cleaning. Please note that this case is valid if the clean option is true for `repo1`) 
+consider avoiding setting path which is subfolder of another checkout step's path (i.e. `C:\agent\_work\1\s\repo1` and `C:\agent\_work\1\s\repo1\repo2`), otherwise, the subfolder of the checkout step will be cleared by another repo's cleaning. Please note that this case is valid if the clean option is true for `repo1`)
 
 > [!NOTE]
 > The checkout path can only be specified for YAML pipelines. For more information, see [Checkout](/azure/devops/pipelines/yaml-schema/steps-checkout) in the [YAML schema](/azure/devops/pipelines/yaml-schema).
@@ -187,7 +187,7 @@ The build pipeline will check out your Git submodules as long as they are:
 
 * **Unauthenticated:**  A public, unauthenticated repo with no credentials required to clone or fetch.
 
-* **Authenticated:**  
+* **Authenticated:**
 
   - Contained in the same project, GitHub organization, or Bitbucket Cloud account as the Git repo specified above.
 
@@ -302,7 +302,7 @@ If you need to clone a repo from another project that is not public, you will ne
 > Use a **secret variable** to store credentials securely.
 >
 > Secret variables are not automatically made available to scripts as environment variables.
-> See [Secret variables](../process/variables.md#secret-variables) on how to map them in.
+> See [Secret variables](../variables/index.md#secret-variables) on how to map them in.
 
 For Azure Repos, you can use a personal access token with the **Code (Read)** permission.
 Send this as the password field in a "Basic" authorization header without a username.
@@ -324,7 +324,7 @@ This option can be useful in cases when you want to:
 
 If you want to disable downloading sources:
 
-* **Azure Pipelines, TFS 2018, and newer:** Click **Advanced settings**, and then select **Don't sync sources**.
+* **Azure Pipelines and Azure DevOps Server 2022 and newer:** Click **Advanced settings**, and then select **Don't sync sources**.
 
 > [!NOTE]
 > When you use this option, the agent also skips running Git commands that clean the repo.
@@ -357,7 +357,7 @@ This setting is always true on non-Windows agents.
 
 When an Other/external Git repository is specified, CI builds require that the repository is accessible from the internet. If the repository is behind a firewall or proxy, then only scheduled and manual builds will work.
 
-## FAQ  
+## FAQ
 
 <!-- BEGINSECTION class="md-qanda" -->
 
