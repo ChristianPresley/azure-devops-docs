@@ -11,19 +11,19 @@ ms.subservice: azure-pipelines
 
 [!INCLUDE [version-lt-eq-azure-devops](../../includes/version-lt-eq-azure-devops.md)]
 
-Use this reference when you need to choose a variable syntax, decide where to define a value, pass data between jobs or stages, or keep secrets out of pipeline logs. For full concepts and procedures, see [Define variables](variables.md), [Set variables in scripts](set-variables-scripts.md), [Set secret variables](set-secret-variables.md), and [Manage variable groups](../library/variable-groups.md).
+Use this reference when you need to choose a variable syntax, decide where to define a value, pass data between jobs or stages, or keep secrets out of pipeline logs. For full concepts and procedures, see [Define variables](index.md), [Set variables in scripts](scripts.md), [Set secret variables](secrets.md), and [Manage variable groups](../library/variable-groups.md).
 
 ## Choose the right value type
 
 | Need | Use | Why |
 | --- | --- | --- |
-| Reuse a string value in task inputs or scripts | [Variable](variables.md) | Variables are strings and can change during a run. |
-| Select jobs, stages, steps, or templates before the run starts | [Runtime parameter](runtime-parameters.md) | Parameters are typed and available during template parsing. |
+| Reuse a string value in task inputs or scripts | [Variable](index.md) | Variables are strings and can change during a run. |
+| Select jobs, stages, steps, or templates before the run starts | [Runtime parameter](../process/runtime-parameters.md) | Parameters are typed and available during template parsing. |
 | Share nonsecret configuration across pipelines | [Variable group](../library/variable-groups.md) | Variable groups centralize common values. |
-| Share secrets across pipelines | [Variable group linked to Azure Key Vault](../library/link-variable-groups-to-key-vaults.md) | Key Vault supports central secret management and rotation. |
-| Pass a value from one step, job, or stage to another | [Output variable](set-variables-scripts.md#levels-of-output-variables) | Output variables are designed for values discovered while the pipeline runs. |
-| Gate a job or stage based on a previous result | [Condition with an expression](conditions.md) | Conditions evaluate pipeline state and dependency outputs. |
-| Access predefined variables for deployment stages and artifacts in Classic pipelines | [Classic release variables](../release/variables.md) | Predefined variables for release context, artifact paths, and deployment identity. |
+| Share secrets across pipelines | [Variable group linked to Azure Key Vault](../library/variable-groups.md#link-a-variable-group-to-azure-key-vault) | Key Vault supports central secret management and rotation. |
+| Pass a value from one step, job, or stage to another | [Output variable](scripts.md#levels-of-output-variables) | Output variables are designed for values discovered while the pipeline runs. |
+| Gate a job or stage based on a previous result | [Condition with an expression](../process/conditions.md) | Conditions evaluate pipeline state and dependency outputs. |
+| Access predefined variables for deployment stages and artifacts in Classic pipelines | [Classic release variables](reference.md#classic-release-variables) | Predefined variables for release context, artifact paths, and deployment identity. |
 
 ## Choose variable syntax
 
@@ -45,7 +45,7 @@ When the same variable name is defined in multiple places, the most local defini
 | Job | Steps in the job | Job-specific values, such as a test shard or package path | Highest YAML scope |
 | Step-created variable | Later steps in the same job by default | Values discovered in a script | Available after the step that sets it |
 
-For examples, see [Variable scopes](variables.md#variable-scopes).
+For examples, see [Variable scopes](index.md#variable-scopes).
 
 ## Output variable syntax
 
@@ -58,7 +58,7 @@ Use `task.setvariable` when a script discovers a value that later steps, jobs, o
 | Job in the same stage | Set with `isOutput=true` in job `Build`, step `setVersion` | Map with `imageTag: $[ dependencies.Build.outputs['setVersion.imageTag'] ]`, then use `$(imageTag)` |
 | Job in a later stage | Set with `isOutput=true` in stage `Build`, job `BuildJob`, step `setVersion` | Map with `imageTag: $[ stageDependencies.Build.BuildJob.outputs['setVersion.imageTag'] ]`, then use `$(imageTag)` |
 | Stage condition | Set with `isOutput=true` in stage `Build`, job `BuildJob`, step `setVersion` | Use `condition: eq(dependencies.Build.outputs['BuildJob.setVersion.runDeploy'], 'true')` |
-| Deployment job | Set with `isOutput=true` in the deployment lifecycle hook | Use the deployment job syntax for the strategy. See [Deployment jobs](deployment-jobs.md#support-for-output-variables). |
+| Deployment job | Set with `isOutput=true` in the deployment lifecycle hook | Use the deployment job syntax for the strategy. See [Deployment jobs](../process/deployment-jobs.md#support-for-output-variables). |
 
 Output variables are available only to downstream jobs or stages that depend on the job or stage where the variable was set. If multiple consumers need the same output variable, add explicit `dependsOn` relationships.
 
@@ -70,7 +70,7 @@ Output variables are available only to downstream jobs or stages that depend on 
 - Don't echo secrets or pass them as command-line arguments. Some operating systems log command-line arguments.
 - Secret masking doesn't mask substrings. Avoid structured secrets such as JSON, XML, or values where a meaningful substring is sensitive.
 
-For procedures, see [Set secret variables](set-secret-variables.md).
+For procedures, see [Set secret variables](secrets.md).
 
 ## Variable groups in real pipelines
 
@@ -116,8 +116,8 @@ In this pattern, `contoso-shared-release` can provide shared values such as `app
 
 ## See also
 
-- [Define variables](variables.md)
-- [Set variables in scripts](set-variables-scripts.md)
-- [Expressions](expressions.md)
-- [Set secret variables](set-secret-variables.md)
+- [Define variables](index.md)
+- [Set variables in scripts](scripts.md)
+- [Expressions](../process/expressions.md)
+- [Set secret variables](secrets.md)
 - [Manage variable groups](../library/variable-groups.md)
