@@ -12,7 +12,7 @@ monikerRange: '<= azure-devops'
 
 [!INCLUDE [version-lt-eq-azure-devops](../../includes/version-lt-eq-azure-devops.md)]
 
-Git commands are available for build workflows on [Microsoft-hosted](../agents/hosted.md) and [self-hosted](../agents/agents.md) agents. For example, after a continuous integration (CI) build completes on a feature branch, you can merge the branch to main. This article explains how to run Git commands in Azure Pipelines build scripts. 
+Git commands are available for build workflows on [Microsoft-hosted](../agents/hosted.md) and [self-hosted](../agents/agents.md) agents. For example, after a continuous integration (CI) build completes on a feature branch, you can merge the branch to main. This article explains how to run Git commands in Azure Pipelines build scripts.
 
 <a name="enable"></a>
 ## Enable scripts to run Git commands
@@ -83,7 +83,7 @@ steps:
 
 ::: moniker range="< azure-devops"
 
-Select [Variables](../build/variables.md) in the pipeline editor, create or modify the `Build.Clean` variable, and set its value to `source`.
+Select [Variables](../variables/reference.md) in the pipeline editor, create or modify the `Build.Clean` variable, and set its value to `source`.
 
 ::: moniker-end
 
@@ -93,7 +93,7 @@ In the Classic pipeline editor, select **Get sources**, and then select **true**
 
 ::: moniker range="< azure-devops"
 
-On the [Variables](../build/variables.md) tab, create or modify the `Build.Clean` variable and set its value to `source`.
+On the [Variables](../variables/reference.md) tab, create or modify the `Build.Clean` variable and set its value to `source`.
 
 ::: moniker-end
 
