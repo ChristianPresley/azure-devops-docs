@@ -5,7 +5,7 @@ ms.assetid: D5989F1C-04D8-43EF-9212-AE70151C461C
 ms.topic: concept-article
 ms.author: sandrica
 author: silviuandrica
-ms.date: 02/18/2021
+ms.date: 04/30/2026
 monikerRange: '<= azure-devops'
 ---
 
@@ -13,7 +13,8 @@ monikerRange: '<= azure-devops'
 
 [!INCLUDE [version-lt-eq-azure-devops](../../../includes/version-lt-eq-azure-devops.md)]
 
-
+> [!NOTE]
+> This article describes gates and approvals for **Classic release pipelines**. If you use **YAML pipelines**, see [Define approvals and checks](../../process/approvals.md) instead.
 
 Release pipelines enable teams to continuously deploy their application across different stages with lower risk and with faster pace. Deployments to each stage can be fully automated by using jobs and tasks.
 
@@ -36,7 +37,6 @@ By using gates, approvals, and manual intervention you can take full control of 
 | After deployment, a team wants to wait for a specified time before prompting users to sign out. | [Post-deployment gates](gates.md) and [post-deployment approvals](approvals.md) |
 | During deployment, a user must manually follow specific instructions and then resume the deployment. | [Manual Intervention](../deploy-using-approvals.md#set-up-manual-intervention) or [Manual Validation](../deploy-using-approvals.md#set-up-manual-validation)| 
 | During deployment, a team wants to prompt users to enter a value for a parameter used by the deployment tasks, or allow users to edit the release. | [Manual Intervention](../deploy-using-approvals.md#set-up-manual-intervention) or [Manual Validation](../deploy-using-approvals.md#set-up-manual-validation) | 
-| During deployment, a team wants to wait for monitoring or information portals to detect any active incidents, before continuing with other deployment jobs.  | Planned | 
 
 You can combine all three techniques within a release pipeline to fully achieve your own deployment requirements.
 
