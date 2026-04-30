@@ -19,7 +19,7 @@ This guide helps you migrate from [Travis](https://www.travis-ci.com/) to Azure 
 
 Travis and Azure Pipelines differ in many ways, including:
 
-* Travis builds have _stages_, _jobs_, and _phases_, while Azure Pipelines has steps that you arrange and execute in any order or grouping you choose. 
+* Travis builds have _stages_, _jobs_, and _phases_, while Azure Pipelines has steps that you arrange and execute in any order or grouping you choose.
 
 * Azure Pipelines lets you store job definitions and steps in separate YAML files in the same or a different repository. This approach enables you to share steps across multiple pipelines.
 
@@ -28,7 +28,7 @@ Travis and Azure Pipelines differ in many ways, including:
 ## Prerequisites
 
 * A GitHub account where you can create a repository. [Create one for free](https://github.com).
-* An Azure DevOps organization. [Create one for free](../get-started/pipelines-sign-up.md). 
+* An Azure DevOps organization. [Create one for free](../get-started/pipelines-sign-up.md).
   If your team already has an Azure DevOps organization, make sure you're an administrator of the Azure DevOps project that you want to use.
 * The ability to run pipelines on Microsoft-hosted agents. You can either purchase a [parallel job](../licensing/concurrent-jobs.md) or you can [request a free tier](../troubleshooting/troubleshoot-start.md#check-for-available-parallel-jobs).
 * Basic knowledge of Azure Pipelines. If you're new to Azure Pipelines, see the following articles to learn more about Azure Pipelines and how it works before starting your migration:
@@ -225,9 +225,9 @@ jobs:
 
 ### Advanced parallel execution
 
-In Azure Pipelines you have more options and control over how you orchestrate your pipeline. 
+In Azure Pipelines you have more options and control over how you orchestrate your pipeline.
 
-For example, a team has a set of fast-running unit tests, and another set of and slower integration tests. The team wants to begin creating the .ZIP file for a release as soon as the unit are completed because they provide high confidence 
+For example, a team has a set of fast-running unit tests, and another set of and slower integration tests. The team wants to begin creating the .ZIP file for a release as soon as the unit are completed because they provide high confidence
 that the build provides a good package. But before they deploy to pre-production, they want to wait until all tests have passed:
 
 ![Advanced Parallel Execution Illustration](media/parallel-azurepipelines.png)
@@ -390,15 +390,15 @@ steps:
 
 Travis allows you to specify steps that run when the build succeeds,
 by using the `after_success` phase, or when the build fails, by using the
-`after_failure` phase. By using Azure Pipelines, you can define success and failure 
+`after_failure` phase. By using Azure Pipelines, you can define success and failure
 conditions based on the result of any step, which enables more flexible
 and powerful pipelines.
 
 **.travis.yml**
 ``` yaml
 build: ./build.sh
-after_success: echo Success 
-after_failure: echo Failed 
+after_success: echo Success
+after_failure: echo Failed
 ```
 
 **azure-pipelines.yml**
@@ -414,13 +414,13 @@ steps:
 ### Advanced success and failure handling
 
 In Azure Pipelines you can program a flexible set of dependencies and
-conditions for flow control between jobs.  
+conditions for flow control between jobs.
 You can configure jobs to run based on the success or
-failure of previous jobs or based on environment variables. 
-You can even configure jobs to always run, 
+failure of previous jobs or based on environment variables.
+You can even configure jobs to always run,
 regardless of the success of other jobs.
 
-For example, if you want to run a script when the build fails, but only 
+For example, if you want to run a script when the build fails, but only
 if it's running as a build on the main branch:
 
 **azure-pipelines.yml**
@@ -442,7 +442,7 @@ Both Travis and Azure Pipelines set multiple environment variables
 to help you inspect and interact with the execution environment of the
 CI system.
 
-In most cases, an Azure Pipelines variable matches 
+In most cases, an Azure Pipelines variable matches
 the environment variable in Travis. Here's a list of commonly used
 environment variables in Travis and their analog in Azure Pipelines:
 
@@ -488,7 +488,7 @@ The `TRAVIS_OS_NAME` variable contains values that map to values provided by the
 | `osx`     | `Darwin`        | The build is running on macOS.   |
 | `windows` | `Windows_NT`    | The build is running on Windows. |
 
-For more information, see [Predefined environment variables](../build/variables.md).
+For more information, see [Predefined environment variables](../variables/reference.md).
 
 If there's no variable for the data you need, use a shell
 command to get it.  For example, a good substitute for an environment
@@ -534,8 +534,8 @@ for dependency storage.
 ## Git submodules
 
 Travis and Azure Pipelines both clone git repos recursively by
-default. This default setting means that the agent clones submodules, which 
-is useful since submodules usually contain dependencies. 
+default. This default setting means that the agent clones submodules, which
+is useful since submodules usually contain dependencies.
 However, the extra cloning takes extra time. If you don't need the dependencies,
 disable cloning submodules:
 
