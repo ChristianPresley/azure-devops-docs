@@ -60,7 +60,7 @@ As runtime jobs complete, Azure Pipelines checks whether there are new jobs elig
 
 Understanding the processing order clarifies why you can't use certain variables in [template parameters](template-parameters.md). The first template expansion step operates only on the text of the YAML file. Runtime variables don't yet exist during that step. After that step, template parameters are already resolved.
 
-You can't use [variables](variables.md) to resolve service connection or environment names, because the pipeline authorizes resources before a stage starts running. Stage- and job-level variables aren't available yet. Variable groups are themselves a resource subject to authorization, so their data isn't available when checking resource authorization.
+You can't use [variables](../variables/index.md) to resolve service connection or environment names, because the pipeline authorizes resources before a stage starts running. Stage- and job-level variables aren't available yet. Variable groups are themselves a resource subject to authorization, so their data isn't available when checking resource authorization.
 
 You can use pipeline-level variables that are explicitly included in the [pipeline resource definition](/azure/devops/pipelines/yaml-schema/resources-pipelines-pipeline). For more information, see [Pipeline resource metadata as predefined variables](/azure/devops/pipelines/yaml-schema/resources-pipelines-pipeline#pipeline-resource-metadata-as-predefined-variables).
 
@@ -107,7 +107,7 @@ The agent runs steps sequentially. Before a step starts, all previous steps must
 
 ![Diagram that shows running each task.](media/run-tasks.png)
 
-Steps are implemented by [tasks](tasks.md), which can be Node.js, PowerShell, or other scripts. The task system routes inputs and outputs to the backing scripts. Tasks also provide common services such as altering the system path and creating new [pipeline variables](variables.md).
+Steps are implemented by [tasks](tasks.md), which can be Node.js, PowerShell, or other scripts. The task system routes inputs and outputs to the backing scripts. Tasks also provide common services such as altering the system path and creating new [pipeline variables](../variables/index.md).
 
 Each step runs in its own process, isolating its environment from previous steps. Because of this process-per-step model, environment variables aren't preserved between steps. However, tasks and scripts can use a mechanism called [logging commands](../scripts/logging-commands.md) to communicate back to the agent. When a task or script writes a logging command to standard output, the agent takes whatever action the command requests.
 
@@ -165,11 +165,11 @@ The following examples show how to use the Azure DevOps CLI to list the pipeline
 
 ### List pipeline runs
 
-List the pipeline runs in your project with the [az pipelines runs list](/cli/azure/pipelines/runs#az-pipelines-runs-list) command. 
+List the pipeline runs in your project with the [az pipelines runs list](/cli/azure/pipelines/runs#az-pipelines-runs-list) command.
 
-This command lists the first three pipeline runs with a status of **completed** and a result of **succeeded**, and shows the result in table format.  
+This command lists the first three pipeline runs with a status of **completed** and a result of **succeeded**, and shows the result in table format.
 
-```azurecli 
+```azurecli
 az pipelines runs list --status completed --result succeeded --top 3 --output table
 
 Run ID    Number      Status     Result     Pipeline ID    Pipeline Name               Source Branch    Queued Time                 Reason
@@ -177,7 +177,7 @@ Run ID    Number      Status     Result     Pipeline ID    Pipeline Name        
 125       20200124.1  completed  succeeded  12             Githubname.pipelines-java  master           2020-01-23 18:56:10.067588  manual
 123       20200123.2  completed  succeeded  12             Githubname.pipelines-java  master           2020-01-23 11:55:56.633450  manual
 122       20200123.1  completed  succeeded  12             Githubname.pipelines-java  master           2020-01-23 11:48:05.574742  manual
-``` 
+```
 
 ### Show pipeline run details
 
@@ -185,7 +185,7 @@ Show the details for a pipeline run in your project with the [az pipelines runs 
 
 This command shows details for the pipeline run with ID **123**, displays the results in table format, and opens your web browser to the Azure Pipelines build results page.
 
-```azurecli 
+```azurecli
 az pipelines runs show --id 122 --open --output table
 
 Run ID    Number      Status     Result     Pipeline ID    Pipeline Name               Source Branch    Queued Time                 Reason
@@ -199,7 +199,7 @@ Add a tag to a pipeline run in your project with the [az pipelines runs tag add]
 
 The following command adds the tag **YAML** to the pipeline run with the ID **123** and returns the result in JSON format.
 
-```azurecli 
+```azurecli
 az pipelines runs tag add --run-id 123 --tags YAML --output json
 
 [
@@ -209,7 +209,7 @@ az pipelines runs tag add --run-id 123 --tags YAML --output json
 
 ### List pipeline run tags
 
-List the tags for a pipeline run in your project with the [az pipelines runs tag list](/cli/azure/pipelines/runs/tag#az-pipelines-runs-tag-list) command. The following command lists the tags for the pipeline run with the ID **123** and returns the result in table format.  
+List the tags for a pipeline run in your project with the [az pipelines runs tag list](/cli/azure/pipelines/runs/tag#az-pipelines-runs-tag-list) command. The following command lists the tags for the pipeline run with the ID **123** and returns the result in table format.
 
 ```azurecli
 az pipelines runs tag list --run-id 123 --output table
@@ -221,9 +221,9 @@ YAML
 
 ### Delete tag from pipeline run
 
-Delete a tag from a pipeline run in your project using the [az pipelines runs tag delete](/cli/azure/pipelines/runs/tag#az-pipelines-runs-tag-delete) command. This command deletes the **YAML** tag from the pipeline run with ID **123**.  
+Delete a tag from a pipeline run in your project using the [az pipelines runs tag delete](/cli/azure/pipelines/runs/tag#az-pipelines-runs-tag-delete) command. This command deletes the **YAML** tag from the pipeline run with ID **123**.
 
-```azurecli 
+```azurecli
 az pipelines runs tag delete --run-id 123 --tag YAML
 ```
 ## Manage runs with the Azure DevOps MCP Server
@@ -248,7 +248,7 @@ Fetch the status of a specific build.
 Show the status and details for build 12345678.9.
 ```
 
-This prompt returns returns the status, result, start/finish time, and summary for a build. 
+This prompt returns returns the status, result, start/finish time, and summary for a build.
 
 ### Start a new pipeline run
 
