@@ -5,13 +5,13 @@ summary: Implement continuous integration and continuous delivery (CI/CD) for th
 
 metadata:
   title: Azure Pipelines documentation
-  titleSuffix: Azure DevOps 
+  titleSuffix: Azure DevOps
   description: Configure and manage continuous integration and continuous delivery (CI/CD) for the app and platform of your choice.
-  ms.assetid: 00f4ed452-fbb8-45f9-8f0a-343702aac5b8  
-  ms.topic: landing-page 
-  author: steved0x 
-  ms.author: sdanie 
-  ms.date: 09/27/2021 
+  ms.assetid: 00f4ed452-fbb8-45f9-8f0a-343702aac5b8
+  ms.topic: landing-page
+  author: steved0x
+  ms.author: sdanie
+  ms.date: 09/27/2021
 
 # linkListType: architecture | concept | deploy | download | get-started | how-to-guide | learn | overview | quickstart | reference | tutorial | video | whats-new
 
@@ -49,19 +49,19 @@ landingContent:
             url: ./ecosystems/containers/build-image.md
           - text: .NET Core apps
             url: ./ecosystems/dotnet-core.md
-          - text: Anaconda  
+          - text: Anaconda
             url: ./ecosystems/anaconda.md
-          - text: Android 
+          - text: Android
             url: ./ecosystems/android.md
-          - text: Azure Kubernetes Service 
+          - text: Azure Kubernetes Service
             url: ./ecosystems/kubernetes/aks-template.md
-          - text: Java 
+          - text: Java
             url: ./ecosystems/java.md
           - text: JavaScript & Node.js apps
             url: ./ecosystems/javascript.md
           - text: Python apps
             url: ./ecosystems/python.md
-          - text: PHP  
+          - text: PHP
             url: ./ecosystems/php.md
           - text: "See more >"
             url: ./ecosystems/ecosystems.md
@@ -96,9 +96,9 @@ landingContent:
           - text: YAML schema
             url: /azure/devops/pipelines/yaml-schema/
           - text: Predefined variables
-            url: ./build/variables.md
-          - text: Release & artifacts variables
-            url: ./release/variables.md
+            url: ./variables/reference.md
+          - text: Classic release and artifacts variables
+            url: ./variables/reference.md#classic-release-variables
           - text: Variable groups
             url: ./library/variable-groups.md
           - text: Task index
@@ -107,17 +107,17 @@ landingContent:
     linkLists:
       - linkListType: how-to-guide
         links:
-          - text: GitHub 
+          - text: GitHub
             url: ./repos/github.md
-          - text: Azure Repos Git 
+          - text: Azure Repos Git
             url: ./repos/azure-repos-git.md
-          - text: Team Foundation version control 
+          - text: Team Foundation version control
             url: ./repos/tfvc.md
           - text: Bitbucket Cloud
             url: ./repos/pipeline-options-for-git.md
-          - text: Subversion 
+          - text: Subversion
             url: ./repos/pipeline-options-for-git.md
-          - text: Generic Git 
+          - text: Generic Git
             url: ./repos/pipeline-options-for-git.md
       - linkListType: tutorial
         links:
@@ -163,7 +163,7 @@ landingContent:
             url: ./test/review-code-coverage-results.md
           - text: Review test results
             url: ./test/review-continuous-test-results-after-build.md
-          - text: Manage flaky tests 
+          - text: Manage flaky tests
             url: ./test/flaky-test-management.md
           - text: Analyze test results
             url: ./test/test-analytics.md
@@ -190,7 +190,7 @@ landingContent:
           - text: Troubleshoot pipeline triggers
             url: ./troubleshooting/troubleshoot-triggers.md
           - text: Run a release in debug mode
-            url: ./release/variables.md#run-a-release-in-debug-mode
+            url: ./variables/reference.md#run-a-release-in-debug-mode
           - text: Troubleshoot Azure Resource Manager service connections
             url: ./release/azure-rm-endpoint.md
           - text: Troubleshoot workload identity service connections
@@ -205,7 +205,7 @@ landingContent:
             url: artifacts/pipeline-artifacts.md
           - text: Publish NuGet packages
             url: ./artifacts/nuget.md
-          - text: Publish npm packages 
+          - text: Publish npm packages
             url: ./artifacts/npm.md
           - text: Publish Python packages
             url: ./artifacts/pypi.md

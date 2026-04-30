@@ -149,36 +149,19 @@
     items:
     - name: Variables quick reference
       displayName: syntax, scope, output variables, secret variables, variable groups, macro syntax, template syntax, runtime syntax
-      href: process/variables-quick-reference.md
+      href: variables/quick-reference.md
     - name: Define variables
       displayName: secrets, expressions, queue time, expansion,system, environment variables, macro syntax, template syntax
-      href: process/variables.md
-    - name: Use predefined variables
-      displayName: build variables, agent variables, pipeline variables, system variables
-      href: build/variables.md
+      href: variables/index.md
+    - name: Variables reference
+      displayName: build variables, agent variables, pipeline variables, system variables, release variables, classic release variables, artifacts variables
+      href: variables/reference.md
     - name: Set variables in scripts
       displayName: variables, task, setvariable, output variables, scripts
-      href: process/set-variables-scripts.md
+      href: variables/scripts.md
     - name: Set secret variables
       displayName: secret variables, key vault, variable group, logging command
-      href: process/set-secret-variables.md
-    - name: Variable groups
-      items:
-      - name: Manage variable groups
-        displayName: Azure key vault, link secrets, expansion, expand variables
-        href: library/variable-groups.md
-      - name: Link a variable group to Azure Key Vault
-        displayName: Azure key vault, link secrets, expansion, expand variables
-        href: library/link-variable-groups-to-key-vaults.md
-      - name: Manage variables in variable groups (CLI)
-        displayName: create pipeline, manage pipeline, monitor pipeline, secret variable
-        href: scripts/cli/pipeline-variable-group-secret-nonsecret-variables.md
-    - name: Use classic release and artifacts variables
-      displayName: identity, system, build, agent, deployment job, System.AccessToken, System.Debug
-      href: release/variables.md
-    - name: Job access tokens
-      displayName: job access token, identity, build service account, project build service account, collection build service account, access token, build service
-      href: process/access-tokens.md
+      href: variables/secrets.md
   - name: Library, resources, & secure files
     items:
     - name: Pipeline resources
@@ -186,6 +169,12 @@
     - name: Library & shared resources
       displayName: security roles, variables, variable groups, secure files
       href: library/index.md
+    - name: Manage variable groups
+      displayName: Azure Key Vault, link secrets, expansion, expand variables, shared variables
+      href: library/variable-groups.md
+    - name: Link a variable group to Azure Key Vault
+      displayName: Azure Key Vault, link secrets, variable groups
+      href: library/variable-groups.md#link-a-variable-group-to-azure-key-vault
     - name: Resources in YAML pipelines
       href: process/resources.md
     - name: Define and target environments
@@ -441,7 +430,7 @@
         href: release/artifacts.md
       - name: Release variables
         displayName: release, deploy, variables
-        href: release/variables.md
+        href: variables/reference.md#classic-release-variables
       - name: Release triggers (Classic)
         displayName: release trigger, stage trigger, deploy PR, scheduled trigger
         href: release/triggers.md
@@ -634,7 +623,7 @@
   - name: Pipeline queues but never starts
     href: troubleshooting/troubleshoot-start.md
   - name: Debug release issues
-    href: release/variables.md#run-a-release-in-debug-mode
+    href: variables/reference.md#run-a-release-in-debug-mode
   - name: Troubleshoot ARM service connections
     href: release/azure-rm-endpoint.md
   - name: Troubleshoot Azure Web App deployment
@@ -723,6 +712,9 @@
     - name: Secure access to Azure repositories from pipelines
       displayName: forks, branches, access token
       href: security/secure-access-to-repos.md
+    - name: Job access tokens
+      displayName: job access token, identity, build service account, project build service account, collection build service account, access token, build service
+      href: process/access-tokens.md
     - name: Protecting secrets
       href: security/secrets.md
     - name: Pipeline resources
