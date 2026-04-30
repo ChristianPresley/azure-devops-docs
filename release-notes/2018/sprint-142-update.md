@@ -89,12 +89,12 @@ Linking related or dependent work gives you broader context into the work you're
 
 > [!NOTE]
 > Permissions are respected across both Azure DevOps organizations, which must both be backed by the same Azure AD tenant.
-> 
+>
 > [!div class="mx-imgBorder"]
 > ![Remote link](media/142_05.png)
 
 As you begin to manage several dependencies, use the new **Remote Link Count** field in **Queries** to list the work items that have remote dependencies in your project, or consider installing the [Dependency Tracker](https://marketplace.visualstudio.com/items?itemName=ms-eswm.dependencytracker) extension. This extension, which was created by the Windows group at Microsoft to meet their scale needs, builds upon remote links to display a rich hierarchy and graphical representation of your dependencies.
- 
+
 ### Open work items from search
 
 Previously, a work item couldn't be opened from the search results page if the work item preview pane was turned off. This would make it difficult to dig into your search results. Now you can click on the work item title to open the work items in a modal window. This feature was prioritized from UserVoice.
@@ -120,7 +120,7 @@ Build counters provide a way to uniquely number and label builds. Previously, yo
 * You can define multiple counters per definition.
 * You can query for the value of a counter outside of a build. For instance, you can count the number of builds that have run since last reset using a counter.
 
-See the documentation on [User-defined variables](/azure/devops/pipelines/process/variables?tabs=yaml%2cbatch&view=azure-devops&preserve-view=true) for more information about build counters.
+See the documentation on [User-defined variables](/azure/devops/pipelines/variables/index?tabs=yaml%2cbatch&view=azure-devops&preserve-view=true) for more information about build counters.
 
 ### Use YAML to specify branches to build for pull requests
 
@@ -173,11 +173,11 @@ The Azure Pipelines [open source, cross-platform agent](https://github.com/Micro
 
 ### Clone variable groups
 
-We have added support for cloning variable groups. Whenever you want to replicate a variable group and just update few of the variables, you don't need to go through the tedious process of adding variables one by one. You can now quickly make a copy of your variable group, update the values appropriately, and save it as a new variable group. 
+We have added support for cloning variable groups. Whenever you want to replicate a variable group and just update few of the variables, you don't need to go through the tedious process of adding variables one by one. You can now quickly make a copy of your variable group, update the values appropriately, and save it as a new variable group.
 
 > [!div class="mx-imgBorder"]
 > ![Clone variable group](media/142_13.png)
-> 
+>
 > [!NOTE]
 > The secret variable values are not copied over when you clone a variable group. You need to update the encrypted variables and then save the cloned variable group.
 
@@ -192,7 +192,7 @@ Continuing our commitment towards improved traceability, we are happy to announc
 
 The Azure App Service Deploy task (4.*) version now supports [RunFromPackage](/azure/azure-functions/run-functions-from-deployment-package) (previously called [RunFromZip](https://github.com/Azure/app-service-announcements/issues/110).
 
-App Service supports a number of different techniques to deploy your files such as msdeploy (aka WebDeploy), git, ARM and more. But all these techniques have a limitation. Your files are deployed under your wwwroot folder (specifically d:\home\site\wwwroot) and the runtime then runs the files from there. 
+App Service supports a number of different techniques to deploy your files such as msdeploy (aka WebDeploy), git, ARM and more. But all these techniques have a limitation. Your files are deployed under your wwwroot folder (specifically d:\home\site\wwwroot) and the runtime then runs the files from there.
 
 With Run From Package, there is no longer a deployment step which copies the individual files to wwwroot. Instead, you just point it to a zip file, and the zip gets mounted on wwwroot as a read-only file system. This has several benefits:
 * Reduces the risk of file copy locking issues.
@@ -203,7 +203,7 @@ With Run From Package, there is no longer a deployment step which copies the ind
 
 ### Deploy Linux containers with the App Server Deploy task
 
-The 4.* version of the Azure App Service Deploy task now supports deploying your own custom container to [Azure Functions on Linux](https://blogs.msdn.microsoft.com/appserviceteam/2017/11/15/functions-on-linux-preview/). 
+The 4.* version of the Azure App Service Deploy task now supports deploying your own custom container to [Azure Functions on Linux](https://blogs.msdn.microsoft.com/appserviceteam/2017/11/15/functions-on-linux-preview/).
 
 The Linux hosting model for Azure Functions is based on Docker containers which bring greater flexibility in terms of packaging and leveraging app specific dependencies. Functions on Linux can be hosted in 2 different modes:
 
@@ -214,13 +214,13 @@ The Linux hosting model for Azure Functions is based on Docker containers which 
 
 ### Azure Test Runner client to run manual tests for desktop applications
 
-You can now use the Azure Test Runner (ATR) client to run manual tests for desktop applications. This will help you move from Microsoft Test Manager to Azure Test Plans. Please refer to our guidance [here](/azure/devops/test/mtm/guidance-mtm-usage?view=azure-devops&preserve-view=true). Using the ATR client, you can run your manual tests and record the test results for each test step. You also have data collection capabilities such as screenshot, image action log, and audio video recording. If you find an issue when testing, use Test Runner to create a bug with test steps, screenshots, and comments automatically included in the bug.  
+You can now use the Azure Test Runner (ATR) client to run manual tests for desktop applications. This will help you move from Microsoft Test Manager to Azure Test Plans. Please refer to our guidance [here](/azure/devops/test/mtm/guidance-mtm-usage?view=azure-devops&preserve-view=true). Using the ATR client, you can run your manual tests and record the test results for each test step. You also have data collection capabilities such as screenshot, image action log, and audio video recording. If you find an issue when testing, use Test Runner to create a bug with test steps, screenshots, and comments automatically included in the bug.
 
-ATR requires a one-time download and install of the runner. Select **Run for desktop application** as shown below. 
+ATR requires a one-time download and install of the runner. Select **Run for desktop application** as shown below.
 
 > [!div class="mx-imgBorder"]
 > ![Azure Test Runner](media/142_01.png)
-> 
+>
 > [!div class="mx-imgBorder"]
 > ![Azure Test Runner install](media/142_02.png)
 
