@@ -14,6 +14,9 @@ monikerRange: '<= azure-devops'
 
 [!INCLUDE [version-lt-eq-azure-devops](../../includes/version-lt-eq-azure-devops.md)]
 
+> [!NOTE]
+> This tutorial uses **Classic release pipelines**. If you use **YAML pipelines**, see [Define approvals and checks](../process/approvals.md) for the equivalent capabilities on environments and service connections.
+
 By using a combination of manual deployment approvals, gates, and manual intervention in your release pipeline, you can quickly and easily configure your deployment to meet all the specific pre-deployment requirements for your workflow.
 
 In this tutorial, you will learn about:
