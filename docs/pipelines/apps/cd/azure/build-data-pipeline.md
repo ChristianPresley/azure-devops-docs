@@ -14,18 +14,18 @@ monikerRange: '=azure-devops'
 
 [!INCLUDE [version-eq-azure-devops](../../../../includes/version-eq-azure-devops.md)]
 
-Get started building a data pipeline with data ingestion, data transformation, and model training. 
+Get started building a data pipeline with data ingestion, data transformation, and model training.
 
-Learn how to grab data from a CSV (comma-separated values) file and save the data to Azure Blob Storage. Transform the data and save it to a staging area. Then train a machine learning model by using the transformed data. Write the model to blob storage as a Python [pickle file](https://docs.python.org/3/library/pickle.html).  
+Learn how to grab data from a CSV (comma-separated values) file and save the data to Azure Blob Storage. Transform the data and save it to a staging area. Then train a machine learning model by using the transformed data. Write the model to blob storage as a Python [pickle file](https://docs.python.org/3/library/pickle.html).
 
 ## Prerequisites
 
 Before you begin, you need:
 - An Azure account that has an active subscription. [Create an account for free](https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn).
 - An active Azure DevOps organization. [Sign up for Azure Pipelines](../../../get-started/pipelines-sign-up.md).
-    - The **Administrator** role for service connections in your Azure DevOps project. Learn how to [add the Administrator role](../../../library/add-resource-protection.md).  
+    - The **Administrator** role for service connections in your Azure DevOps project. Learn how to [add the Administrator role](../../../library/add-resource-protection.md).
 - Data from [sample.csv](https://github.com/MicrosoftDocs/azure-devops-docs-samples/raw/main/azure-data-pipeline/data/sample.csv).
-- Access to the [data pipeline solution](https://github.com/MicrosoftDocs/azure-devops-docs-samples/tree/main/azure-data-pipeline) in GitHub. 
+- Access to the [data pipeline solution](https://github.com/MicrosoftDocs/azure-devops-docs-samples/tree/main/azure-data-pipeline) in GitHub.
 - [DevOps for Azure Databricks](https://marketplace.visualstudio.com/items?itemName=riserrad.azdo-databricks).
 
 
@@ -118,11 +118,11 @@ Select a default region to make it easier to run commands. After you specify the
 1. Run the following `az storage container create` command to create two containers, `rawdata` and `prepareddata`.
 
     ```azurecli
-    az storage container create -n rawdata --account-name $storageName 
-    az storage container create -n prepareddata --account-name $storageName 
+    az storage container create -n rawdata --account-name $storageName
+    az storage container create -n prepareddata --account-name $storageName
     ```
-    
-1. Run the following `az keyvault create` command to create a new Key Vault. 
+
+1. Run the following `az keyvault create` command to create a new Key Vault.
 
     ```azurecli
     az keyvault create \
@@ -138,19 +138,19 @@ Select a default region to make it easier to run commands. After you specify the
     * Location: Your closest location
     * Clear the selection for **Enable Git**.
 
-   1. Add the [Azure Data Factory extension](/cli/azure/datafactory). 
-   
+   1. Add the [Azure Data Factory extension](/cli/azure/datafactory).
+
         ```azurecli
        az extension add --name datafactory
-        ```   
-   1. Run the following `az datafactory create` command to create a new Azure Data Factory.  
-    
+        ```
+   1. Run the following `az datafactory create` command to create a new Azure Data Factory.
+
        ```azurecli
         az datafactory create \
             --name data-factory-cicd-dev \
             --resource-group $rgName
        ```
-    2. Copy the subscription ID. Your data factory uses this ID later. 
+    2. Copy the subscription ID. Your data factory uses this ID later.
 
 1. [Create a second data factory](https://ms.portal.azure.com/#create/hub) by using the portal UI or the Azure CLI. You use this Azure Data Factory for testing.
 
@@ -160,29 +160,29 @@ Select a default region to make it easier to run commands. After you specify the
     * Location: Your closest location
     * Clear the selection for **Enable GIT**.
 
-  
-   1. Run the following `az datafactory create` command to create a new Azure Data Factory for testing.  
-    
+
+   1. Run the following `az datafactory create` command to create a new Azure Data Factory for testing.
+
        ```azurecli
         az datafactory create \
             --name data-factory-cicd-test \
             --resource-group $rgName
        ```
-    
-    2. Copy the subscription ID. Your data factory uses this ID later. 
- 
-1. [Add a new Azure Databricks service](https://ms.portal.azure.com/#create/hub): 
+
+    2. Copy the subscription ID. Your data factory uses this ID later.
+
+1. [Add a new Azure Databricks service](https://ms.portal.azure.com/#create/hub):
     * Resource group: `data-pipeline-cicd-rg`
-    * Workspace name: `databricks-cicd-ws`    
+    * Workspace name: `databricks-cicd-ws`
     * Location: Your closest location
-     
-   1. Add the Azure Databricks extension if it's not already installed. 
+
+   1. Add the Azure Databricks extension if it's not already installed.
 
        ```azurecli
         az extension add --name databricks
-        ```   
-        
-   2. Run the following `az databricks workspace create` command to create a new workspace.  
+        ```
+
+   2. Run the following `az databricks workspace create` command to create a new workspace.
         ```azurecli
         az databricks workspace create \
             --resource-group $rgName \
@@ -190,11 +190,11 @@ Select a default region to make it easier to run commands. After you specify the
             --location $region  \
             --sku trial
         ```
-    3. Copy the subscription ID. Your Databricks service uses this ID later. 
+    3. Copy the subscription ID. Your Databricks service uses this ID later.
 
 ## Upload data to your storage container
 
-1. In the Azure portal, open your storage account in the `data-pipeline-cicd-rg` resource group. 
+1. In the Azure portal, open your storage account in the `data-pipeline-cicd-rg` resource group.
 1. Go to **Blob Service** > **Containers**.
 1. Open the `prepareddata` container.
 1. Upload the [sample.csv](https://github.com/MicrosoftDocs/azure-devops-docs-samples/raw/main/azure-data-pipeline/data/sample.csv) file.
@@ -205,23 +205,23 @@ Select a default region to make it easier to run commands. After you specify the
 You use Azure Key Vault to store all connection information for your Azure services.
 
 ### Create a Databricks personal access token
-1. In the Azure portal, go Databricks and then open your workspace. 
-1. In the Azure Databricks UI, [create and copy a personal access token](/azure/databricks/dev-tools/api/latest/authentication#--generate-a-personal-access-token). 
+1. In the Azure portal, go Databricks and then open your workspace.
+1. In the Azure Databricks UI, [create and copy a personal access token](/azure/databricks/dev-tools/api/latest/authentication#--generate-a-personal-access-token).
 
-### Copy the account key and connection string for your storage account 
-1. Go to your storage account. 
-1. Open **Access keys**. 
-1. Copy the first key and connection string. 
+### Copy the account key and connection string for your storage account
+1. Go to your storage account.
+1. Open **Access keys**.
+1. Copy the first key and connection string.
 
 ### Save values to key vault
 1. Create three secrets:
-    
+
     * databricks-token: `your-databricks-pat`
-    * StorageKey: `your-storage-key`    
+    * StorageKey: `your-storage-key`
     * StorageConnectString: `your-storage-connection`
 
-1. Run the following `az keyvault secret set` command to add secrets to your key vault.  
-   
+1. Run the following `az keyvault secret set` command to add secrets to your key vault.
+
     ```azurecli
     az keyvault secret set --vault-name "$keyVault" --name "databricks-token" --value "your-databricks-pat"
     az keyvault secret set --vault-name "$keyVault" --name "StorageKey" --value "your-storage-key"
@@ -230,7 +230,7 @@ You use Azure Key Vault to store all connection information for your Azure servi
 
 ## Import the data pipeline solution
 1. Sign in to your Azure DevOps organization and then go to your project.
-1. Go to **Repos** and then import your forked version of the [GitHub repository](https://github.com/MicrosoftDocs/azure-devops-docs-samples/raw/main/azure-data-pipeline/). For more information, see [Import a Git repo into your project](../../../../repos/git/import-git-repository.md). 
+1. Go to **Repos** and then import your forked version of the [GitHub repository](https://github.com/MicrosoftDocs/azure-devops-docs-samples/raw/main/azure-data-pipeline/). For more information, see [Import a Git repo into your project](../../../../repos/git/import-git-repository.md).
 
 ## Add an Azure Resource Manager service connection
 1. Create an Azure Resource Manager [service connection](../../../library/service-endpoints.md).
@@ -238,17 +238,17 @@ You use Azure Key Vault to store all connection information for your Azure servi
 1. Select your subscription.
 1. Choose the **data-pipeline-cicd-rg** resource group.
 1. Name the service connection `azure_rm_connection`.
-1. Select **Grant access permission to all pipelines**. You need the Service Connections Administrator role to select this option. 
+1. Select **Grant access permission to all pipelines**. You need the Service Connections Administrator role to select this option.
 
 ## Add pipeline variables
 
 1. [Create a new variable group](../../../library/variable-groups.md) named `datapipeline-vg`.
 
-1. Add the Azure DevOps extension if you didn't already install it. 
+1. Add the Azure DevOps extension if you didn't already install it.
 
    ```azurecli
-   az extension add --name azure-devops 
-   ```  
+   az extension add --name azure-devops
+   ```
 1. Sign in to your [Azure DevOps organization](../../../../cli/log-in-via-pat.md).
 
    ```azurecli
@@ -270,70 +270,70 @@ You use Azure Key Vault to store all connection information for your Azure servi
                                        "STORAGE_CONTAINER_NAME=rawdata"
    ```
 
-1. Create a second variable group named `keys-vg`. This group pulls data variables from key Vvult. 
-1. Select **Link secrets from an Azure Key Vault as variables**. For more information, see [Link a variable group to secrets in Azure Key Vault](../../../library/link-variable-groups-to-key-vaults.md). 
-1. Authorize the Azure subscription. 
+1. Create a second variable group named `keys-vg`. This group pulls data variables from key Vvult.
+1. Select **Link secrets from an Azure Key Vault as variables**. For more information, see [Link a variable group to secrets in Azure Key Vault](../../../library/variable-groups.md#link-a-variable-group-to-azure-key-vault).
+1. Authorize the Azure subscription.
 1. Choose all of the available secrets to add as variables (`databricks-token`,`StorageConnectString`,`StorageKey`).
 
 
-## Configure Azure Databricks and Azure Data Factory 
-Follow the steps in the next sections to set up Azure Databricks and Azure Data Factory. 
+## Configure Azure Databricks and Azure Data Factory
+Follow the steps in the next sections to set up Azure Databricks and Azure Data Factory.
 ### Create testscope in Azure Databricks
 
-1. In the Azure portal, go to **Key vault** > **Properties**. 
-1. Copy the **DNS Name** and **Resource ID**. 
-1. In your Azure Databricks workspace, [create a secret scope](/azure/databricks/security/secrets/secret-scopes) named `testscope`. 
+1. In the Azure portal, go to **Key vault** > **Properties**.
+1. Copy the **DNS Name** and **Resource ID**.
+1. In your Azure Databricks workspace, [create a secret scope](/azure/databricks/security/secrets/secret-scopes) named `testscope`.
 
 ### Add a new cluster in Azure Databricks
 
-1. In the Azure Databricks workspace, go to **Clusters**. 
-1. Select **Create Cluster**. 
-1. Name and save your new cluster. 
-1. Select your new cluster name. 
-1. In the URL string, copy the content between `/clusters/` and `/configuration`. For example, in the string `clusters/0306-152107-daft561/configuration`, you copy `0306-152107-daft561`. 
-1. Save this string to use later. 
+1. In the Azure Databricks workspace, go to **Clusters**.
+1. Select **Create Cluster**.
+1. Name and save your new cluster.
+1. Select your new cluster name.
+1. In the URL string, copy the content between `/clusters/` and `/configuration`. For example, in the string `clusters/0306-152107-daft561/configuration`, you copy `0306-152107-daft561`.
+1. Save this string to use later.
 
 ### Set up your code repository in Azure Data Factory
 
-1. In Azure Data Factory, go to **Author & Monitor**. For more information, see [Create a data factory](/azure/data-factory/quickstart-create-data-factory-portal). 
-1. Select **Set up code repository** and then connect your repo. 
+1. In Azure Data Factory, go to **Author & Monitor**. For more information, see [Create a data factory](/azure/data-factory/quickstart-create-data-factory-portal).
+1. Select **Set up code repository** and then connect your repo.
     * Repository type: Azure DevOps Git
     * Azure DevOps organization: Your active account
     * Project name: Your Azure DevOps data pipeline project
-    * Git repository name: **Use existing**. 
-        * Select the **main** branch for collaboration.     
+    * Git repository name: **Use existing**.
+        * Select the **main** branch for collaboration.
         * Set **/azure-data-pipeline/factorydata** as the root folder.
     * Branch to import resource into: Select **Use existing** and **main**.
 
 ### Link Azure Data Factory to your key vault
-1. In the Azure portal UI, open the key vault. 
+1. In the Azure portal UI, open the key vault.
 1. Select **Access policies**.
 1. Select **Add Access Policy**.
-1. For **Configure from template**, select **Key & Secret Management**. 
-1. In **Select principal**, search for the name of your development Azure Data Factory and add it.  
+1. For **Configure from template**, select **Key & Secret Management**.
+1. In **Select principal**, search for the name of your development Azure Data Factory and add it.
 1. Select **Add** to add your access policies.
-1. Repeat these steps to add an access policy for the test Azure Data Factory. 
+1. Repeat these steps to add an access policy for the test Azure Data Factory.
 
 ### Update the key vault linked service in Azure Data Factory
 1. Go to **Manage** > **Linked services**.
-1. Update the key vault to connect to your subscription. 
+1. Update the key vault to connect to your subscription.
 
 ### Update the storage linked service in Azure Data Factory
 1. Go to **Manage** > **Linked services**.
-1. Update the Azure Blob Storage value to connect to your subscription. 
+1. Update the Azure Blob Storage value to connect to your subscription.
 
 ### Update the Azure Databricks linked service in Azure Data Factory
 1. Go to **Manage** > **Linked services**.
-1. Update the Azure Databricks value to connect to your subscription. 
-1. For the **Existing Cluster ID**, enter the cluster value you saved earlier. 
+1. Update the Azure Databricks value to connect to your subscription.
+1. For the **Existing Cluster ID**, enter the cluster value you saved earlier.
 
 ### Test and publish the data factory
-1. In Azure Data Factory, go to **Edit**. 
-1. Open `DataPipeline`. 
-1. Select **Variables**. 
+1. In Azure Data Factory, go to **Edit**.
+1. Open `DataPipeline`.
+1. Select **Variables**.
 1. Verify that the `storage_account_name` refers to your storage account in the Azure portal. Update the default value if necessary. Save your changes.
-1. Select **Validate** to verify `DataPipeline`. 
-1. Select **Publish** to publish data-factory assets to the `adf_publish` branch of your repository.  
+1. Select **Validate** to verify `DataPipeline`.
+1. Select **Publish** to publish data-factory assets to the `adf_publish` branch of your repository.
 
 ## Run the CI/CD pipeline
 
@@ -341,7 +341,7 @@ Follow these steps to run the continuous integration and continuous delivery (CI
 
 1. Go to the **Pipelines** page. Then choose the action to create a new pipeline.
 1. Select **Azure Repos Git** as the location of your source code.
-1. When the list of repositories appears, select your repository. 
+1. When the list of repositories appears, select your repository.
 1. As you set up your pipeline, select **Existing Azure Pipelines YAML file**. Choose the YAML file: **/azure-data-pipeline/data_pipeline_ci_cd.yml**.
 1. Run the pipeline. When running your pipeline for the first time, you might need to give permission to access a resource during the run.
 
@@ -412,16 +412,16 @@ stages:
                     ResourceGroupName: $(RESOURCE_GROUP)
 ```
 
-For the complete pipeline file, see the [azure-data-pipeline repository](https://github.com/MicrosoftDocs/azure-devops-docs-samples/tree/main/azure-data-pipeline). 
+For the complete pipeline file, see the [azure-data-pipeline repository](https://github.com/MicrosoftDocs/azure-devops-docs-samples/tree/main/azure-data-pipeline).
 
 
 ## Clean up resources
 
 If you don't plan to continue using this application, delete your data pipeline by following these steps:
 
-1. Delete the `data-pipeline-cicd-rg` resource group. 
-2. Delete your Azure DevOps project. 
-  
+1. Delete the `data-pipeline-cicd-rg` resource group.
+2. Delete your Azure DevOps project.
+
 ## Next steps
 > [!div class="nextstepaction"]
 > [Learn more about data in Azure Data Factory](/azure/data-factory/concepts-pipelines-activities)
