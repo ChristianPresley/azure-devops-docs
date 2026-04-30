@@ -15,7 +15,7 @@ This article describes the demands available in Managed DevOps Pools and how to 
 
 ## WorkFolder
 
-The default work folder for agents is typically `D:\a\_work` (or `C:\a\_work` if the pool's VM size doesn't have a `D` drive) for Windows agents or `/mnt/vss/_work` for Linux agents, and your pipeline can reference it by using the `Agent.WorkFolder` [predefined variable](/azure/devops/pipelines/build/variables). You can override this location to change both the drive and directory name used when the agent starts by specifying the `WorkFolder` demand in your pipeline.
+The default work folder for agents is typically `D:\a\_work` (or `C:\a\_work` if the pool's VM size doesn't have a `D` drive) for Windows agents or `/mnt/vss/_work` for Linux agents, and your pipeline can reference it by using the `Agent.WorkFolder` [predefined variable](/azure/devops/pipelines/variables/reference). You can override this location to change both the drive and directory name used when the agent starts by specifying the `WorkFolder` demand in your pipeline.
 
 > [!TIP]
 > The `WorkFolder` demand configures a custom agent working folder at the pipeline level. To configure your agents to use a custom working directory for every agent in the pool, configure the [Work folder](configure-advanced-settings.md#work-folder) setting.
@@ -26,12 +26,12 @@ Set your agent work folder by configuring the `WorkFolder` demand in the `demand
 
 #### [Windows](#tab/windows/)
 
-The default work folder for Windows agents is typically on drive `D`. You can reference it in your pipeline by using the `Agent.WorkFolder` [predefined variable](/azure/devops/pipelines/build/variables).
+The default work folder for Windows agents is typically on drive `D`. You can reference it in your pipeline by using the `Agent.WorkFolder` [predefined variable](/azure/devops/pipelines/variables/reference).
 
 In the following example, `WorkFolder` is set to an [attached data disk](./configure-storage.md?tabs=windows#use-the-data-disk-for-your-agent-working-directory) with the letter `F`.
 
 ```yml
-pool: 
+pool:
   name: fabrikam-managed-pool # Name of pool
   demands:
   - WorkFolder -equals f:\custom-work-folder
@@ -39,12 +39,12 @@ pool:
 
 #### [Linux](#tab/linux/)
 
-The default work folder for agents is typically `/mnt` for Linux. You can reference it in your pipeline by using the `Agent.WorkFolder` [predefined variable](/azure/devops/pipelines/build/variables).
+The default work folder for agents is typically `/mnt` for Linux. You can reference it in your pipeline by using the `Agent.WorkFolder` [predefined variable](/azure/devops/pipelines/variables/reference).
 
 In the following example, `WorkFolder` is set to an [attached data disk](./configure-storage.md?tabs=linux#use-the-data-disk-for-your-agent-working-directory).
 
 ```yml
-pool: 
+pool:
   name: fabrikam-managed-pool # Name of pool
   demands:
   - WorkFolder -equals /mnt/storage/sdc/custom-work-folder
@@ -59,7 +59,7 @@ pool:
 Configure the `Priority` demand in the `demands` section of your pipeline.
 
 ```yml
-pool: 
+pool:
   name: fabrikam-dev-pool # Name of pool
   demands:
   - Priority -equals Low
@@ -83,7 +83,7 @@ If you have multiple images in your pool, and don't use demands in your pipeline
 In the following example, a pipeline is configured to run on an image that's configured with an `ubuntu-24.04-gen2` alias.
 
 ```yml
-pool: 
+pool:
   name: fabrikam-dev-pool # Name of pool
   demands:
   - ImageOverride -equals ubuntu-24.04-gen2
@@ -101,7 +101,7 @@ When you use `ImageVersionOverride` to specify a different image version than wh
 Configure the `ImageVersionOverride` demand in the `demands` section of your pipeline. The following example specifies an `ImageVersionOverride` of `20250427.1.0`.
 
 ```yml
-pool: 
+pool:
   name: fabrikam-dev-pool # Name of pool
   demands:
   - ImageVersionOverride -equals 20250427.1.0
@@ -123,7 +123,7 @@ Subsequent jobs with the same `CustomCapabilities` demand use that tagged agent 
 In the following example, a pipeline is run using the `windows-2022` Azure Pipelines image in a stateful pool. If an online agent is ready to accept jobs and is tagged with the `CustomCapabilities` attribute (set by a pipeline that previously ran on the agent), that agent is used to run this pipeline. If no online agent matches this demand, the next available agent is used to run the job, and the agent is tagged with the `CustomCapabilities` attribute. Future pipeline runs with this demand runs on this agent, if it's online and ready for jobs.
 
 ```yml
-pool: 
+pool:
   name: fabrikam-dev-pool # Name of pool
   demands:
   - ImageOverride -equals windows-2022
