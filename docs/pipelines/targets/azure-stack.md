@@ -5,7 +5,7 @@ ms.assetid: 76C2080A-C1D9-44AF-AA76-1953BA4C2837
 ms.topic: how-to
 ms.author: ronai
 author: RoopeshNair
-ms.date: 02/01/2022
+ms.date: 04/30/2026
 monikerRange: "<=azure-devops"
 ms.custom: sfi-image-nochange
 ---
@@ -43,9 +43,9 @@ The following code snippets are written for a Windows machine using the PowerShe
     endpoint-resource-manager | "https://management.orlando.azurestack.corp.microsoft.com"  | The resource management endpoint. |
     suffix-storage-endpoint | "orlando.azurestack.corp.microsoft.com"  | The endpoint suffix for storage accounts. |
     suffix-keyvault-dns | ".vault.orlando.azurestack.corp.microsoft.com"  | The Key Vault service dns suffix. |
-    endpoint-active-directory-graph-resource-id | "https://graph.windows.net/"  | The Active Directory resource ID. |
+    endpoint-microsoft-graph-resource-id | "https://graph.microsoft.com/"  | The Microsoft Graph resource ID. (Replaces the deprecated Azure AD Graph endpoint, `https://graph.windows.net/`.) |
     endpoint-sql-management | https://notsupported  | The sql server management endpoint. Set this to `https://notsupported` |
-    profile | 2019-03-01-hybrid | Profile to use for this cloud. |
+    profile | 2020-09-01-hybrid | Profile to use for this cloud. |
 
 2. Open your command-line tool such as Windows PowerShell or Bash and sign in. Use the following command:
 
@@ -61,9 +61,9 @@ The following code snippets are written for a Windows machine using the PowerShe
         --endpoint-resource-manager "https://management.<local>.<FQDN>" `
         --suffix-storage-endpoint ".<local>.<FQDN>" `
         --suffix-keyvault-dns ".vault.<local>.<FQDN>" `
-        --endpoint-active-directory-graph-resource-id "https://graph.windows.net/" `
+        --endpoint-microsoft-graph-resource-id "https://graph.microsoft.com/" `
         --endpoint-sql-management https://notsupported  `
-        --profile 2019-03-01-hybrid
+        --profile 2020-09-01-hybrid
     ```
 
 4. Get your subscription ID and resource group that you want to use for the SPN.
@@ -72,11 +72,13 @@ The following code snippets are written for a Windows machine using the PowerShe
 
     ```azurecli  
     az ad sp create-for-rbac --name "myApp" --role contributor `
-        --scopes /subscriptions/{subscription-id}/resourceGroups/{resource-group} `
-        --sdk-auth
+        --scopes /subscriptions/{subscription-id}/resourceGroups/{resource-group}
     ```
 
-    If you don’t have cloud operator privileges, you can also sign in with the SPN provided to you by your cloud operator. You’ll need the client ID, the secret, and your tenant ID. With these values, you can use the following Azure CLI commands to create the JSON object that contains the values you’ll need to create your service connection.
+    > [!NOTE]
+    > The `--sdk-auth` parameter has been deprecated and removed from `az ad sp create-for-rbac`. Capture the JSON returned by the command above—it contains the `appId`, `password`, and `tenant` values you need to create the service connection. Where possible, prefer [workload identity federation](../library/connect-to-azure.md) over a long-lived service principal secret.
+
+    If you don’t have cloud operator privileges, you can also sign in with the SPN provided to you by your cloud operator. You’ll need the client ID, the secret, and your tenant ID. With these values, you can use the following Azure CLI commands to capture the values you’ll need to create your service connection.
 
     ```azurecli  
     az login --service-principal -u "<client-id>" -p "<secret>" --tenant "<tenant-ID>" --allow-no-subscriptions
