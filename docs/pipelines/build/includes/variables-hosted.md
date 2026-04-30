@@ -47,7 +47,7 @@ Example of **Agent.ContainerMapping**:
 
 <a id="build-variables"></a>
 
-When you use a variable in a template that isn't marked as available in templates, the variable doesn't render. The variable doesn't render because its value isn't accessible within the template's scope. 
+When you use a variable in a template that isn't marked as available in templates, the variable doesn't render. The variable doesn't render because its value isn't accessible within the template's scope.
 
 | Variable | Description | Available in [templates](../../process/templates.md)? |
 |:---------|:------------|:------------------------------------------------------|
@@ -98,12 +98,12 @@ When you use a variable in a template that isn't marked as available in template
 | Pipeline.Workspace | Workspace directory for a particular pipeline. This variable has the same value as `Agent.BuildDirectory`. For example, `/home/vsts/work/1`. For more information about the agent directory structure, see [Agent directory structure](../../agents/agents.md#agent-directory-structure).|
 
 > [!TIP]
-> If you're using classic release pipelines, you can use [classic releases and artifacts variables](../../release/variables.md) to store and access data throughout your pipeline.
+> If you're using classic release pipelines, you can use [classic releases and artifacts variables](../../variables/reference.md) to store and access data throughout your pipeline.
 
 ##  Deployment job variables
 
 
-These variables are scoped to a specific [Deployment job](../../process/deployment-jobs.md) and is resolved only at job execution time. 
+These variables are scoped to a specific [Deployment job](../../process/deployment-jobs.md) and is resolved only at job execution time.
 
 | Variable | Description |
 |:---------|:------------|
@@ -114,13 +114,13 @@ These variables are scoped to a specific [Deployment job](../../process/deployme
 | Strategy.Name | The name of the deployment strategy: `canary`, `runOnce`, or `rolling`. |
 | Strategy.CycleName | The current cycle name in a deployment. Options are `PreIteration`, `Iteration`, or `PostIteration`. |
 
-## System variables 
+## System variables
 
-When you use a variable in a template that isn't marked as available in templates, the variable doesn't render. The variable doesn't render because its value isn't accessible within the template's scope. 
+When you use a variable in a template that isn't marked as available in templates, the variable doesn't render. The variable doesn't render because its value isn't accessible within the template's scope.
 
 | Variable | Description | Available in [templates](../../process/templates.md)? |
 |:---------|:------------|:------------------------------------------------------|
-| System.AccessToken | [Use the OAuth token to access the REST API](../../scripts/powershell.md#example-powershell-script-access-rest-api).<br><br>[Use System.AccessToken from YAML scripts](../variables.md#systemaccesstoken).<br><br>This variable is agent-scoped, and can be used as an environment variable in a script and as a parameter in a build task. It can't be used as part of the build number or as a version control tag. | Yes |
+| System.AccessToken | [Use the OAuth token to access the REST API](../../scripts/powershell.md#example-powershell-script-access-rest-api).<br><br>[Use System.AccessToken from YAML scripts](../../variables/reference.md#systemaccesstoken).<br><br>This variable is agent-scoped, and can be used as an environment variable in a script and as a parameter in a build task. It can't be used as part of the build number or as a version control tag. | Yes |
 | System.CollectionId | The GUID of the Azure DevOps organization or collection. | Yes |
 | System.CollectionUri | The URI of the Azure DevOps organization or collection. For example: `https://dev.azure.com/fabrikamfiber/`. | Yes |
 | System.DefaultWorkingDirectory | [!INCLUDE [include](../includes/variables-build-sources-directory.md)] | Yes |
