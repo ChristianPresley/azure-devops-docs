@@ -43,12 +43,12 @@ jobs:
     vmImage: 'ubuntu-latest'
   strategy:
     matrix:
-      Python38:
-        python.version: '3.8'
-      Python39:
-        python.version: '3.9'
-      Python310:
-        python.version: '3.10'
+      Python311:
+        python.version: '3.11'
+      Python312:
+        python.version: '3.12'
+      Python313:
+        python.version: '3.13'
 
   steps:
   - task: UsePythonVersion@0
@@ -151,12 +151,12 @@ Azure Pipelines can run parallel Tox test jobs to split up the work. On a develo
     vmImage: 'ubuntu-latest'
   strategy:
     matrix:
-      Python38:
-        python.version: '3.8'
-      Python39:
-        python.version: '3.9'
-      Python310:
-        python.version: '3.10'
+      Python311:
+        python.version: '3.11'
+      Python312:
+        python.version: '3.12'
+      Python313:
+        python.version: '3.13'
 
   steps:
   - task: UsePythonVersion@0
