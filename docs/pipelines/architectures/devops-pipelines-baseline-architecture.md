@@ -1,5 +1,5 @@
 ---
-title: Azure Pipelines baseline architecture 
+title: Azure Pipelines baseline architecture
 description: This architecture illustrates building a continuous integration and deployment pipeline using Azure Pipelines.
 ms.date: 01/24/2025
 ms.topic: example-scenario
@@ -23,7 +23,7 @@ This article describes a high-level DevOps workflow for deploying application ch
 
 ## Architecture
 
-:::image type="complex" source="media/azure-devops-ci-cd-architecture.svg" lightbox="media/azure-devops-ci-cd-architecture.svg" alt-text="Architecture diagram of a CI/CD pipeline using Azure Pipelines." border="false"::: 
+:::image type="complex" source="media/azure-devops-ci-cd-architecture.svg" lightbox="media/azure-devops-ci-cd-architecture.svg" alt-text="Architecture diagram of a CI/CD pipeline using Azure Pipelines." border="false":::
 Architecture diagram of an Azure pipeline. The diagram shows the following steps: 1. An engineer pushing code changes to an Azure DevOps Git repository. 2. An Azure Pipelines PR pipeline getting triggered. This pipeline shows the following tasks: linting, restore, build, and unit tests. 3. An Azure Pipelines CI pipeline getting triggered. This pipeline shows the following tasks: get secrets, linting, restore, build, unit tests, integration tests, and publishing build artifacts. 3. An Azure Pipelines CD pipeline getting triggered. This pipeline shows the following tasks: download artifacts, deploy to staging, tests, manual intervention, and release. 4. Shows the CD pipeline deploying to a staging environment. 5. Shows the CD pipeline releasing to a production environment. 6. Shows an operator monitoring the pipeline, taking advantage of Azure Monitor, Azure Application Insights, and Azure Analytics Workspace.
 :::image-end:::
 
@@ -44,7 +44,7 @@ The data flows through the scenario as follows:
 
     If any of the checks fail, the pipeline run ends and the developer will have to make the required changes. If all checks pass, the pipeline should require a PR review. If the PR review fails, the pipeline ends and the developer will have to make the required changes. If all the checks and PR reviews pass, the PR will successfully merge.
 
-1. **CI pipeline** - A merge to Azure Repos Git triggers a CI pipeline. This pipeline runs the same checks as the PR pipeline with some important additions. The CI pipeline runs integration tests. Integration tests can be resource-intensive, so running them in the CI pipeline balances development speed and bug detection. It's also important to note that passing tests in a PR does not always ensure they will succeed after merging, as changes in the main branch can introduce new issues, highlighting the need for post-merge testing. These factors make the CI pipeline a better place for integration tests than the PR pipeline. 
+1. **CI pipeline** - A merge to Azure Repos Git triggers a CI pipeline. This pipeline runs the same checks as the PR pipeline with some important additions. The CI pipeline runs integration tests. Integration tests can be resource-intensive, so running them in the CI pipeline balances development speed and bug detection. It's also important to note that passing tests in a PR does not always ensure they will succeed after merging, as changes in the main branch can introduce new issues, highlighting the need for post-merge testing. These factors make the CI pipeline a better place for integration tests than the PR pipeline.
 These integration tests shouldn't require the deployment of the solution, as the build artifacts haven't been created yet. If the integration tests require secrets, the pipeline gets those secrets from Azure Key Vault. If any of the checks fail, the pipeline ends and the developer will have to make the required changes. The result of a successful run of this pipeline is the creation and publishing of build artifacts.
 
 1. **CD pipeline trigger** - The publishing of artifacts [triggers the CD pipeline](/azure/devops/pipelines/process/pipeline-triggers).
@@ -128,7 +128,7 @@ These considerations implement the pillars of the Azure Well-Architected Framewo
 
 - Consider using one of the [Tokenization Tasks](https://marketplace.visualstudio.com/search?term=token&target=VSTS&category=All%20categories&sortBy=Relevance) available in the VSTS marketplace, in the context often refer to a process where sensitive information (such as API keys, passwords, or other secrets) is replaced with tokens or placeholders during deployment or configuration.
 
-- Use [Release Variables](/azure/devops/pipelines/release/variables) in your release definitions to drive configuration changes of your environments. Release variables can be scoped to an entire release or a given environment. When using variables for secret information, ensure that you select the padlock icon.
+- Use [Classic release variables](/azure/devops/pipelines/variables/reference#classic-release-variables) in your release definitions to drive configuration changes of your environments. Release variables can be scoped to an entire release or a given environment. When using variables for secret information, ensure that you select the padlock icon.
 
 - Consider using [Self-hosted agents](/azure/devops/pipelines/agents/agents?tabs=browser#install) if you're deploying to resources running in a secured virtual network. You might also consider self-hosted agents if you're running a high volume of builds. In cases of high build volumes, self-hosted agents can be used to speed up builds in a cost efficient manner.
 
