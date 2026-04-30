@@ -59,25 +59,25 @@ The [Cache task](/azure/devops/pipelines/tasks/reference/cache-v2) has two requi
 1. **path**: The path to the folder you want to cache. This can be an absolute or relative path. Relative paths are resolved against `$(System.DefaultWorkingDirectory)`.
 
     > [!TIP]
-    > You can use [predefined variables](../build/variables.md) to store the path to the folder you want to cache. However, wildcards are not supported.
+    > You can use [predefined variables](../variables/reference.md) to store the path to the folder you want to cache. However, wildcards are not supported.
 
 2. **key**: This defines the identifier for the cache you want to restore or save. The key is composed of a combination of string values, file paths, or file patterns, with each segment separated by a `|` character.
 
     - **Strings**: <br>
     A fixed value (such as the cache name or a tool name), or taken from an environment variable (like the current OS or job name).
-    
+
     - **File paths**: <br>
-    The path to a specific file whose contents will be hashed. The file must exist at the time the task is run. Any segment that resembles a file path is treated as such, so be cautious, especially when using segments containing `.`, as this may lead to "file doesn't exist" failures. 
+    The path to a specific file whose contents will be hashed. The file must exist at the time the task is run. Any segment that resembles a file path is treated as such, so be cautious, especially when using segments containing `.`, as this may lead to "file doesn't exist" failures.
 
       > [!TIP]
       > To avoid a path-like string segment from being treated like a file path, wrap it with double quotes, for example: `"my.key" | $(Agent.OS) | key.file`
-    
+
     - **File patterns**: <br>
     A comma-separated list of glob-style wildcard patterns that must match at least one file. Examples:
-      
+
       - `**/yarn.lock`: all *yarn.lock* files under the sources directory.
       - `*/asset.json, !bin/**`: all *asset.json* files located in a directory under the sources directory, except those in the *bin* directory.
-    
+
 The contents of any file identified by a file path or file pattern are hashed to generate a dynamic cache key. This is useful when your project has files that uniquely identify what’s being cached. For instance, files like `package-lock.json`, `yarn.lock`, `Gemfile.lock`, or `Pipfile.lock` are often referenced in a cache key, as they represent a unique set of dependencies. Relative file paths or patterns are resolved against `$(System.DefaultWorkingDirectory)`.
 
 - **Example**:
@@ -119,7 +119,7 @@ To specify multiple restore keys, list them on separate lines. The order in whic
 
 - **Example**:
 
-Here's an example of how to use restore keys to cache Yarn packages: 
+Here's an example of how to use restore keys to cache Yarn packages:
 
 ```yaml
 variables:
@@ -149,7 +149,7 @@ If the first restore key doesn't yield a match, the next restore key (`yarn`) Th
 
 ## Use restore condition
 
-In some scenarios, you may want to conditionally execute steps based on whether the cache was successfully restored. For example, you can skip a step that installs dependencies if the cache was restored. This can be achieved using the `cacheHitVar` argument. 
+In some scenarios, you may want to conditionally execute steps based on whether the cache was successfully restored. For example, you can skip a step that installs dependencies if the cache was restored. This can be achieved using the `cacheHitVar` argument.
 
 Setting this input to the name of an environment variable causes the variable to be set to `true` when there's a cache hit, `inexact` if a restore key yields a partial cache hit, and `false` if no cache is found. You can then reference this variable in a [step condition](../process/conditions.md) or within a script.
 
@@ -178,7 +178,7 @@ To ensure isolation between caches from different pipelines and different branch
 
 - Jobs building pull requests can read caches from the target branch (for the same pipeline), but can't write (create) caches in the target branch's scope.
 
-When a cache step is encountered during a run, the cache identified by the key is requested from the server. The server then looks for a cache with this key from the scopes visible to the job, and returns the cache (if available). On cache save (at the end of the job), a cache is written to the scope representing the pipeline and branch. 
+When a cache step is encountered during a run, the cache identified by the key is requested from the server. The server then looks for a cache with this key from the scopes visible to the job, and returns the cache (if available). On cache save (at the end of the job), a cache is written to the scope representing the pipeline and branch.
 
 #### CI, manual, and scheduled runs
 
@@ -228,9 +228,9 @@ steps:
   inputs:
     key: 'gems | "$(Agent.OS)" | Gemfile.lock'
     path: $(BUNDLE_PATH)
-    restoreKeys: | 
+    restoreKeys: |
       gems | "$(Agent.OS)"
-      gems   
+      gems
 ```
 
 ### [Ccache](#tab/ccache)
@@ -245,7 +245,7 @@ variables:
 
 steps:
 - bash: |
-    sudo apt-get install ccache -y    
+    sudo apt-get install ccache -y
     echo "##vso[task.prependpath]/usr/lib/ccache"
   displayName: Install ccache and update PATH to use linked versions of gcc, cc, etc
 
@@ -254,7 +254,7 @@ steps:
   inputs:
     key: 'ccache | "$(Agent.OS)" | $(Build.SourceVersion)'
     path: $(CCACHE_DIR)
-    restoreKeys: | 
+    restoreKeys: |
       ccache | "$(Agent.OS)"
 ```
 
@@ -279,7 +279,7 @@ steps:
       key: 'docker | "$(Agent.OS)" | cache'        ## A unique identifier for the cache
       path: $(Pipeline.Workspace)/docker           ## Path of the folder or file that you want to cache
       cacheHitVar: CACHE_RESTORED                  ## Variable to set to 'true' when the cache is restored
-    
+
   - script: |
       docker load -i $(Pipeline.Workspace)/docker/cache.tar
     displayName: Docker restore
@@ -312,7 +312,7 @@ steps:
           path: $(Pipeline.Workspace)/docker_image_cache
           restoreKeys: |
             docker | "$(Agent.OS)" | mydockerimage
-    
+
       - script: |
           docker buildx create --name builder --driver docker-container --use
           docker buildx build \
@@ -340,7 +340,7 @@ steps:
 - task: Cache@2
   inputs:
     key: 'go | "$(Agent.OS)" | go.mod'
-    restoreKeys: | 
+    restoreKeys: |
       go | "$(Agent.OS)"
     path: $(GO_CACHE_DIR)
   displayName: Cache GO packages
@@ -374,9 +374,9 @@ steps:
     options: '--build-cache'                # String. Gradle options.
   displayName: Build
 
-- script: |   
+- script: |
     # stop the Gradle daemon to ensure no files are left open (impacting the save cache operation later)
-    ./gradlew --stop    
+    ./gradlew --stop
   displayName: Gradlew stop
 ```
 
@@ -514,7 +514,7 @@ steps:
   displayName: Use cached Anaconda environment
   inputs:
     key: 'conda | "$(Agent.OS)" | environment.yml'
-    restoreKeys: | 
+    restoreKeys: |
       python | "$(Agent.OS)"
       python
     path: $(CONDA_CACHE_DIR)
@@ -532,12 +532,12 @@ steps:
       displayName: Cache Anaconda
       inputs:
         key: 'conda | "$(Agent.OS)" | environment.yml'
-        restoreKeys: | 
+        restoreKeys: |
           python | "$(Agent.OS)"
           python
         path: $(CONDA)/envs
         cacheHitVar: CONDA_CACHE_RESTORED
-    
+
     - script: conda env create --quiet --file environment.yml
       displayName: Create environment
       condition: eq(variables.CONDA_CACHE_RESTORED, 'false')
