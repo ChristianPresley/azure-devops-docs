@@ -50,13 +50,13 @@ If no approval is granted within the **Timeout** period, the deployment is rejec
 
 - **Approval policies**:
 
-   - For added security, you can add this approval policy to prevent the user who requested the release from approving it. If you're experimenting with approvals, uncheck this option so that you can approve or reject your own deployments. See [How are the identity variables set?](../../build/variables.md#how-are-the-identity-variables-set) to learn more about identity variables.
+   - For added security, you can add this approval policy to prevent the user who requested the release from approving it. If you're experimenting with approvals, uncheck this option so that you can approve or reject your own deployments. See [How are the identity variables set?](../../variables/reference.md#how-are-the-identity-variables-set) to learn more about identity variables.
    - This policy lets you enforce multifactor authentication in the release approval flow. If this policy is checked, it prompts approvers to re-sign in before approving releases. This feature is only available in Azure DevOps Services for Microsoft Entra backed accounts only.
    - Reduce user workload by automatically approving subsequent prompts if the specified user has already approved the deployment to a previous stage in the pipeline (applies to predeployment approvals only).
 
 ## Approval notifications
 
-You can enable notifications from your project settings to subscribe to release events. Emails are sent to approvers with links to the summary page where they can approve/reject the release. 
+You can enable notifications from your project settings to subscribe to release events. Emails are sent to approvers with links to the summary page where they can approve/reject the release.
 
 1. From your project, select ![gear icon](../../../media/icons/gear-icon.png) **Project settings**.
 
