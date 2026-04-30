@@ -56,7 +56,7 @@ When you save a new task group, you provide a name and description and select a 
 
 1. Select **Create**. The new task group is created and replaces the selected tasks in your pipeline.
 
-1. All the `'$(vars)'` from the underlying tasks, except [predefined variables](../build/variables.md), surface as the mandatory parameters for the newly created task group, and you can edit the values if necessary.
+1. All the `'$(vars)'` from the underlying tasks, except [predefined variables](../variables/reference.md), surface as the mandatory parameters for the newly created task group, and you can edit the values if necessary.
 
    For example, if you had a task input `foobar` that you didn't intend to parameterize, the task input is converted into the task group parameter `'foobar'`. You can provide the default value for the task group parameter `'foobar'` as `$(foobar)` to ensure that at runtime, the expanded task gets the input you intend.
 
@@ -83,7 +83,7 @@ To open the task group details page for editing, select the task group name on t
 :::image type="content" source="media/manage-task-group.png" alt-text="Screenshot that shows managing a task group.":::
 
 - On the **Tasks** tab, you can edit the tasks that make up the task group. For each encapsulated task you can change the parameter values for the nonvariable parameters, edit the existing parameter variables, or convert parameter values to and from variables. When you save the changes, all definitions that use the task group pick up the changes.
-  
+
   All the variable parameters of the task group appear as mandatory parameters in the pipeline definition. You can also set the default values for the task group parameters.
 
 - On the **History** tab, you can see the history of changes to the group.
@@ -101,7 +101,7 @@ All built-in Azure Pipelines tasks are [versioned](../process/tasks.md#task-vers
 1. The string **-test** is appended to the task group version number. When you're happy with the changes, choose **Publish draft**. On the **Publish draft task group** screen, select **Publish as preview** if you want to publish the new version as a preview, and then select **Publish**.
 
    :::image type="content" source="media/publish-preview-task-group.png" alt-text="Screenshot that shows publishing a draft version of a task group.":::
- 
+
 1. You can now use the updated task group in your release processes. You can either change the version number in pipelines that already use the task group, or choose the versioned task group from the **Add tasks** pane. As with built-in tasks, the default when you add a task group is the highest non-preview version.
 
    :::image type="content" source="media/use-preview-task-group.png" alt-text="Screenshot that shows using a draft version of a task group.":::
