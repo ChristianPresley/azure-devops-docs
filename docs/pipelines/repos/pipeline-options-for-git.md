@@ -38,7 +38,7 @@ This is the branch that you want to be the default when you manually queue this 
 
 ::: moniker range="azure-devops"
 > [!NOTE]
-> Cleaning is not effective if you're using a [Microsoft-hosted agent](../agents/hosted.md) because you'll get a new agent every time. 
+> Cleaning is not effective if you're using a [Microsoft-hosted agent](../agents/hosted.md) because you'll get a new agent every time.
 > When using self-hosted agents, depending on how your agents pools are configured, you may get a new agent for subsequent pipeline runs (or stages or jobs in the same pipeline), so **not** cleaning is not a guarantee that subsequent runs, jobs, or stages will be able to access outputs from previous runs, jobs, or stages.
 ::: moniker-end
 
@@ -62,11 +62,11 @@ There are several different clean options available for YAML pipelines.
 * The pipeline settings UI has a **Clean** setting, that when set to true is equivalent of specifying `clean: true` for every `checkout` step in your pipeline. To configure the **Clean** setting:
   1. Edit your pipeline, choose **...**, and select **Triggers**.
 
-      :::image type="content" source="../process/media/pipeline-triggers/edit-triggers.png" alt-text="Edit triggers."::: 
+      :::image type="content" source="../process/media/pipeline-triggers/edit-triggers.png" alt-text="Edit triggers.":::
 
-  2. Select **YAML**, **Get sources**, and configure your desired **Clean** setting. The default is **true**. 
+  2. Select **YAML**, **Get sources**, and configure your desired **Clean** setting. The default is **true**.
 
-      :::image type="content" source="../process/media/clean-setting.png" alt-text="Clean setting."::: 
+      :::image type="content" source="../process/media/clean-setting.png" alt-text="Clean setting.":::
 
 To override clean settings when manually running a pipeline, you can use [runtime parameters](../process/runtime-parameters.md). In the following example, a runtime parameter is used to configure the checkout clean setting.
 
@@ -163,7 +163,7 @@ If you are using multiple `checkout` steps and checking out multiple repositorie
 Please note that the checkout path value cannot be set to go up any directory levels above `$(Agent.BuildDirectory)`, so `path\..\anotherpath` will result in a valid checkout path (i.e. `C:\agent\_work\1\anotherpath`), but a value like `..\invalidpath` will not (i.e. `C:\agent\_work\invalidpath`).
 
 If you are using multiple `checkout` steps and checking out multiple repositories, and want to explicitly specify the folder using `path`,
-consider avoiding setting path which is subfolder of another checkout step's path (i.e. `C:\agent\_work\1\s\repo1` and `C:\agent\_work\1\s\repo1\repo2`), otherwise, the subfolder of the checkout step will be cleared by another repo's cleaning. Please note that this case is valid if the clean option is true for `repo1`) 
+consider avoiding setting path which is subfolder of another checkout step's path (i.e. `C:\agent\_work\1\s\repo1` and `C:\agent\_work\1\s\repo1\repo2`), otherwise, the subfolder of the checkout step will be cleared by another repo's cleaning. Please note that this case is valid if the clean option is true for `repo1`)
 
 > [!NOTE]
 > The checkout path can only be specified for YAML pipelines. For more information, see [Checkout](/azure/devops/pipelines/yaml-schema/steps-checkout) in the [YAML schema](/azure/devops/pipelines/yaml-schema).
@@ -187,7 +187,7 @@ The build pipeline will check out your Git submodules as long as they are:
 
 * **Unauthenticated:**  A public, unauthenticated repo with no credentials required to clone or fetch.
 
-* **Authenticated:**  
+* **Authenticated:**
 
   - Contained in the same project, GitHub organization, or Bitbucket Cloud account as the Git repo specified above.
 
@@ -302,7 +302,7 @@ If you need to clone a repo from another project that is not public, you will ne
 > Use a **secret variable** to store credentials securely.
 >
 > Secret variables are not automatically made available to scripts as environment variables.
-> See [Secret variables](../process/variables.md#secret-variables) on how to map them in.
+> See [Secret variables](../variables/index.md#secret-variables) on how to map them in.
 
 For Azure Repos, you can use a personal access token with the **Code (Read)** permission.
 Send this as the password field in a "Basic" authorization header without a username.
@@ -357,7 +357,7 @@ This setting is always true on non-Windows agents.
 
 When an Other/external Git repository is specified, CI builds require that the repository is accessible from the internet. If the repository is behind a firewall or proxy, then only scheduled and manual builds will work.
 
-## FAQ  
+## FAQ
 
 <!-- BEGINSECTION class="md-qanda" -->
 
