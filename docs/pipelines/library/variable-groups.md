@@ -20,7 +20,7 @@ Secret variables in variable groups are [protected resources](../security/resour
 
 Variable groups follow the [library security model](index.md#library-security) for roles and permissions.
 
-For a compact comparison of variable groups, variable syntax, scope, output variables, and secret handling, see [Variables quick reference](../process/variables-quick-reference.md).
+For a compact comparison of variable groups, variable syntax, scope, output variables, and secret handling, see [Variables quick reference](../variables/quick-reference.md).
 
 ## Plan variable group usage
 
@@ -53,7 +53,7 @@ In YAML pipelines, authorize the pipeline before it can use a variable group. If
 * A project in your Azure DevOps organization or Azure DevOps Server collection. [Create a project](../../organizations/projects/create-project.md) if you don't have one.
 
 ::: moniker-end
- 
+
 ::: moniker range="azure-devops"
 
 ## Set up the CLI
@@ -74,7 +74,7 @@ If you're using the Azure DevOps CLI, you need to set up the CLI to work with yo
     az upgrade
     az extension add --name azure-devops --upgrade
     ```
-  
+
 1. In Azure DevOps CLI commands, you can set the default organization and project by using:
 
     ```azurecli
@@ -89,8 +89,8 @@ If you're using the Azure DevOps CLI, you need to set up the CLI to work with yo
 
 You can create variable groups for the pipeline runs in your project.
 
->[!NOTE]
->To create a secret variable group to link secrets from an Azure key vault as variables, follow the instructions at [Link a variable group to secrets in Azure Key Vault](./link-variable-groups-to-key-vaults.md).
+> [!NOTE]
+> To create a secret variable group that links secrets from Azure Key Vault as variables, see [Link a variable group to Azure Key Vault](#link-a-variable-group-to-azure-key-vault).
 
 
 # [Azure Pipelines UI](#tab/azure-pipelines-ui)
@@ -149,6 +149,12 @@ variables:
 
 ---
 
+## Link a variable group to Azure Key Vault
+
+[!INCLUDE [link variable group to Azure Key Vault](../process/includes/variable-groups-link-secrets.md)]
+
+---
+
 
 ## Update variable groups
 
@@ -191,7 +197,7 @@ ID    Name               Type    Number of Variables
 
 ### Update a variable group
 
-To update a variable group, use the [az pipelines variable-group update](/cli/azure/pipelines/variable-group#ext-azure-devops-az-pipelines-variable-group-update) command. 
+To update a variable group, use the [az pipelines variable-group update](/cli/azure/pipelines/variable-group#ext-azure-devops-az-pipelines-variable-group-update) command.
 
 > [!NOTE]
 > You can't update a variable group of type `AzureKeyVault` using the Azure DevOps CLI.
@@ -417,17 +423,17 @@ To authorize all project pipelines to use the variable group, set the `authorize
 
 ::: moniker-end
 
-### Link a variable group to a pipeline 
+### Link a variable group to a pipeline
 
 Once you authorize a YAML pipeline to use a variable group, you can use variables within the group in the pipeline.
 
-To use variables from a variable group, add a reference to the group name in your YAML pipeline file. 
+To use variables from a variable group, add a reference to the group name in your YAML pipeline file.
 ```yaml
 variables:
 - group: my-variable-group
 ```
 
-You can reference multiple variable groups in the same pipeline. If multiple variable groups include the variables with the same name, the last variable group that uses the variable in the file sets the variable's value. For more information about precedence of variables, see [Expansion of variables](../process/variables.md#expansion-of-variables).
+You can reference multiple variable groups in the same pipeline. If multiple variable groups include the variables with the same name, the last variable group that uses the variable in the file sets the variable's value. For more information about precedence of variables, see [Expansion of variables](../variables/index.md#expansion-of-variables).
 
 You can also reference a variable group in a template. The following *variables.yml* template file references the variable group `my-variable-group`. The variable group includes a variable named `myhello`.
 
@@ -484,7 +490,7 @@ steps:
 - script: echo $(myhello)
 ```
 
-You can't access secret variables, including encrypted variables and key vault variables, directly in scripts. You must pass these variables as arguments to a task. For more information, see [Secret variables](../process/variables.md#secret-variables).
+You can't access secret variables, including encrypted variables and key vault variables, directly in scripts. You must pass these variables as arguments to a task. For more information, see [Secret variables](../variables/index.md#secret-variables).
 
 # [Classic](#tab/classic)
 
@@ -507,7 +513,7 @@ When you set a variable with the same name in multiple scopes, the following pre
 1. Variable set in the pipeline
 1. Variable set in the variable group
 
-For more information about precedence of variables, see [Expansion of variables](../process/variables.md#expansion-of-variables).
+For more information about precedence of variables, see [Expansion of variables](../variables/index.md#expansion-of-variables).
 
 [!INCLUDE [variable-collision](../includes/variable-collision.md)]
 
@@ -515,8 +521,8 @@ For more information about precedence of variables, see [Expansion of variables]
 
 ## Related articles
 
-* [Define variables](../process/variables.md)
-* [Define custom variables](../release/variables.md#custom-variables)
-* [Use secret and nonsecret variables in variable groups](../scripts/cli/pipeline-variable-group-secret-nonsecret-variables.md)
-* [Link a variable group to secrets in Azure Key Vault](link-variable-groups-to-key-vaults.md)
+* [Define variables](../variables/index.md)
+* [Define custom variables](../variables/reference.md#custom-variables)
+* [Use secret and nonsecret variables in variable groups](./variable-groups.md#manage-variables-in-variable-groups)
+* [Link a variable group to secrets in Azure Key Vault](./variable-groups.md#link-a-variable-group-to-azure-key-vault)
 * [Add approvals and checks](../process/approvals.md)
