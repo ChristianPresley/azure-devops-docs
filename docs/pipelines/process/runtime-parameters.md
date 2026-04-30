@@ -17,27 +17,27 @@ Runtime parameters give you more control over the values you pass to a pipeline.
 - Control parameter types, allowed ranges, and default values
 - Dynamically select jobs and stages with [template expressions](template-expressions.md)
 
-You can specify [parameters in templates](template-parameters.md) and in the pipeline. Parameters have data types such as number and string, and they can be restricted to a subset of values. The `parameters` section in a YAML defines what parameters are available. 
+You can specify [parameters in templates](template-parameters.md) and in the pipeline. Parameters have data types such as number and string, and they can be restricted to a subset of values. The `parameters` section in a YAML defines what parameters are available.
 
-Parameters are available only during template parsing. They expand before the pipeline runs, replacing values surrounded by `${{ }}` with parameter values. Use [variables](variables.md) if your values need to be available throughout the [pipeline run](runs.md). 
+Parameters are available only during template parsing. They expand before the pipeline runs, replacing values surrounded by `${{ }}` with parameter values. Use [variables](../variables/index.md) if your values need to be available throughout the [pipeline run](runs.md).
 
 > [!NOTE]
-> This guidance doesn't apply to classic pipelines. For parameters in classic pipelines, see [Process parameters (classic)](parameters.md). 
-> 
+> This guidance doesn't apply to classic pipelines. For parameters in classic pipelines, see [Process parameters (classic)](parameters.md).
+>
 
-Parameters must contain a name and data type. You can't make parameters optional. You need to assign a default value in your YAML file or when you run your pipeline. If you don't assign a default value or set `default` to `false`, the first available value is used. 
+Parameters must contain a name and data type. You can't make parameters optional. You need to assign a default value in your YAML file or when you run your pipeline. If you don't assign a default value or set `default` to `false`, the first available value is used.
 
-Use [templateContext](template-parameters.md#use-templatecontext-to-pass-properties-to-templates) to pass more properties to stages, steps, and jobs used as parameters in a template. 
+Use [templateContext](template-parameters.md#use-templatecontext-to-pass-properties-to-templates) to pass more properties to stages, steps, and jobs used as parameters in a template.
 
-## What is the difference between parameters and variables? 
+## What is the difference between parameters and variables?
 
 [!INCLUDE [variables-vs-parameters](includes/variables-vs-parameters.md)]
 
 ## Use parameters in pipelines
 
-Set runtime parameters at the start of a YAML file. 
+Set runtime parameters at the start of a YAML file.
 
-This example pipeline includes an `image` parameter with three hosted agents as `string` options. In the jobs section, the `pool` value specifies the agent from the parameter used to run the job. The `trigger` is set to none so that you can select the value of `image` when you manually trigger your pipeline to run. 
+This example pipeline includes an `image` parameter with three hosted agents as `string` options. In the jobs section, the `pool` value specifies the agent from the parameter used to run the job. The `trigger` is set to none so that you can select the value of `image` when you manually trigger your pipeline to run.
 
 ```yaml
 parameters:
@@ -55,24 +55,24 @@ trigger: none
 jobs:
 - job: build
   displayName: build
-  pool: 
+  pool:
     vmImage: ${{ parameters.image }}
   steps:
   - script: echo building $(Build.BuildNumber) with ${{ parameters.image }}
 ```
 
-From the pipeline runs page, select **Run pipeline** to run the pipeline. You see the option to select the Pool Image. If you don't make a selection, the default option `ubuntu-latest` is used. You can't select a Pool Image if you run your pipeline from the YAML editor. 
+From the pipeline runs page, select **Run pipeline** to run the pipeline. You see the option to select the Pool Image. If you don't make a selection, the default option `ubuntu-latest` is used. You can't select a Pool Image if you run your pipeline from the YAML editor.
 
 > [!div class="mx-imgBorder"]
 > ![runtime parameters](media/runtime-param-ui.png)
 
 ## Use conditionals with parameters
 
-You can also use parameters as part of conditional logic. With conditionals, part of a YAML runs if it meets the `if` criteria. 
+You can also use parameters as part of conditional logic. With conditionals, part of a YAML runs if it meets the `if` criteria.
 
 ### Use parameters to determine what steps run
 
-This pipeline adds a second boolean parameter, `test`, which controls whether to run tests in the pipeline. When the value of `test` is true, the step that outputs *Running all the tests* runs. 
+This pipeline adds a second boolean parameter, `test`, which controls whether to run tests in the pipeline. When the value of `test` is true, the step that outputs *Running all the tests* runs.
 
 ```yaml
 parameters:
@@ -92,7 +92,7 @@ trigger: none
 jobs:
 - job: build
   displayName: Build and Test
-  pool: 
+  pool:
     vmImage: ${{ parameters.image }}
   steps:
   - script: echo building $(Build.BuildNumber)
@@ -102,7 +102,7 @@ jobs:
 
 ### Use parameters to set what configuration is used
 
-You can also use parameters to set which job runs. In this example, different architectures build depending on the value of `config` parameter, which is a `string` type. By default, both the `x86` and `x64` architectures build.  
+You can also use parameters to set which job runs. In this example, different architectures build depending on the value of `config` parameter, which is a `string` type. By default, both the `x86` and `x64` architectures build.
 
 ```yaml
 parameters:
@@ -129,7 +129,7 @@ jobs:
 
 ### Selectively exclude a stage
 
-You can also use parameters to set whether a stage runs. In this example, there's a pipeline with four stages and different jobs for each stage. The Performance Test stage runs if the parameter `runPerfTests` is true. The default value of `runPerfTests` is false, so only three of the four stages run unless you update the value. 
+You can also use parameters to set whether a stage runs. In this example, there's a pipeline with four stages and different jobs for each stage. The Performance Test stage runs if the parameter `runPerfTests` is true. The default value of `runPerfTests` is false, so only three of the four stages run unless you update the value.
 
 ```yaml
 parameters:
@@ -175,7 +175,7 @@ stages:
 
 ### Check for an empty parameter object
 
-Use the `length()` [expression](expressions.md) to check if an object parameter has no value. 
+Use the `length()` [expression](expressions.md) to check if an object parameter has no value.
 
 ```yaml
 parameters:
@@ -196,8 +196,8 @@ steps:
 
 ## Parameter security best practices
 
-When you use runtime parameters in Azure Pipelines, don't pass secrets or sensitive values as parameter inputs. Parameter values are expanded at template parsing time and might be exposed in pipeline logs or outputs. 
+When you use runtime parameters in Azure Pipelines, don't pass secrets or sensitive values as parameter inputs. Parameter values are expanded at template parsing time and might be exposed in pipeline logs or outputs.
 
-Always validate and restrict allowed parameter values to prevent injection of unexpected or unsafe input. Follow the principle of least privilege when granting access to pipeline resources. 
+Always validate and restrict allowed parameter values to prevent injection of unexpected or unsafe input. Follow the principle of least privilege when granting access to pipeline resources.
 
 For credentials, tokens, or other confidential data, use pipeline variables marked as secrets and stored in Azure Key Vault, the Pipeline UI, or variable groups. For more information, see [Protect secrets in Azure Pipelines](../security/secrets.md).
