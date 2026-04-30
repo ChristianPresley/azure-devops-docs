@@ -1,6 +1,11 @@
 {
   "redirections": [
     {
+      "source_path_from_root": "/docs/pipelines/release/key-vault-in-own-project.md",
+      "redirect_url": "/azure/devops/pipelines/release/azure-key-vault",
+      "redirect_document_id": false
+    },
+    {
       "source_path": "docs/pipelines/agents/v2-osx-agent.md",
       "redirect_url": "/previous-versions/azure/devops/pipelines/agents/v2-osx-agent"
     },
