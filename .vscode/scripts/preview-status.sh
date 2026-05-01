@@ -65,6 +65,13 @@ for pat in "${PROC_PATTERNS[@]}"; do
 		echo "  $label: not running"
 	fi
 done
+# Watchdog
+watchdog_pids=$(pgrep -f "$WATCHDOG_PATTERN" 2>/dev/null | tr '\n' ' ' || true)
+if [[ -n "$watchdog_pids" ]]; then
+	echo "  watchdog: PID(s) $watchdog_pids"
+else
+	echo "  watchdog: not running (wwwroot will not auto-recover from wireit wipes)"
+fi
 
 echo ""
 echo "=== Ports ==="

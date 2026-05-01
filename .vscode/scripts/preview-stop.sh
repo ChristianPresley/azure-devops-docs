@@ -4,6 +4,14 @@
 . "$(dirname "$0")/_common.sh"
 
 stopped_any=false
+# Stop the watchdog FIRST so it doesn't auto-restore wwwroot during shutdown.
+if pgrep -f "$WATCHDOG_PATTERN" >/dev/null 2>&1; then
+	echo "Stopping watchdog..."
+	pkill -f "$WATCHDOG_PATTERN" 2>/dev/null || true
+	stopped_any=true
+	sleep 1
+fi
+
 for pattern in "${PROC_PATTERNS[@]}"; do
 	if pgrep -f "$pattern" >/dev/null 2>&1; then
 		echo "Stopping: $pattern"

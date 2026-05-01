@@ -22,10 +22,14 @@ WWWROOT="$DOCFX_TEMPLATES_DIR/wwwroot"
 
 # Process patterns we own. Centralized so start/stop/status agree.
 PROC_PATTERNS=("dcp-local" "dist/server\\.js" "lib/browser-sync\\.js")
+# Watchdog process pattern (managed separately so we don't tear it down with the main services).
+WATCHDOG_PATTERN="preview-watch-wwwroot\\.sh"
 # Ports we own.
 PORTS=(443 3001 3003)
 # A test URL that must return 200 if the pipeline is healthy.
 SMOKE_URL="https://localhost/en-us/azure/devops/pipelines/get-started/what-is-azure-pipelines?view=azure-devops&branch=main"
+# Watchdog log.
+WATCH_LOG="${WATCH_LOG:-/tmp/preview-watch.log}"
 
 # Pick the configured cache hash, or the newest one on disk.
 resolve_cache_hash() {

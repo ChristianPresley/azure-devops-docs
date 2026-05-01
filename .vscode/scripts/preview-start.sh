@@ -55,6 +55,16 @@ start_browser_sync() {
 	wait_for_port 443 15
 }
 
+start_watchdog() {
+	if is_running "$WATCHDOG_PATTERN"; then
+		echo "wwwroot watchdog already running."
+		return 0
+	fi
+	echo "Starting wwwroot watchdog (log: $WATCH_LOG)..."
+	nohup "$SCRIPT_DIR/preview-watch-wwwroot.sh" > "$WATCH_LOG" 2>&1 &
+	disown || true
+}
+
 run_smoke_test_with_report() {
 	local code
 	code=$(smoke_test || true)
@@ -68,6 +78,12 @@ run_smoke_test_with_report() {
 if all_services_running && wwwroot_is_healthy; then
 	echo "Smoke testing..."
 	if run_smoke_test_with_report; then
+		# Make sure the watchdog is up too.
+		if ! is_running "$WATCHDOG_PATTERN"; then
+			echo ""
+			echo "Starting watchdog (was missing)..."
+			start_watchdog
+		fi
 		echo ""
 		echo "Preview is already up and healthy: https://localhost/en-us/azure/devops/?view=azure-devops&branch=main"
 		exit 0
@@ -125,6 +141,7 @@ echo "wwwroot restored ($file_count files)"
 start_dcp_local
 start_render
 start_browser_sync
+start_watchdog
 
 echo ""
 echo "Smoke testing..."
