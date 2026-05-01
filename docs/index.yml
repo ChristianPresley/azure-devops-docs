@@ -1,10 +1,10 @@
 ### YamlMime:Hub
 
 title: Azure DevOps documentation
-summary: Plan, build, test, and deploy with integrated DevOps tools for teams of any size.
+summary: Plan smarter, collaborate better, and ship faster. Bring Git repos, CI/CD pipelines, agile boards, package feeds, and test plans together in one place.
 brand: azure
 metadata:
-  title: Azure DevOps documentation
+  title: Azure DevOps documentation - boards, pipelines, repos, more
   description: Plan, build, test, and deploy with integrated DevOps tools for teams of any size. Azure DevOps provides source control, work tracking, CI/CD, and more.
   ms.topic: hub-page
   ms.subservice: azure-devops-projects
@@ -12,34 +12,34 @@ metadata:
   author: chcomley
   ms.date: 03/19/2026
 
-# highlightedContent section (optional)
-# Maximum of 8 items
+# highlightedContent - up to 8 single-line typed-icon cards at the top
 highlightedContent:
-# itemType: architecture | concept | deploy | download | get-started | how-to-guide | learn | overview | quickstart | reference | tutorial | video | whats-new
   items:
-    # Card
-    - title: What is Azure DevOps?
+    # Card - Orient first
+    - title: Azure DevOps Platform
       itemType: overview
       url: ./user-guide/what-is-azure-devops.md?toc=/azure/devops/get-started/toc.json
-    # Card
-    - title: What's new in Azure DevOps?
-      itemType: whats-new
-      url: https://aka.ms/azuredevops/releasenotes
-    # Card
-    - title: What's new in Azure DevOps documentation?
-      itemType: whats-new
-      url: /azure/devops/release-notes/docswhatsnew/index
-    # Card
-    - title: Get started with Azure DevOps
+    # Card - Then act
+    - title: Get started in Azure DevOps
       itemType: get-started
       url: ./user-guide/sign-up-invite-teammates.md?toc=/azure/devops/get-started/toc.json
-# productDirectory section (optional)
+    # Card - Build skills
+    - title: Build skills with Microsoft Learn for Azure DevOps
+      itemType: learn
+      url: /training/browse/?products=azure-devops
+    # Card - Stay current
+    - title: Recent releases and features
+      itemType: whats-new
+      url: https://aka.ms/azuredevops/releasenotes
+    # Card - Security entry point
+    - title: Secure your Azure DevOps organization
+      itemType: reference
+      url: ./organizations/security/security-overview.md
+
+# productDirectory - icon-card grid for the six Azure DevOps products
 productDirectory:
-#  title: Azure DevOps Products
   items:
-    # Card
     - title: Azure Boards
-      # imageSrc should be square in ratio with no whitespace
       imageSrc: ./media/index/DevOpsIconBoards96.svg
       summary: Plan, track, and discuss work across teams with Kanban boards, backlogs, and sprint tools.
       links:
@@ -49,7 +49,6 @@ productDirectory:
           text: Plan and track work
         - url: ./boards/configure-customize.md
           text: Configure and customize boards
-    # Card
     - title: Azure Pipelines
       imageSrc: ./media/index/DevOpsIconPipelines96.svg
       summary: Automatically build, test, and deploy code to any platform and cloud.
@@ -60,7 +59,6 @@ productDirectory:
           text: Create your first pipeline
         - url: ./pipelines/troubleshooting/troubleshooting.md
           text: Troubleshoot pipeline runs
-    # Card
     - title: Azure Artifacts
       imageSrc: ./media/index/DevOpsIconArtifacts96.svg
       summary: Create, host, and share NuGet, npm, Maven, Python, Cargo, and Universal packages.
@@ -71,7 +69,6 @@ productDirectory:
           text: Connect to a feed
         - url: ./artifacts/feeds/feed-permissions.md
           text: Manage feed permissions
-    # Card
     - title: Azure Repos
       imageSrc: ./media/index/DevOpsIconRepos96.svg
       summary: Manage code with Git repositories, pull requests, and branch policies.
@@ -82,7 +79,6 @@ productDirectory:
           text: Clone an existing Git repository
         - url: ./repos/git/pull-requests.md
           text: Review and merge code with pull requests
-    # Card
     - title: Azure Test Plans
       imageSrc: ./media/index/DevOpsIconTestPlans96.svg
       summary: Create and run manual and exploratory tests, and track test results.
@@ -93,7 +89,6 @@ productDirectory:
           text: Create a test plan
         - url: ./test/run-automated-tests-from-test-hub.md
           text: Run automated tests
-    # Card
     - title: Azure DevOps Server
       imageSrc: /media/common/i_server.svg
       summary: Host Azure DevOps on your own infrastructure with the on-premises server.
@@ -104,45 +99,233 @@ productDirectory:
           text: Install
         - url: /azure/devops/server/admin/admin-quick-ref
           text: Administrative tasks reference
-# additionalContent section
+    - title: Managed DevOps Pools
+      imageSrc: ./media/index/DevOpsIconPipelines96.svg
+      summary: Run your pipelines on managed, scalable agent pools without provisioning your own infrastructure.
+      links:
+        - url: ./managed-devops-pools/overview.md
+          text: What are Managed DevOps Pools?
+        - url: ./managed-devops-pools/quickstart-azure-portal.md
+          text: Create a pool in the portal
+        - url: ./managed-devops-pools/configure-pool-settings.md
+          text: Configure pool settings
+
+# conceptualContent - three-column layout with typed-icon links (concept/how-to/tutorial/reference)
+conceptualContent:
+  items:
+    # Column 1
+    - title: Secure, govern, and audit
+      links:
+        - url: ./organizations/security/security-overview.md
+          itemType: concept
+          text: Security and access control overview
+        - url: ./organizations/security/about-permissions.md
+          itemType: concept
+          text: Permissions and security groups
+        - url: ./organizations/security/access-levels.md
+          itemType: concept
+          text: About access levels
+        - url: ./organizations/accounts/organization-management.md
+          itemType: how-to-guide
+          text: Manage your organization
+        - url: ./organizations/audit/azure-devops-auditing.md
+          itemType: how-to-guide
+          text: Audit Azure DevOps activity
+    # Column 2
+    - title: Integrate with tools and APIs
+      links:
+        - url: ./marketplace-extensibility/index.yml
+          itemType: overview
+          text: Marketplace and extensibility
+        - url: ./cross-service/github-integration.md
+          itemType: concept
+          text: GitHub integration with Azure DevOps
+        - url: ./pipelines/overview-azure.md
+          itemType: overview
+          text: Deploy to Azure with Azure Pipelines
+        - url: ./service-hooks/overview.md
+          itemType: how-to-guide
+          text: Send events with service hooks and webhooks
+        - url: ./extend/get-started/node.md
+          itemType: tutorial
+          text: Build your first extension
+        - url: ./integrate/index.md
+          itemType: reference
+          text: REST API and integration reference
+    # Column 3
+    - title: Report, analyze, and collaborate
+      links:
+        - url: ./report/index.yml
+          itemType: overview
+          text: Reporting and analytics overview
+        - url: ./report/dashboards/overview.md
+          itemType: concept
+          text: Dashboards for teams and projects
+        - url: ./report/analytics/analytics-best-practices.md
+          itemType: concept
+          text: Analytics best practices
+        - url: ./report/powerbi/overview.md
+          itemType: how-to-guide
+          text: Connect Power BI to Analytics
+        - url: ./project/wiki/about-readme-wiki.md
+          itemType: concept
+          text: Wikis, READMEs, and Markdown
+        - url: ./project/search/get-started-search.md
+          itemType: how-to-guide
+          text: Search code, work items, and wikis
+    # Column 4
+    - title: Learn with Microsoft Learn and get help
+      links:
+        - url: /training/browse/?products=azure-devops
+          itemType: learn
+          text: Microsoft Learn training for Azure DevOps
+        - url: ./troubleshoot/index.yml
+          itemType: how-to-guide
+          text: Troubleshooting guides and FAQs
+        - url: ./user-guide/troubleshoot-connection.md
+          itemType: how-to-guide
+          text: Troubleshoot connecting to a project
+        - url: ./user-guide/provide-feedback.md
+          itemType: reference
+          text: Get support and provide feedback
+        - url: https://devblogs.microsoft.com/devops/
+          itemType: whats-new
+          text: Azure DevOps blog
+
+# tools - AI in Azure DevOps (curated to destinations that actually contain AI guidance)
+tools:
+  title: AI in Azure DevOps
+  summary: Connect AI agents and Copilot to Azure DevOps to plan, build, and ship faster.
+  items:
+    - title: Azure DevOps MCP Server
+      imageSrc: ./media/index/mcp-server.svg
+      url: ./mcp-server/mcp-server-overview.md
+    - title: Remote MCP Server (preview)
+      imageSrc: ./media/index/mcp-server.svg
+      url: ./mcp-server/remote-mcp-server.md
+    - title: GitHub Copilot for work items
+      imageSrc: ./media/index/DevOpsIconBoards96.svg
+      url: ./boards/github/work-item-integration-github-copilot.md
+    - title: AI-assisted package workflows
+      imageSrc: ./media/index/DevOpsIconArtifacts96.svg
+      url: ./artifacts/get-started-artifacts-ai.md
+
+# additionalContent - up to 4 sections of cards plus a markdown footer
 additionalContent:
   sections:
-  - title: Additional resources
-    items:
-      # Card
-      - title: AI assistance
-        links:
-            - text: Enable AI assistance with Azure DevOps MCP Server
-              url: ./mcp-server/mcp-server-overview.md
-            - text: Set up remote Azure DevOps MCP Server (preview)
-              url: ./mcp-server/remote-mcp-server.md
-            - text: Use GitHub Copilot with Azure Boards
-              url: ./boards/github/work-item-integration-github-copilot.md
-      # Card
-      - title: Security and access
-        links:
-            - text: Make your Azure DevOps secure
-              url: ./organizations/security/security-overview.md
-            - text: About permissions and security groups
+    # Section 1
+    - title: Migrate to Azure DevOps
+      summary: Move from on-premises or other tools to Azure DevOps Services.
+      items:
+        - title: Plan a migration
+          summary: Roadmap, prerequisites, and tooling for moving to Azure DevOps Services.
+          url: ./migrate/migration-overview.md
+          links:
+            - text: Migration overview
+              url: ./migrate/migration-overview.md
+            - text: Migration prerequisites
+              url: ./migrate/migration-prerequisites.md
+            - text: Get started with migration
+              url: ./migrate/migration-get-started.md
+        - title: Run a migration
+          summary: Test, validate, run, and verify the move.
+          url: ./migrate/migration-migrate.md
+          links:
+            - text: Test run
+              url: ./migrate/migration-test-run.md
+            - text: Validate
+              url: ./migrate/migration-validate.md
+            - text: Migrate
+              url: ./migrate/migration-migrate.md
+            - text: Post-migration
+              url: ./migrate/migration-post-migration.md
+            - text: Troubleshooting
+              url: ./migrate/migration-troubleshooting.md
+    # Section 2
+    - title: Automate with the API and CLI
+      summary: Build integrations and automate Azure DevOps from your tools.
+      items:
+        - title: REST API
+          summary: Programmatic access to projects, pipelines, repos, work items, and more.
+          url: /rest/api/azure/devops/
+          links:
+            - text: REST API reference
+              url: /rest/api/azure/devops/
+            - text: Authentication guidance
+              url: ./integrate/get-started/authentication/authentication-guidance.md
+            - text: Call a REST API
+              url: ./integrate/how-to/call-rest-api.md
+            - text: Integration reference
+              url: ./integrate/index.md
+        - title: Azure DevOps CLI
+          summary: Manage Azure DevOps from the command line and in pipelines.
+          url: ./cli/index.md
+          links:
+            - text: Get started with the CLI
+              url: ./cli/index.md
+            - text: Quick reference
+              url: ./cli/quick-reference.md
+            - text: Use in YAML pipelines
+              url: ./cli/azure-devops-cli-in-yaml.md
+            - text: Use in release pipelines
+              url: ./cli/azure-devops-cli-in-release-pipeline.md
+            - text: Sign in with a PAT
+              url: ./cli/log-in-via-pat.md
+    # Section 3
+    - title: Find your role
+      summary: Tailored entry points for the most common Azure DevOps roles.
+      items:
+        - title: Developers
+          summary: Code, build, and ship with Git and pipelines.
+          url: ./user-guide/code-with-git.md
+          links:
+            - text: Code with Git
+              url: ./user-guide/code-with-git.md
+            - text: Run your first pipeline
+              url: ./pipelines/create-first-pipeline.md
+            - text: Review and merge with pull requests
+              url: ./repos/git/pull-requests.md
+        - title: Administrators
+          summary: Set up, secure, and govern your organization.
+          url: ./organizations/accounts/organization-management.md
+          links:
+            - text: Manage your organization
+              url: ./organizations/accounts/organization-management.md
+            - text: Permissions and security groups
               url: ./organizations/security/about-permissions.md
-            - text: About access levels
-              url: ./organizations/security/access-levels.md
-      # Card
-      - title: Integration
-        links:
-            - text: Marketplace and extensibility
-              url: ./marketplace-extensibility/index.yml
-            - text: GitHub integration with Azure DevOps
-              url: ./cross-service/github-integration.md
-            - text: Deploy to Azure with Azure Pipelines
-              url: ./pipelines/overview-azure.md
-      # Card
-      - title: Troubleshooting
-        links:
-            - text: Troubleshooting guides and FAQs
-              url: ./troubleshoot/index.yml
-            - text: Troubleshoot connecting to a project
-              url: ./user-guide/troubleshoot-connection.md
+            - text: Audit Azure DevOps activity
+              url: ./organizations/audit/azure-devops-auditing.md
+        - title: Project managers
+          summary: Plan and track work with Agile, Scrum, and CMMI tools.
+          url: ./boards/get-started/plan-track-work.md
+          links:
+            - text: Plan and track work
+              url: ./boards/get-started/plan-track-work.md
+            - text: Track work with backlogs
+              url: ./boards/backlogs/backlogs-overview.md
+            - text: Agile glossary
+              url: ./boards/work-items/agile-glossary.md
+    # Section 4
+    - title: Stay connected
+      summary: Follow product news, get help, and check service status.
+      items:
+        - title: Product news and roadmap
+          summary: Latest releases, features, and what's coming next.
+          url: https://devblogs.microsoft.com/devops/
+          links:
+            - text: Azure DevOps blog
+              url: https://devblogs.microsoft.com/devops/
+            - text: Recent releases and features
+              url: https://aka.ms/azuredevops/releasenotes
+        - title: Community and support
+          summary: Connect with other users and the Microsoft team.
+          url: https://developercommunity.visualstudio.com/AzureDevOps
+          links:
+            - text: Developer Community
+              url: https://developercommunity.visualstudio.com/AzureDevOps
+            - text: Service status
+              url: https://status.dev.azure.com/
             - text: Get support and provide feedback
               url: ./user-guide/provide-feedback.md
-  footer: "[Blogs](https://devblogs.microsoft.com/devops/) - [X](https://x.com/AzureDevOps) - [Stack Overflow](https://stackoverflow.com/questions/tagged/azure-devops) - [Issue Reporting](https://azure.microsoft.com/support/devops/) - [Developer Community](https://azure.microsoft.com/support/devops/) - [Service Status](https://status.dev.azure.com/)"
+  footer: |
+    Have feedback on this documentation? [Open an issue on GitHub](https://github.com/MicrosoftDocs/azure-devops-docs/issues/new) or visit [Microsoft Q&A for Azure DevOps](/answers/tags/473/azure-devops).
