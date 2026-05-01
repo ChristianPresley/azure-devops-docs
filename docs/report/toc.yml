@@ -86,8 +86,6 @@
   href: dashboards/toc.yml
 - name: Analytics & Power BI integration
   href: powerbi/toc.yml
-- name: SQL Server Reporting (Legacy)
-  href: sql-reports/toc.yml
 - name: Work tracking field reference
   items:
   - name: Work item field index
