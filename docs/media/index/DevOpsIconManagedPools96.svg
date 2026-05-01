@@ -1,0 +1,41 @@
+<svg width="96" height="96" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="DevOpsIconManagedPools96">
+<mask id="mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="96" height="96">
+<path id="Union" d="M4 8C4 5.79086 5.79086 4 8 4H64C66.2091 4 68 5.79086 68 8V20H72V12C72 9.79086 73.7909 8 76 8H88C90.2091 8 92 9.79086 92 12V32C92 34.2091 90.2091 36 88 36H76C73.7909 36 72 34.2091 72 32V24H68V44H80C82.2091 44 84 45.7909 84 48V72C84 74.2091 82.2091 76 80 76H68V88C68 90.2091 66.2091 92 64 92H8C5.79086 92 4 90.2091 4 88V8Z" fill="white"/>
+</mask>
+<g mask="url(#mask0)">
+<rect id="Pool back shadow" width="60" height="20" rx="4" transform="translate(8 22)" fill="#064E60" opacity="0.6"/>
+<g id="Pool back" filter="url(#filter0_f)">
+<rect width="60" height="20" rx="4" transform="translate(8 18)" fill="#064E60"/>
+</g>
+<rect id="Pool middle" width="60" height="20" rx="4" transform="translate(8 42)" fill="#0E7A93"/>
+<rect id="Pool front" width="60" height="20" rx="4" transform="translate(8 66)" fill="#15A4C4"/>
+<circle id="Status dot 1" cx="3" cy="3" r="3" transform="translate(15 49)" fill="#5CD0E2"/>
+<circle id="Status dot 2" cx="3" cy="3" r="3" transform="translate(15 73)" fill="#A6E1ED"/>
+<rect id="Activity bar 1" width="22" height="4" rx="2" transform="translate(28 50)" fill="#5CD0E2"/>
+<rect id="Activity bar 2" width="32" height="4" rx="2" transform="translate(28 74)" fill="#A6E1ED"/>
+<g id="Autoscale shadow" filter="url(#filter1_f)">
+<circle cx="14" cy="14" r="14" transform="translate(64 8)" fill="#0E7A93"/>
+</g>
+<circle id="Autoscale ring" cx="14" cy="14" r="14" transform="translate(64 8)" fill="#15A4C4"/>
+<path id="Autoscale arrow" d="M8 0L16 8H12V14H4V8H0L8 0Z" transform="translate(70 15)" fill="#A6E1ED"/>
+<path id="Sheen" opacity="0.2" d="M4 8C4 5.79086 5.79086 4 8 4H64C66.2091 4 68 5.79086 68 8V20H72V12C72 9.79086 73.7909 8 76 8H88C90.2091 8 92 9.79086 92 12V32C92 34.2091 90.2091 36 88 36H76C73.7909 36 72 34.2091 72 32V24H68V44H80C82.2091 44 84 45.7909 84 48V72C84 74.2091 82.2091 76 80 76H68V88C68 90.2091 66.2091 92 64 92H8C5.79086 92 4 90.2091 4 88V8Z" fill="url(#paint0_linear)"/>
+</g>
+</g>
+<defs>
+<filter id="filter0_f" x="0" y="10" width="76" height="36" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="4" result="effect1_foregroundBlur"/>
+</filter>
+<filter id="filter1_f" x="56" y="0" width="44" height="44" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="4" result="effect1_foregroundBlur"/>
+</filter>
+<linearGradient id="paint0_linear" x2="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(96) scale(96) rotate(90)">
+<stop stop-color="white"/>
+<stop offset="1" stop-color="white" stop-opacity="0"/>
+</linearGradient>
+</defs>
+</svg>

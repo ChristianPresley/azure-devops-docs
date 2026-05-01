@@ -34,6 +34,9 @@
   - name: What are feeds?
     displayName: feeds, artifact feeds
     href: concepts/feeds.md
+  - name: Connect to a feed
+    displayName: connect, feed, package manager, nuget, npm, maven, python, cargo, universal
+    href: how-to/connect-to-feed.md
   - name: Feed scopes
     displayName: project scoped, organization scoped, feed, artifacts
     href: feeds/project-scoped-feeds.md

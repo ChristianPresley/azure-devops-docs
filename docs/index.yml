@@ -24,7 +24,7 @@ highlightedContent:
       itemType: get-started
       url: ./user-guide/sign-up-invite-teammates.md?toc=/azure/devops/get-started/toc.json
     # Card - Build skills
-    - title: Build skills with Microsoft Learn for Azure DevOps
+    - title: 'Microsoft Learn: Build skills for Azure DevOps'
       itemType: learn
       url: /training/browse/?products=azure-devops
     # Card - Stay current
@@ -33,15 +33,17 @@ highlightedContent:
       url: https://aka.ms/azuredevops/releasenotes
     # Card - Security entry point
     - title: Secure your Azure DevOps organization
-      itemType: reference
+      itemType: overview
       url: ./organizations/security/security-overview.md
 
-# productDirectory - icon-card grid for the six Azure DevOps products
+# productDirectory - icon-card grid for Azure DevOps products, ordered by user journey:
+# Plan -> Code -> Build -> Run -> Package -> Test -> Self-host
 productDirectory:
   items:
+    # Plan
     - title: Azure Boards
       imageSrc: ./media/index/DevOpsIconBoards96.svg
-      summary: Plan, track, and discuss work across teams with Kanban boards, backlogs, and sprint tools.
+      summary: Plan, track, and prioritize work across teams with Kanban boards, backlogs, and sprints.
       links:
         - url: ./boards/get-started/what-is-azure-boards.md
           text: What is Azure Boards?
@@ -49,29 +51,10 @@ productDirectory:
           text: Plan and track work
         - url: ./boards/configure-customize.md
           text: Configure and customize boards
-    - title: Azure Pipelines
-      imageSrc: ./media/index/DevOpsIconPipelines96.svg
-      summary: Automatically build, test, and deploy code to any platform and cloud.
-      links:
-        - url: ./pipelines/get-started/what-is-azure-pipelines.md
-          text: What is Azure Pipelines?
-        - url: ./pipelines/create-first-pipeline.md
-          text: Create your first pipeline
-        - url: ./pipelines/troubleshooting/troubleshooting.md
-          text: Troubleshoot pipeline runs
-    - title: Azure Artifacts
-      imageSrc: ./media/index/DevOpsIconArtifacts96.svg
-      summary: Create, host, and share NuGet, npm, Maven, Python, Cargo, and Universal packages.
-      links:
-        - url: ./artifacts/start-using-azure-artifacts.md
-          text: What is Azure Artifacts?
-        - url: ./artifacts/npm/npmrc.md
-          text: Connect to a feed
-        - url: ./artifacts/feeds/feed-permissions.md
-          text: Manage feed permissions
+    # Code
     - title: Azure Repos
       imageSrc: ./media/index/DevOpsIconRepos96.svg
-      summary: Manage code with Git repositories, pull requests, and branch policies.
+      summary: Host Git repositories, review code with pull requests, and protect branches with policies.
       links:
         - url: ./repos/get-started/what-is-repos.md
           text: What is Azure Repos?
@@ -79,19 +62,10 @@ productDirectory:
           text: Clone an existing Git repository
         - url: ./repos/git/pull-requests.md
           text: Review and merge code with pull requests
-    - title: Azure Test Plans
-      imageSrc: ./media/index/DevOpsIconTestPlans96.svg
-      summary: Create and run manual and exploratory tests, and track test results.
-      links:
-        - url: ./test/overview.md
-          text: What is Azure Test Plans?
-        - url: ./test/create-a-test-plan.md
-          text: Create a test plan
-        - url: ./test/run-automated-tests-from-test-hub.md
-          text: Run automated tests
+    # Self-host
     - title: Azure DevOps Server
       imageSrc: /media/common/i_server.svg
-      summary: Host Azure DevOps on your own infrastructure with the on-premises server.
+      summary: Self-host Azure DevOps on your own infrastructure for full control over data and compliance.
       links:
         - url: /azure/devops/server/requirements
           text: Setup and upgrade requirements
@@ -99,16 +73,6 @@ productDirectory:
           text: Install
         - url: /azure/devops/server/admin/admin-quick-ref
           text: Administrative tasks reference
-    - title: Managed DevOps Pools
-      imageSrc: ./media/index/DevOpsIconPipelines96.svg
-      summary: Run your pipelines on managed, scalable agent pools without provisioning your own infrastructure.
-      links:
-        - url: ./managed-devops-pools/overview.md
-          text: What are Managed DevOps Pools?
-        - url: ./managed-devops-pools/quickstart-azure-portal.md
-          text: Create a pool in the portal
-        - url: ./managed-devops-pools/configure-pool-settings.md
-          text: Configure pool settings
 
 # conceptualContent - three-column layout with typed-icon links (concept/how-to/tutorial/reference)
 conceptualContent:
@@ -120,7 +84,7 @@ conceptualContent:
           itemType: concept
           text: Security and access control overview
         - url: ./organizations/security/about-permissions.md
-          itemType: concept
+          itemType: overview
           text: Permissions and security groups
         - url: ./organizations/security/access-levels.md
           itemType: concept
@@ -174,7 +138,7 @@ conceptualContent:
           itemType: how-to-guide
           text: Search code, work items, and wikis
     # Column 4
-    - title: Learn with Microsoft Learn and get help
+    - title: Learn and get help
       links:
         - url: /training/browse/?products=azure-devops
           itemType: learn
@@ -186,7 +150,7 @@ conceptualContent:
           itemType: how-to-guide
           text: Troubleshoot connecting to a project
         - url: ./user-guide/provide-feedback.md
-          itemType: reference
+          itemType: how-to-guide
           text: Get support and provide feedback
         - url: https://devblogs.microsoft.com/devops/
           itemType: whats-new
@@ -206,7 +170,7 @@ tools:
     - title: GitHub Copilot for work items
       imageSrc: ./media/index/DevOpsIconBoards96.svg
       url: ./boards/github/work-item-integration-github-copilot.md
-    - title: AI-assisted package workflows
+    - title: AI for Azure Artifacts
       imageSrc: ./media/index/DevOpsIconArtifacts96.svg
       url: ./artifacts/get-started-artifacts-ai.md
 
@@ -246,7 +210,7 @@ additionalContent:
       summary: Build integrations and automate Azure DevOps from your tools.
       items:
         - title: REST API
-          summary: Programmatic access to projects, pipelines, repos, work items, and more.
+          summary: Automate every Azure DevOps service from your tools and scripts.
           url: /rest/api/azure/devops/
           links:
             - text: REST API reference
@@ -305,6 +269,16 @@ additionalContent:
               url: ./boards/backlogs/backlogs-overview.md
             - text: Agile glossary
               url: ./boards/work-items/agile-glossary.md
+        - title: Testers
+          summary: Plan, run, and track manual, exploratory, and automated tests.
+          url: ./test/overview.md
+          links:
+            - text: What is Azure Test Plans?
+              url: ./test/overview.md
+            - text: Create a test plan
+              url: ./test/create-a-test-plan.md
+            - text: Run automated tests
+              url: ./test/run-automated-tests-from-test-hub.md
     # Section 4
     - title: Stay connected
       summary: Follow product news, get help, and check service status.
