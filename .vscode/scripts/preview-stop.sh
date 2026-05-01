@@ -12,6 +12,14 @@ if pgrep -f "$WATCHDOG_PATTERN" >/dev/null 2>&1; then
 	sleep 1
 fi
 
+# Kill any stray npm/wireit chain that would wipe wwwroot in a loop.
+if find_hostile_processes >/dev/null; then
+	echo "Killing stray npm/wireit chain (would wipe wwwroot in a loop)..."
+	kill_hostile_processes
+	stopped_any=true
+	sleep 1
+fi
+
 for pattern in "${PROC_PATTERNS[@]}"; do
 	if pgrep -f "$pattern" >/dev/null 2>&1; then
 		echo "Stopping: $pattern"

@@ -24,6 +24,11 @@ WWWROOT="$DOCFX_TEMPLATES_DIR/wwwroot"
 PROC_PATTERNS=("dcp-local" "dist/server\\.js" "lib/browser-sync\\.js")
 # Watchdog process pattern (managed separately so we don't tear it down with the main services).
 WATCHDOG_PATTERN="preview-watch-wwwroot\\.sh"
+# Hostile process patterns: things that wipe wwwroot when they run. We never start these,
+# but they may be left over from a prior 'npm run start' / 'npm run serve' / wireit invocation.
+# Excludes the VS Code wireit *language server* (vscode-server/extensions/...wireit-...).
+HOSTILE_PATTERNS=("npm run start\\b" "npm run serve\\b" "npm run start-browser-sync\\b" "node .*lib/content-build\\.js")
+HOSTILE_WIREIT_PATTERN="node /git/external/docs-ui/node_modules/\\.bin/wireit"
 # Ports we own.
 PORTS=(443 3001 3003)
 # A test URL that must return 200 if the pipeline is healthy.
@@ -51,6 +56,30 @@ resolve_cache_hash() {
 # True if a process matching the regex is alive.
 is_running() {
 	pgrep -f "$1" >/dev/null 2>&1
+}
+
+# Find any hostile npm/wireit chain that would wipe wwwroot. Echoes "PID  cmdline"
+# lines for each match; returns 0 if any found.
+find_hostile_processes() {
+	local pat pid cmd found=1
+	for pat in "${HOSTILE_PATTERNS[@]}" "$HOSTILE_WIREIT_PATTERN"; do
+		while IFS= read -r pid; do
+			[[ -z "$pid" ]] && continue
+			cmd=$(ps -p "$pid" -o args= 2>/dev/null || true)
+			[[ -z "$cmd" ]] && continue
+			echo "$pid  $cmd"
+			found=0
+		done < <(pgrep -f "$pat" 2>/dev/null || true)
+	done
+	return $found
+}
+
+# Kill any hostile npm/wireit chain. Idempotent.
+kill_hostile_processes() {
+	local pat
+	for pat in "${HOSTILE_PATTERNS[@]}" "$HOSTILE_WIREIT_PATTERN"; do
+		pkill -f "$pat" 2>/dev/null || true
+	done
 }
 
 # True if all three preview services are running.

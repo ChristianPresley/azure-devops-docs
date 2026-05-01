@@ -95,6 +95,15 @@ for port in "${PORTS[@]}"; do
 done
 
 echo ""
+echo "=== Hostile processes (would wipe wwwroot) ==="
+if find_hostile_processes 2>/dev/null; then
+	echo ""
+	echo "  WARNING: these processes will wipe wwwroot in a loop. Run 'preview: stop' to clean up."
+else
+	echo "  none"
+fi
+
+echo ""
 echo "=== Last 5 lines of each log ==="
 declare -A log_label=( ["$DCP_LOG"]="dcp-local" ["$RENDER_LOG"]="render" ["$BS_LOG"]="browser-sync" )
 for path in "$DCP_LOG" "$RENDER_LOG" "$BS_LOG"; do

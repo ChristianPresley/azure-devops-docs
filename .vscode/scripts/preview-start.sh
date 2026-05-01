@@ -56,9 +56,13 @@ start_browser_sync() {
 }
 
 start_watchdog() {
-	if is_running "$WATCHDOG_PATTERN"; then
-		echo "wwwroot watchdog already running."
-		return 0
+	# Kill any extras first (race-safe).
+	local existing
+	existing=$(pgrep -f "$WATCHDOG_PATTERN" | wc -l)
+	if (( existing > 0 )); then
+		echo "Cleaning up $existing existing watchdog process(es)..."
+		pkill -f "$WATCHDOG_PATTERN" 2>/dev/null || true
+		sleep 1
 	fi
 	echo "Starting wwwroot watchdog (log: $WATCH_LOG)..."
 	nohup "$SCRIPT_DIR/preview-watch-wwwroot.sh" > "$WATCH_LOG" 2>&1 &
@@ -71,6 +75,17 @@ run_smoke_test_with_report() {
 	echo "  /pipelines/get-started/what-is-azure-pipelines -> HTTP $code"
 	[[ "$code" == "200" ]]
 }
+
+# ============================================================
+# Pre-flight: kill any stray npm/wireit that would wipe wwwroot
+# ============================================================
+if find_hostile_processes >/dev/null 2>&1; then
+	echo "Found stray npm/wireit chain that would wipe wwwroot:"
+	find_hostile_processes | sed 's/^/  /'
+	echo "Killing them before proceeding..."
+	kill_hostile_processes
+	sleep 2
+fi
 
 # ============================================================
 # Decision: case 1 — fully healthy
