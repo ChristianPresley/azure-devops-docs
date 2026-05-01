@@ -1,0 +1,100 @@
+{
+	// Local docs-ui preview pipeline (no OPS, no KeyVault).
+	// See /memories/repo/local-docs-ui-preview.md for architecture details.
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "preview: start (full pipeline)",
+			"detail": "Restore wwwroot from wireit cache, then start dcp-local (:3003), render (:3001), and browser-sync (:443).",
+			"type": "shell",
+			"command": "${workspaceFolder}/.vscode/scripts/preview-start.sh",
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"presentation": {
+				"reveal": "always",
+				"panel": "dedicated",
+				"clear": true
+			},
+			"problemMatcher": [],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
+		},
+		{
+			"label": "preview: stop",
+			"detail": "Kill dcp-local, render server, and browser-sync proxy.",
+			"type": "shell",
+			"command": "${workspaceFolder}/.vscode/scripts/preview-stop.sh",
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"presentation": {
+				"reveal": "always",
+				"panel": "shared",
+				"clear": true
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "preview: status",
+			"detail": "Show running preview processes, listening ports, and service log tails.",
+			"type": "shell",
+			"command": "${workspaceFolder}/.vscode/scripts/preview-status.sh",
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"presentation": {
+				"reveal": "always",
+				"panel": "shared",
+				"clear": true
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "preview: configure (pick wireit cache)",
+			"detail": "List wireit content-build caches by recency and write the chosen hash to .vscode/preview.env.",
+			"type": "shell",
+			"command": "${workspaceFolder}/.vscode/scripts/preview-configure.sh",
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"presentation": {
+				"reveal": "always",
+				"panel": "shared",
+				"clear": true,
+				"echo": true
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "preview: restart dcp-local (rescan wwwroot)",
+			"detail": "Kill and restart only the content proxy. Use after dropping new assets/pagejson into wwwroot.",
+			"type": "shell",
+			"command": "${workspaceFolder}/.vscode/scripts/preview-restart-dcp.sh",
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"presentation": {
+				"reveal": "always",
+				"panel": "shared",
+				"clear": true
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "preview: tail logs",
+			"detail": "Follow dcp-local + render + browser-sync logs in one stream.",
+			"type": "shell",
+			"command": "tail -F /tmp/preview-dcp.log /tmp/preview-render.log /tmp/preview-bs.log",
+			"presentation": {
+				"reveal": "always",
+				"panel": "dedicated",
+				"clear": true
+			},
+			"isBackground": true,
+			"problemMatcher": []
+		}
+	]
+}
