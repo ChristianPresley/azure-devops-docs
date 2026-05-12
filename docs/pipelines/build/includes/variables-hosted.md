@@ -277,7 +277,21 @@ See [How are the identity variables set?](#identity_values). Example: `a1b2c3d4-
 
 ### Build.Reason
 
-The event that caused the build to run. See [Build.Reason values](#buildreason-values) for the full list. Example: `Manual`
+The event that caused the build to run. Example: `Manual`
+
+| Value | Description |
+|---|---|
+| `Manual` | A user manually queued the build from the Azure DevOps portal. |
+| `IndividualCI` | **Continuous integration (CI)** triggered by a Git push or a Team Foundation Version Control (TFVC) check-in. |
+| `BatchedCI` | **Continuous integration (CI)** triggered by a Git push or a TFVC check-in, with **Batch changes** selected. |
+| `Schedule` | **Scheduled** trigger. |
+| `ScheduleForced` | A user manually ran a scheduled trigger, bypassing the **Always run** evaluation. For example, choosing **Run pipeline** on a scheduled pipeline. |
+| `UserCreated` | The build was created programmatically through the REST API or `az pipelines run`, as opposed to the **Queue build** button (`Manual`). |
+| `ValidateShelveset` | A user manually queued the build of a specific TFVC shelveset. |
+| `CheckInShelveset` | **Gated check-in** trigger. |
+| `PullRequest` | A Git branch policy that requires a build triggers the build. |
+| `BuildCompletion` | [Another build triggers](../../process/pipeline-triggers.md) the build. |
+| `ResourceTrigger` | [A resource trigger](../../process/resources.md) or [another build triggers](../../process/pipeline-triggers.md) the build. |
 
 **Available in**: Template `${{ }}` ✓ &nbsp;·&nbsp; Macro `$(var)` ✓ &nbsp;·&nbsp; Runtime `$[ ]` ✓
 
@@ -746,20 +760,6 @@ if "%TF_BUILD%"=="True" (
 This variable is agent-scoped, and can be used as an environment variable in a script and as a parameter in a build task. It can't be used as part of the build number or as a version control tag.
 
 **Available in**: Template `${{ }}` ✗ &nbsp;·&nbsp; Macro `$(var)` ✓ &nbsp;·&nbsp; Runtime `$[ ]` ✓
-
-### Build.Reason values
-
-- `Manual`: A user manually queued the build from the Azure DevOps portal.
-- `IndividualCI`: **Continuous integration (CI)** triggered by a Git push or a Team Foundation Version Control (TFVC) check-in.
-- `BatchedCI`: **Continuous integration (CI)** triggered by a Git push or a TFVC check-in, with **Batch changes** selected.
-- `Schedule`: **Scheduled** trigger.
-- `ScheduleForced`: A user manually ran a scheduled trigger, bypassing the **Always run** evaluation. For example, choosing **Run pipeline** on a scheduled pipeline.
-- `UserCreated`: The build was created programmatically through the REST API or `az pipelines run`, as opposed to the **Queue build** button (`Manual`).
-- `ValidateShelveset`: A user manually queued the build of a specific TFVC shelveset.
-- `CheckInShelveset`: **Gated check-in** trigger.
-- `PullRequest`: A Git branch policy that requires a build triggers the build.
-- `BuildCompletion`: [Another build triggers](../../process/pipeline-triggers.md) the build.
-- `ResourceTrigger`: [A resource trigger](../../process/resources.md) or [another build triggers](../../process/pipeline-triggers.md) the build.
 
 ### Agent.ContainerMapping example
 
