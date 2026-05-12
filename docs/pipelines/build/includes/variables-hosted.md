@@ -133,7 +133,18 @@ The local path on the agent where all folders for a given build pipeline are cre
 
 ### Agent.ContainerMapping
 
-A mapping from container resource names in YAML to their Docker IDs at runtime. See [Agent.ContainerMapping example](#agentcontainermapping-example).
+A mapping from container resource names in YAML to their Docker IDs at runtime. Example:
+
+```json
+{
+  "one_container": {
+    "id": "bdbb357d73a0bd3550a1a5b778b62a4c88ed2051c7802a0659f1ff6e76910190"
+  },
+  "another_container": {
+    "id": "82652975109ec494876a8ccbb875459c945982952e0a72ad74c91216707162bb"
+  }
+}
+```
 
 **Available in**: Template `${{ }}` ✗ &nbsp;·&nbsp; Macro `$(var)` ✓ &nbsp;·&nbsp; Runtime `$[ ]` ✓
 
@@ -761,18 +772,6 @@ This variable is agent-scoped, and can be used as an environment variable in a s
 
 **Available in**: Template `${{ }}` ✗ &nbsp;·&nbsp; Macro `$(var)` ✓ &nbsp;·&nbsp; Runtime `$[ ]` ✓
 
-### Agent.ContainerMapping example
-
-```json
-{
-  "one_container": {
-    "id": "bdbb357d73a0bd3550a1a5b778b62a4c88ed2051c7802a0659f1ff6e76910190"
-  },
-  "another_container": {
-    "id": "82652975109ec494876a8ccbb875459c945982952e0a72ad74c91216707162bb"
-  }
-}
-```
 
 > [!TIP]
 > If you're using classic release pipelines, you can use [classic releases and artifacts variables](../../release/variables.md) to store and access data throughout your pipeline.
