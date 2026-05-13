@@ -5,7 +5,7 @@ author: geekzter
 ms.author: ericvan
 ms.assetid: 864FEB87-FE29-446D-804E-AD6ABDEA82C3
 ms.topic: concept-article
-ms.date: 01/20/2026
+ms.date: 05/11/2026
 monikerRange: '<= azure-devops'
 ---
 
@@ -13,7 +13,7 @@ monikerRange: '<= azure-devops'
 
 [!INCLUDE [version-lt-eq-azure-devops](../../includes/version-lt-eq-azure-devops.md)]
 
-Using variables in Classic release pipelines is a convenient way to exchange and transport data throughout your pipeline. Each variable is stored as a string, and its value can change between pipeline runs.
+Using variables in Classic release pipelines is a convenient way to exchange and transport data throughout your pipeline. For general variable concepts that also apply to YAML pipelines, see [Define variables](../process/variables.md).
 
 ::: moniker range="azure-devops"
 
@@ -40,69 +40,75 @@ Some of the most significant variables are described in the following tables. To
 
 ### System variables
 
-| Variable name                   | Description                                                                                                                                                       |
-|---------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **System.TeamFoundationServerUri** | The URL of the service connection in Azure Pipelines. Use this variable in your scripts or tasks to call Azure Pipelines REST APIs.<br/><br />Example: `https://fabrikam.vsrm.visualstudio.com/` |
-| **System.TeamFoundationCollectionUri** | The URL of the Team Foundation collection or Azure Pipelines. Use this variable in your scripts or tasks to call REST APIs on other services such as Build and Version control.<br/><br />Example: `https://dev.azure.com/fabrikam/` |
-| **System.CollectionId**         | The ID of the collection to which this build or release belongs.<br/><br />Example: `6c6f3423-1c84-4625-995a-f7f143a1e43d`                                         |
-| **System.DefinitionId**         | The ID of the release pipeline to which the current release belongs.<br/><br />Example: `1`                                                                        |
-| **System.TeamProject**          | The name of the project to which this build or release belongs.<br/><br />Example: `Fabrikam`                                                                      |
-| **System.TeamProjectId**        | The ID of the project to which this build or release belongs.<br/><br />Example: `79f5c12e-3337-4151-be41-a268d2c73344`                                            |
-| **System.ArtifactsDirectory**   | The directory to which the pipeline downloads artifacts during deployment of a release. The pipeline clears the directory before every deployment if it requires artifacts to be downloaded to the agent. Same as `Agent.ReleaseDirectory` and `System.DefaultWorkingDirectory`.<br/><br />Example: `C:\agent\_work\r1\a`  |
-| **System.DefaultWorkingDirectory** | The directory to which the pipeline downloads artifacts during deployment of a release. The pipeline clears the directory before every deployment if it requires artifacts to be downloaded to the agent. Same as `Agent.ReleaseDirectory` and `System.ArtifactsDirectory`.<br/><br />Example: `C:\agent\_work\r1\a` |
-| **System.WorkFolder**           | The working directory for this agent, where the pipeline creates subfolders for every build or release. Same as `Agent.RootDirectory` and `Agent.WorkFolder`.<br/><br />Example: `C:\agent\_work`  |
-| **System.Debug**                | This is the only system variable that users can _set_. Set this variable to `true` to [run the release in debug mode](#run-a-release-in-debug-mode) to assist in fault-finding.<br/><br />Example: `true` |
+> [!div class="mx-tdCol2BreakAll"]
+> | Variable name                   | Description                                                                                                                                                       |
+> |---------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+> | **System.TeamFoundationServerUri** | The URL of the service connection in Azure Pipelines. Use this variable in your scripts or tasks to call Azure Pipelines REST APIs.<br/><br />Example: `https://fabrikam.vsrm.visualstudio.com/` |
+> | **System.TeamFoundationCollectionUri** | The URL of the Team Foundation collection or Azure Pipelines. Use this variable in your scripts or tasks to call REST APIs on other services such as Build and Version control.<br/><br />Example: `https://dev.azure.com/fabrikam/` |
+> | **System.CollectionId**         | The ID of the collection to which this build or release belongs.<br/><br />Example: `6c6f3423-1c84-4625-995a-f7f143a1e43d`                                         |
+> | **System.DefinitionId**         | The ID of the release pipeline to which the current release belongs.<br/><br />Example: `1`                                                                        |
+> | **System.TeamProject**          | The name of the project to which this build or release belongs.<br/><br />Example: `Fabrikam`                                                                      |
+> | **System.TeamProjectId**        | The ID of the project to which this build or release belongs.<br/><br />Example: `79f5c12e-3337-4151-be41-a268d2c73344`                                            |
+> | **System.ArtifactsDirectory**   | The directory to which the pipeline downloads artifacts during deployment of a release. The pipeline clears the directory before every deployment if it requires artifacts to be downloaded to the agent. Same as `Agent.ReleaseDirectory` and `System.DefaultWorkingDirectory`.<br/><br />Example: `C:\agent\_work\r1\a`  |
+> | **System.DefaultWorkingDirectory** | The directory to which the pipeline downloads artifacts during deployment of a release. The pipeline clears the directory before every deployment if it requires artifacts to be downloaded to the agent. Same as `Agent.ReleaseDirectory` and `System.ArtifactsDirectory`.<br/><br />Example: `C:\agent\_work\r1\a` |
+> | **System.WorkFolder**           | The working directory for this agent, where the pipeline creates subfolders for every build or release. Same as `Agent.RootDirectory` and `Agent.WorkFolder`.<br/><br />Example: `C:\agent\_work`  |
+> | **System.Debug**                | This is the only system variable that users can _set_. Set this variable to `true` to [run the release in debug mode](#run-a-release-in-debug-mode) to assist in fault-finding.<br/><br />Example: `true` |
 
 ### Release variables
 
-| Variable name                   | Description                                                                                                                                                       |
-|---------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Release.AttemptNumber**       | The number of times this release is deployed in this stage.<br/><br />Example:  `1`                                                                               |
-| **Release.DefinitionEnvironmentId**    | The ID of the stage in the corresponding release pipeline.<br/><br />Example: `1`                                                                          |
-| **Release.DefinitionId**               | The ID of the release pipeline to which the current release belongs.<br/><br />Example: `1`                                                                |
-| **Release.DefinitionName**             | The name of the release pipeline to which the current release belongs.<br/><br />Example: `fabrikam-cd`                                                    |
-| **Release.Deployment.RequestedFor**    | The display name of the identity that triggered (started) the deployment currently in progress.<br/><br />Example: `Mateo Escobedo`                        |
-| **Release.Deployment.RequestedForEmail** | The email address of the identity that triggered (started) the deployment currently in progress.<br/><br />Example: `mateo@fabrikam.com`                 |
-| **Release.Deployment.RequestedForId**  | The ID of the identity that triggered (started) the deployment currently in progress.<br/><br />Example: `2f435d07-769f-4e46-849d-10d1ab9ba6ab`            |
-| **Release.DeploymentID**               | The ID of the deployment. Unique per job.<br/><br />Example: `254`                                                                                         |
-| **Release.DeployPhaseID**              | The ID of the phase where deployment is running.<br/><br />Example: `127`                                                                                  |
-| **Release.EnvironmentId**              | The ID of the stage instance in a release to which the deployment is currently in progress.<br/><br />Example: `276`                                       |
-| **Release.EnvironmentName**            | The name of stage to which deployment is currently in progress.<br/><br />Example: `Dev`                                                                   |
-| **Release.EnvironmentUri**             | The URI of the stage instance in a release to which deployment is currently in progress.<br/><br />Example: `vstfs://ReleaseManagement/Environment/276`    |
-| **Release.Environments.{stage-name}.status** | The deployment status of the stage.<br/><br />Example: `InProgress`                                                                                  |
-| **Release.PrimaryArtifactSourceAlias** | The alias of the primary artifact source.<br/><br />Example: `fabrikam\_web`                                                                               |
-| **Release.Reason**                     | The reason for the deployment. Supported values are:<br>  `ContinuousIntegration` - the release started in Continuous Deployment after a build completed.<br>  `Manual` - the release started manually.<br>  `None` - the deployment reason isn't specified.<br>  `Schedule` - the release started from a schedule. |
-| **Release.ReleaseDescription**         | The text description provided at the time of the release.<br/><br />Example: `Critical security patch`                                                     |
-| **Release.ReleaseId**                  | The identifier of the current release record.<br/><br />Example: `118`                                                                                     |
-| **Release.ReleaseName**                | The name of the current release.<br/><br />Example: `Release-47`                                                                                           |
-| **Release.ReleaseUri**                 | The URI of the current release.<br/><br />Example: `vstfs://ReleaseManagement/Release/118`                                                                 |
-| **Release.ReleaseWebURL**              | The URL for this release.<br/><br />Example: `https://dev.azure.com/fabrikam/f3325c6c/_release?releaseId=392&_a=release-summary`                           |
-| **Release.RequestedFor**               | The display name of the identity that triggered the release.<br/><br />Example: `Mateo Escobedo`                                                           |
-| **Release.RequestedForEmail**          | The email address of the identity that triggered the release.<br/><br />Example: `mateo@fabrikam.com`                                                      |
-| **Release.RequestedForId**             | The ID of the identity that triggered the release.<br/><br />Example: `2f435d07-769f-4e46-849d-10d1ab9ba6ab`                                               |
-| **Release.SkipArtifactsDownload**      | Boolean value that specifies whether to skip downloading of artifacts to the agent.<br/><br />Example: `FALSE`                                      |
-| **Release.TriggeringArtifact.Alias**   | The alias of the artifact which triggered the release. This value is empty when the release is scheduled or triggered manually.<br/><br />Example: `fabrikam\_app`|
+> [!div class="mx-tdCol2BreakAll"]
+> | Variable name                   | Description                                                                                                                                                       |
+> |---------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+> | **Release.AttemptNumber**       | The number of times this release is deployed in this stage.<br/><br />Example:  `1`                                                                               |
+> | **Release.DefinitionEnvironmentId**    | The ID of the stage in the corresponding release pipeline.<br/><br />Example: `1`                                                                          |
+> | **Release.DefinitionId**               | The ID of the release pipeline to which the current release belongs.<br/><br />Example: `1`                                                                |
+> | **Release.DefinitionName**             | The name of the release pipeline to which the current release belongs.<br/><br />Example: `fabrikam-cd`                                                    |
+> | **Release.DefinitionSnapshotRevision** | The revision number of the release definition snapshot used for this release. Increments each time the release pipeline is edited and saved.<br/><br />Example: `3` |
+> | **Release.Deployment.RequestedFor**    | The display name of the identity that triggered (started) the deployment currently in progress.<br/><br />Example: `Mateo Escobedo`                        |
+> | **Release.Deployment.RequestedForEmail** | The email address of the identity that triggered (started) the deployment currently in progress.<br/><br />Example: `mateo@fabrikam.com`                 |
+> | **Release.Deployment.RequestedForId**  | The ID of the identity that triggered (started) the deployment currently in progress.<br/><br />Example: `2f435d07-769f-4e46-849d-10d1ab9ba6ab`            |
+> | **Release.Deployment.StartTime**       | The timestamp when the deployment in the current stage started. Useful for measuring deployment duration in scripts.<br/><br />Example: `2024-08-15T14:30:00Z` |
+> | **Release.DeploymentID**               | The ID of the deployment. Unique per job.<br/><br />Example: `254`                                                                                         |
+> | **Release.DeployPhaseID**              | The ID of the phase where deployment is running.<br/><br />Example: `127`                                                                                  |
+> | **Release.EnvironmentId**              | The ID of the stage instance in a release to which the deployment is currently in progress.<br/><br />Example: `276`                                       |
+> | **Release.EnvironmentName**            | The name of stage to which deployment is currently in progress.<br/><br />Example: `Dev`                                                                   |
+> | **Release.EnvironmentUri**             | The URI of the stage instance in a release to which deployment is currently in progress.<br/><br />Example: `vstfs://ReleaseManagement/Environment/276`    |
+> | **Release.Environments.{stage-name}.status** | The deployment status of the stage.<br/><br />Example: `InProgress`                                                                                  |
+> | **Release.PrimaryArtifactSourceAlias** | The alias of the primary artifact source.<br/><br />Example: `fabrikam\_web`                                                                               |
+> | **Release.Reason**                     | The reason for the deployment. Supported values are:<br>  `ContinuousIntegration` - the release started in Continuous Deployment after a build completed.<br>  `Manual` - the release started manually.<br>  `None` - the deployment reason isn't specified.<br>  `Schedule` - the release started from a schedule. |
+> | **Release.ReleaseDescription**         | The text description provided at the time of the release.<br/><br />Example: `Critical security patch`                                                     |
+> | **Release.ReleaseId**                  | The identifier of the current release record.<br/><br />Example: `118`                                                                                     |
+> | **Release.ReleaseName**                | The name of the current release.<br/><br />Example: `Release-47`                                                                                           |
+> | **Release.ReleaseUri**                 | The URI of the current release.<br/><br />Example: `vstfs://ReleaseManagement/Release/118`                                                                 |
+> | **Release.ReleaseWebURL**              | The URL for this release.<br/><br />Example: `https://dev.azure.com/fabrikam/f3325c6c/_release?releaseId=392&_a=release-summary`                           |
+> | **Release.RequestedFor**               | The display name of the identity that triggered the release.<br/><br />Example: `Mateo Escobedo`                                                           |
+> | **Release.RequestedForEmail**          | The email address of the identity that triggered the release.<br/><br />Example: `mateo@fabrikam.com`                                                      |
+> | **Release.RequestedForId**             | The ID of the identity that triggered the release.<br/><br />Example: `2f435d07-769f-4e46-849d-10d1ab9ba6ab`                                               |
+> | **Release.SkipArtifactsDownload**      | Boolean value that specifies whether to skip downloading of artifacts to the agent.<br/><br />Example: `FALSE`                                      |
+> | **Release.TriggeringArtifact.Alias**   | The alias of the artifact which triggered the release. This value is empty when the release is scheduled or triggered manually.<br/><br />Example: `fabrikam\_app`|
 
 
 ### Release-stage variables
 
-| Variable name                                | Description                                                                                        |
-|----------------------------------------------|----------------------------------------------------------------------------------------------------|
-| **Release.Environments.{stage name}.Status** | The status of deployment of this release within a specified stage.<br/><br />Example: `NotStarted` |
+> [!div class="mx-tdCol2BreakAll"]
+> | Variable name                                | Description                                                                                        |
+> |----------------------------------------------|----------------------------------------------------------------------------------------------------|
+> | **Release.Environments.{stage name}.Status** | The status of deployment of this release within a specified stage.<br/><br />Example: `NotStarted` |
 
 ### Agent variables
 
-| Variable name            | Description                                                                                                                                                                   |
-|--------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Agent.Name**           | The name of the agent as registered with the [agent pool](../agents/pools-queues.md). This name is likely different from the computer name.<br/><br />Example: `fabrikam-agent` |
-| **Agent.MachineName**    | The name of the computer on which the agent is configured.<br/><br />Example: `fabrikam-agent`                                                                                |
-| **Agent.Version**        | The version of the agent software.<br/><br />Example: `2.109.1`                                                                                                               |
-| **Agent.JobName**        | The name of the job that runs, such as Release or Build.<br/><br />Example: `Release`                                                                                   |
-| **Agent.HomeDirectory**  | The folder where the agent is installed. This folder contains the code and resources for the agent.<br/><br />Example: `C:\agent`                                             |
-| **Agent.ReleaseDirectory** | The directory to which the deployment of a release downloads artifacts. The directory is cleared before every deployment if it requires artifacts to be downloaded to the agent. It's the same as `System.ArtifactsDirectory` and `System.DefaultWorkingDirectory`.<br/><br />Example: `C:\agent\_work\r1\a` |
-| **Agent.RootDirectory**  | The working directory for this agent, where subfolders are created for every build or release. It's the same as `Agent.WorkFolder` and `System.WorkFolder`.<br/><br />Example: `C:\agent\_work` |
-| **Agent.WorkFolder**     | The working directory for this agent, where subfolders are created for every build or release. It's the same as `Agent.RootDirectory` and `System.WorkFolder`.<br/><br />Example: `C:\agent\_work` |
-| **Agent.DeploymentGroupId** | The ID of the deployment group the agent registers with. This ID is available only in deployment group jobs.<br/><br />Example: `1`                                        |
+> [!div class="mx-tdCol2BreakAll"]
+> | Variable name            | Description                                                                                                                                                                   |
+> |--------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+> | **Agent.Name**           | The name of the agent as registered with the [agent pool](../agents/pools-queues.md). This name is likely different from the computer name.<br/><br />Example: `fabrikam-agent` |
+> | **Agent.MachineName**    | The name of the computer on which the agent is configured.<br/><br />Example: `fabrikam-agent`                                                                                |
+> | **Agent.Version**        | The version of the agent software.<br/><br />Example: `2.109.1`                                                                                                               |
+> | **Agent.JobName**        | The name of the job that runs, such as Release or Build.<br/><br />Example: `Release`                                                                                   |
+> | **Agent.HomeDirectory**  | The folder where the agent is installed. This folder contains the code and resources for the agent.<br/><br />Example: `C:\agent`                                             |
+> | **Agent.ReleaseDirectory** | The directory to which the deployment of a release downloads artifacts. The directory is cleared before every deployment if it requires artifacts to be downloaded to the agent. It's the same as `System.ArtifactsDirectory` and `System.DefaultWorkingDirectory`.<br/><br />Example: `C:\agent\_work\r1\a` |
+> | **Agent.RootDirectory**  | The working directory for this agent, where subfolders are created for every build or release. It's the same as `Agent.WorkFolder` and `System.WorkFolder`.<br/><br />Example: `C:\agent\_work` |
+> | **Agent.WorkFolder**     | The working directory for this agent, where subfolders are created for every build or release. It's the same as `Agent.RootDirectory` and `System.WorkFolder`.<br/><br />Example: `C:\agent\_work` |
+> | **Agent.DeploymentGroupId** | The ID of the deployment group the agent registers with. This ID is available only in deployment group jobs.<br/><br />Example: `1`                                        |
 
 ## Release artifacts variables
 
@@ -110,43 +116,45 @@ For each artifact that you reference in a release, use the following artifact va
 
 Replace the `{alias}` placeholder with the value you specify for the [artifact source alias](artifacts.md#artifact-source-alias) or with the default value generated for the release pipeline.
 
-| Variable name | Description |
-|---------------|-------------|
-| Release.Artifacts.{[alias](artifacts.md#artifact-source-alias)}.DefinitionId | The identifier of the build pipeline or repository.Examples:<br /><br />Azure Pipelines: `1`<br />GitHub: `fabrikam/asp` |
-| Release.Artifacts.{[alias](artifacts.md#artifact-source-alias)}.DefinitionName | The name of the build pipeline or repository.Examples:<br /><br />Azure Pipelines: `fabrikam-ci`<br />TFVC: `$/fabrikam`<br />Git: `fabrikam`<br />GitHub: `fabrikam/asp (main)` |
-| Release.Artifacts.{[alias](artifacts.md#artifact-source-alias)}.BuildNumber | The build number or the commit identifier.Examples:<br /><br />Azure Pipelines: `20170112.1`<br />Jenkins: `20170112.1`<br />TFVC: `Changeset 3`<br />Git: `38629c964`<br />GitHub: `38629c964` |
-| Release.Artifacts.{[alias](artifacts.md#artifact-source-alias)}.BuildId | The build identifier.Examples:<br /><br />Azure Pipelines: `130`<br />Jenkins: `130`<br />GitHub: `38629c964d21fe405ef830b7d0220966b82c9e11` |
-| Release.Artifacts.{[alias](artifacts.md#artifact-source-alias)}.BuildURI | The URL for the build.Examples:<br /><br />Azure Pipelines: `vstfs://build-release/Build/130`<br />GitHub: `https://github.com/fabrikam/asp` |
-| Release.Artifacts.{[alias](artifacts.md#artifact-source-alias)}.SourceBranch | The full path and name of the branch from which the source was built.Examples:<br /><br />Azure Pipelines: `refs/heads/main` |
-| Release.Artifacts.{[alias](artifacts.md#artifact-source-alias)}.SourceBranchName | The name only of the branch from which the source was built.Examples:<br /><br />Azure Pipelines: `main` |
-| Release.Artifacts.{[alias](artifacts.md#artifact-source-alias)}.SourceVersion | The commit that was built.Examples:<br /><br />Azure Pipelines: `bc0044458ba1d9298cdc649cb5dcf013180706f7` |
-| Release.Artifacts.{[alias](artifacts.md#artifact-source-alias)}.Repository.Provider | The type of repository from which the source was built.Examples:<br /><br />Azure Pipelines: `Git` |
-| Release.Artifacts.{[alias](artifacts.md#artifact-source-alias)}.RequestedForID | The identifier of the account that triggered the build.Examples:<br /><br />Azure Pipelines: `2f435d07-769f-4e46-849d-10d1ab9ba6ab` |
-| Release.Artifacts.{[alias](artifacts.md#artifact-source-alias)}.RequestedFor | The name of the account that requested the build.Examples:<br /><br />Azure Pipelines: `Mateo Escobedo` |
-| Release.Artifacts.{[alias](artifacts.md#artifact-source-alias)}.Type | The type of artifact source, such as Build. Examples:<br /><br />Azure Pipelines: `Build`<br />Jenkins: `Jenkins`<br />Azure DevOps Services: `TFVC`<br />Git: `Git`<br />GitHub: `GitHub` |
-| Release.Artifacts.{[alias](artifacts.md#artifact-source-alias)}.PullRequest.TargetBranch | The full path and name of the branch that is the target of a pull request. This variable is initialized only if the release is triggered by a pull request flow.Examples:<br /><br />Azure Pipelines: `refs/heads/main` |
-| Release.Artifacts.{[alias](artifacts.md#artifact-source-alias)}.PullRequest.TargetBranchName | The name only of the branch that is the target of a pull request. This variable is initialized only if the release is triggered by a pull request flow.Examples:<br /><br />Azure Pipelines: `main` |
+> [!div class="mx-tdCol2BreakAll"]
+> | Variable name | Description |
+> |---------------|-------------|
+> | Release.Artifacts.{[alias](artifacts.md#artifact-source-alias)}.DefinitionId | The identifier of the build pipeline or repository.Examples:<br /><br />Azure Pipelines: `1`<br />GitHub: `fabrikam/asp` |
+> | Release.Artifacts.{[alias](artifacts.md#artifact-source-alias)}.DefinitionName | The name of the build pipeline or repository.Examples:<br /><br />Azure Pipelines: `fabrikam-ci`<br />TFVC: `$/fabrikam`<br />Git: `fabrikam`<br />GitHub: `fabrikam/asp (main)` |
+> | Release.Artifacts.{[alias](artifacts.md#artifact-source-alias)}.BuildNumber | The build number or the commit identifier.Examples:<br /><br />Azure Pipelines: `20170112.1`<br />Jenkins: `20170112.1`<br />TFVC: `Changeset 3`<br />Git: `38629c964`<br />GitHub: `38629c964` |
+> | Release.Artifacts.{[alias](artifacts.md#artifact-source-alias)}.BuildId | The build identifier.Examples:<br /><br />Azure Pipelines: `130`<br />Jenkins: `130`<br />GitHub: `38629c964d21fe405ef830b7d0220966b82c9e11` |
+> | Release.Artifacts.{[alias](artifacts.md#artifact-source-alias)}.BuildURI | The URL for the build.Examples:<br /><br />Azure Pipelines: `vstfs://build-release/Build/130`<br />GitHub: `https://github.com/fabrikam/asp` |
+> | Release.Artifacts.{[alias](artifacts.md#artifact-source-alias)}.SourceBranch | The full path and name of the branch from which the source was built.Examples:<br /><br />Azure Pipelines: `refs/heads/main` |
+> | Release.Artifacts.{[alias](artifacts.md#artifact-source-alias)}.SourceBranchName | The name only of the branch from which the source was built.Examples:<br /><br />Azure Pipelines: `main` |
+> | Release.Artifacts.{[alias](artifacts.md#artifact-source-alias)}.SourceVersion | The commit that was built.Examples:<br /><br />Azure Pipelines: `bc0044458ba1d9298cdc649cb5dcf013180706f7` |
+> | Release.Artifacts.{[alias](artifacts.md#artifact-source-alias)}.Repository.Provider | The type of repository from which the source was built.Examples:<br /><br />Azure Pipelines: `Git` |
+> | Release.Artifacts.{[alias](artifacts.md#artifact-source-alias)}.RequestedForID | The identifier of the account that triggered the build.Examples:<br /><br />Azure Pipelines: `2f435d07-769f-4e46-849d-10d1ab9ba6ab` |
+> | Release.Artifacts.{[alias](artifacts.md#artifact-source-alias)}.RequestedFor | The name of the account that requested the build.Examples:<br /><br />Azure Pipelines: `Mateo Escobedo` |
+> | Release.Artifacts.{[alias](artifacts.md#artifact-source-alias)}.Type | The type of artifact source, such as Build. Examples:<br /><br />Azure Pipelines: `Build`<br />Jenkins: `Jenkins`<br />Azure DevOps Services: `TFVC`<br />Git: `Git`<br />GitHub: `GitHub` |
+> | Release.Artifacts.{[alias](artifacts.md#artifact-source-alias)}.PullRequest.TargetBranch | The full path and name of the branch that is the target of a pull request. This variable is initialized only if the release is triggered by a pull request flow.Examples:<br /><br />Azure Pipelines: `refs/heads/main` |
+> | Release.Artifacts.{[alias](artifacts.md#artifact-source-alias)}.PullRequest.TargetBranchName | The name only of the branch that is the target of a pull request. This variable is initialized only if the release is triggered by a pull request flow.Examples:<br /><br />Azure Pipelines: `main` |
 
 ## Primary artifact variables
 
 In Classic release pipelines, if you use multiple artifacts, you can designate one artifact as the primary artifact. Azure Pipelines then populates the following variables for the designated primary artifact.
 
-| Variable name                    | Same as                                              |
-|----------------------------------|------------------------------------------------------|
-| **Build.DefinitionId**           | Release.Artifacts.{Primary artifact alias}.DefinitionId |
-| **Build.DefinitionName**         | Release.Artifacts.{Primary artifact alias}.DefinitionName |
-| **Build.BuildNumber**            | Release.Artifacts.{Primary artifact alias}.BuildNumber |
-| **Build.BuildId**                | Release.Artifacts.{Primary artifact alias}.BuildId |
-| **Build.BuildURI**               | Release.Artifacts.{Primary artifact alias}.BuildURI |
-| **Build.SourceBranch**           | Release.Artifacts.{Primary artifact alias}.SourceBranch |
-| **Build.SourceBranchName**       | Release.Artifacts.{Primary artifact alias}.SourceBranchName |
-| **Build.SourceVersion**          | Release.Artifacts.{Primary artifact alias}.SourceVersion |
-| **Build.Repository.Provider**    | Release.Artifacts.{Primary artifact alias}.Repository.Provider |
-| **Build.RequestedForID**         | Release.Artifacts.{Primary artifact alias}.RequestedForID |
-| **Build.RequestedFor**           | Release.Artifacts.{Primary artifact alias}.RequestedFor |
-| **Build.Type**                   | Release.Artifacts.{Primary artifact alias}.Type |
-| **Build.PullRequest.TargetBranch** | Release.Artifacts.{Primary artifact alias}.PullRequest.TargetBranch |
-| **Build.PullRequest.TargetBranchName** | Release.Artifacts.{Primary artifact alias}.PullRequest.TargetBranchName |
+> [!div class="mx-tdCol2BreakAll"]
+> | Variable name                    | Same as                                              |
+> |----------------------------------|------------------------------------------------------|
+> | **Build.DefinitionId**           | Release.Artifacts.{Primary artifact alias}.DefinitionId |
+> | **Build.DefinitionName**         | Release.Artifacts.{Primary artifact alias}.DefinitionName |
+> | **Build.BuildNumber**            | Release.Artifacts.{Primary artifact alias}.BuildNumber |
+> | **Build.BuildId**                | Release.Artifacts.{Primary artifact alias}.BuildId |
+> | **Build.BuildURI**               | Release.Artifacts.{Primary artifact alias}.BuildURI |
+> | **Build.SourceBranch**           | Release.Artifacts.{Primary artifact alias}.SourceBranch |
+> | **Build.SourceBranchName**       | Release.Artifacts.{Primary artifact alias}.SourceBranchName |
+> | **Build.SourceVersion**          | Release.Artifacts.{Primary artifact alias}.SourceVersion |
+> | **Build.Repository.Provider**    | Release.Artifacts.{Primary artifact alias}.Repository.Provider |
+> | **Build.RequestedForID**         | Release.Artifacts.{Primary artifact alias}.RequestedForID |
+> | **Build.RequestedFor**           | Release.Artifacts.{Primary artifact alias}.RequestedFor |
+> | **Build.Type**                   | Release.Artifacts.{Primary artifact alias}.Type |
+> | **Build.PullRequest.TargetBranch** | Release.Artifacts.{Primary artifact alias}.PullRequest.TargetBranch |
+> | **Build.PullRequest.TargetBranchName** | Release.Artifacts.{Primary artifact alias}.PullRequest.TargetBranchName |
 
 ## Use default variables
 

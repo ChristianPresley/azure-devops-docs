@@ -2,7 +2,7 @@
 title: Set secret variables
 description: Learn how to set secret variables.
 ms.topic: concept-article
-ms.date: 01/12/2026
+ms.date: 05/11/2026
 monikerRange: "<=azure-devops"
 ---
 
@@ -13,6 +13,8 @@ monikerRange: "<=azure-devops"
 Secret variables are encrypted variables that you can use in pipelines without exposing their value. Use secret variables for private information like passwords, IDs, and other identifying data that you don't want exposed in a pipeline. Secret variables are encrypted at rest with a 2048-bit RSA key and are available on the agent for tasks and scripts to use.
 
 **Why secret variables matter:** Protecting sensitive credentials in your CI/CD pipelines is critical. By storing secrets securely, you prevent unauthorized access to sensitive resources, reduce the risk of credential exposure in build logs, and maintain compliance with security best practices. Secret variables ensure that only authorized pipelines and tasks can access sensitive data, protecting your organization's security posture.
+
+Some predefined identity variables (such as `Build.RequestedFor` and `Build.SourceVersionMessage`) are also scrubbed from agent diagnostic logs automatically; see [Identity variables and PII scrubbing](variables.md#identity-variables-and-pii-scrubbing) for the full list.
 
 The recommended ways to [set secret variables are in the UI](#secret-variable-in-the-ui), [in a variable group](#set-a-secret-variable-in-a-variable-group), and [in a variable group from Azure Key Vault](#link-secrets-from-an-azure-key-vault). You can also [set secret variables in a script with a logging command](#set-secret-variable-in-a-script-by-using-logging-commands) but this method isn't recommended since anyone who can access your pipeline can also see the secret.
 
@@ -139,3 +141,4 @@ For more information, see [setting and using variables in scripts](set-variables
 - [Use variables in a variable group](../scripts/cli/pipeline-variable-group-secret-nonsecret-variables.md)
 - [Use predefined variables](../build/variables.md)
 - [Set variables in scripts](set-variables-scripts.md)
+- [Identity variables and PII scrubbing](variables.md#identity-variables-and-pii-scrubbing)

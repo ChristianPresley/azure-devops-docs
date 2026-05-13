@@ -3,7 +3,7 @@ title: Deployment jobs
 description: Deploy to resources within an environment
 ms.topic: concept-article
 ms.assetid: fc825338-7012-4687-8369-5bf8f63b9c10
-ms.date: 07/17/2025
+ms.date: 05/11/2026
 monikerRange: "<=azure-devops"
 ---
 
@@ -358,6 +358,9 @@ While executing deployment strategies, you can access output variables across jo
 - For **runOnce** strategy plus a resourceType: `$[dependencies.<job-name>.outputs['Deploy_<resource-name>.<step-name>.<variable-name>']]`. (for example, `$[dependencies.JobA.outputs['Deploy_VM1.StepA.VariableA']]`)
 - For **canary** strategy:  `$[dependencies.<job-name>.outputs['<lifecycle-hookname>_<increment-value>.<step-name>.<variable-name>']]`  
 - For **rolling** strategy: `$[dependencies.<job-name>.outputs['<lifecycle-hookname>_<resource-name>.<step-name>.<variable-name>']]`
+
+> [!NOTE]
+> **Within-stage vs cross-stage references**: Output variables must be set with `isOutput=true` on the `##vso[task.setvariable]` logging command. Use `dependencies.<job>.outputs['<job>.<step>.<var>']` to consume outputs from another job in the **same** stage. Use `stageDependencies.<stage>.<job>.outputs['<step>.<var>']` (note: no inner `<job>.` segment) to consume outputs from a job in a **previous** stage.
 
 ```yaml
 # Set an output variable in a lifecycle hook of a deployment job executing canary strategy.

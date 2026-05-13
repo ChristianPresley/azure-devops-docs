@@ -4,7 +4,7 @@ ms.custom: devx-track-azurecli, copilot-scenario-highlight, doc-kit-assisted
 description: Variables are name-value pairs defined by you for use in a pipeline. You can use variables as inputs to tasks and in your scripts.
 ms.topic: concept-article
 ms.assetid: 4751564b-aa99-41a0-97e9-3ef0c0fce32a
-ms.date: 03/04/2026
+ms.date: 05/11/2026
 ai-usage: ai-assisted
 ---
 
@@ -58,6 +58,10 @@ If you're using classic release pipelines, see [release variables](../release/va
 When you run the pipeline, the system variables set their current value. Some variables are set automatically. As a pipeline author or end user, you can change the value of a system variable before the pipeline runs. 
 
 System variables are read-only. 
+
+### Identity variables and PII scrubbing
+
+Identity-related system variables are treated as personally identifiable information (PII) and are automatically scrubbed from agent diagnostic logs. This applies to `Build.RequestedFor`, `Build.RequestedForEmail`, `Build.QueuedBy`, `Build.SourceVersionAuthor`, `Build.SourceVersionMessage`, and the `Release.RequestedFor*` family. You can still pass them to tasks and scripts, but the values won't appear in the verbose diagnostic logs collected when `System.Debug` is `true`.
 
 ## Environment variables
 
@@ -151,6 +155,33 @@ Use macro syntax if you're providing a secure string or a [predefined variable](
 Choose a runtime expression if you're working with [conditions](conditions.md) and [expressions](expressions.md). However, don't use a runtime expression if you don't want your empty variable to print (example: `$[variables.var]`). For example, if you have conditional logic that relies on a variable having a specific value or no value, use a macro expression. 
 
 Typically, a template variable is the standard to use. By leveraging template variables, your pipeline fully injects the variable value into your pipeline at pipeline compilation. This injection is helpful when attempting to debug pipelines. You can download the log files and evaluate the fully expanded value that is being substituted in. Since the variable is substituted in, don't leverage template syntax for sensitive values.
+
+### Syntax in practice
+
+The following example shows each syntax in its natural location: macro `$(var)` for task inputs and scripts, template `${{ variables.var }}` for compile-time `if` decisions, and runtime `$[variables.var]` (with `dependencies.*.outputs[...]`) for cross-job output variables.
+
+```yaml
+variables:
+  - name: buildConfiguration
+    value: Release
+
+jobs:
+- job: build
+  steps:
+  - script: dotnet build --configuration $(buildConfiguration)   # macro: task input
+  - ${{ if eq(variables['Build.SourceBranchName'], 'main') }}:    # template: compile-time
+    - script: echo Building the main branch
+  - powershell: |
+      Write-Host "##vso[task.setvariable variable=imageTag;isOutput=true]1.0.$(Build.BuildId)"
+    name: tag
+
+- job: deploy
+  dependsOn: build
+  variables:
+    resolvedTag: $[ dependencies.build.outputs['tag.imageTag'] ]  # runtime: cross-job output
+  steps:
+  - script: echo Deploying $(resolvedTag)
+```
 
 ### Use AI to identify variable syntax issues
 

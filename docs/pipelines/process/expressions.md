@@ -3,7 +3,7 @@ title: Expressions
 description: Discover how to use expressions in Azure Pipelines. Define conditions, evaluate variables, and streamline your CI/CD workflows with this guide.
 ms.topic: concept-article
 ms.assetid: 4df37b09-67a8-418e-a0e8-c17d001f0ab3
-ms.date: 01/09/2026
+ms.date: 05/11/2026
 ms.author: sdanie
 author: steved0x
 monikerRange: "<=azure-devops"
@@ -45,20 +45,7 @@ The difference between runtime and compile time expression syntaxes is primarily
 In a compile-time expression (`${{ <expression> }}`), you have access to `parameters` and statically defined `variables`.
 In a runtime expression (`$[ <expression> ]`), you have access to more `variables` but no parameters.
 
-In this example, a runtime expression sets the  value of `$(isMain)`. A static variable in a compile expression sets the value of `$(compileVar)`.
-
-```yaml
-variables:
-  staticVar: 'my value' # static variable
-  compileVar: ${{ variables.staticVar }} # compile time expression
-  isMain: $[eq(variables['Build.SourceBranch'], 'refs/heads/main')] # runtime expression
-
-steps:
-  - script: |
-      echo ${{variables.staticVar}} # outputs my value
-      echo $(compileVar) # outputs my value
-      echo $(isMain) # outputs True
-```
+For the full comparison of macro `$(var)`, template `${{ variables.var }}`, and runtime `$[variables.var]` syntax, see [Understand variable syntax](variables.md#understand-variable-syntax).
 
 ::: moniker-end
 

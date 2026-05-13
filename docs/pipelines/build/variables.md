@@ -5,7 +5,7 @@ ms.topic: reference
 ms.assetid: 3A1C529F-DF6B-470A-9047-2758644C3D95
 ms.author: rabououn
 author: ramiMSFT
-ms.date: 02/13/2026
+ms.date: 05/11/2026
 ms.custom:  copilot-scenario-highlight 
 monikerRange: '<= azure-devops'
 ---
@@ -36,14 +36,16 @@ Learn more about [working with variables](../process/variables.md).
 
 ::: moniker-end
 
-## Build.Clean 
+## Build.Clean
 
-This is a deprecated variable that modifies how the build agent cleans up source.
-To learn how to clean up source, see [Clean the local repo on the agent](../repos/pipeline-options-for-git.md#clean-the-local-repo-on-the-agent).
+`Build.Clean` is deprecated. Setting it on a pipeline has no effect.
+To control how the agent cleans source between runs, use the `clean` setting on the `checkout` step or, for Classic build pipelines, the **Clean** options on the **Get sources** task. See [Clean the local repo on the agent](../repos/pipeline-options-for-git.md#clean-the-local-repo-on-the-agent).
 
 <h2 id="systemaccesstoken">System.AccessToken</h2>
 
-`System.AccessToken` is a special variable that carries the security token used by the running build.
+`System.AccessToken` is a special variable that carries the security token used by the running build. Its value is an OAuth token scoped to the [build job authorization scope](../process/access-tokens.md#job-authorization-scope) you configured for the pipeline, and the token is revoked when the job completes.
+
+`System.AccessToken` is only resolved at job execution time. It can't be used in template expressions (`${{ }}`) or runtime expressions (`$[ ]`) that resolve before the job starts.
 
 # [YAML](#tab/yaml)
 
@@ -56,6 +58,19 @@ steps:
   inputs:
     command: login
     containerRegistry: '<docker connection>'
+  env:
+    SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+```
+
+A common use is to call Azure DevOps REST APIs from a script. Pass the token through `env:` so the script can read it as an environment variable. Avoid echoing the token directly to the log.
+
+```yaml
+steps:
+- bash: |
+    curl --silent --show-error \
+      -H "Authorization: Bearer $SYSTEM_ACCESSTOKEN" \
+      "$(System.CollectionUri)$(System.TeamProject)/_apis/build/builds/$(Build.BuildId)?api-version=7.1"
+  displayName: Look up the current build via REST
   env:
     SYSTEM_ACCESSTOKEN: $(System.AccessToken)
 ```
@@ -137,6 +152,17 @@ The value depends on what caused the build and are specific to Azure Repos repos
 | In TFVC by a [gated check-in trigger](triggers.md) | The person who checked in the changes. | The person who checked in the changes. |
 | In Git or TFVC by the [Scheduled triggers](triggers.md) | The system identity, for example: `[DefaultCollection]\Project Collection Service Accounts` | The system identity, for example: `[DefaultCollection]\Project Collection Service Accounts` |
 | Because you clicked the **Queue build** button | You | You |
+
+For example, to skip a step that should only run on user-initiated CI builds (not scheduled or service-triggered runs), check `Build.RequestedFor` against the system identity:
+
+```yaml
+steps:
+- script: ./notify-author.sh
+  displayName: Notify the commit author
+  condition: and(succeeded(), ne(variables['Build.RequestedFor'], 'Microsoft.VisualStudio.Services.TFS'))
+```
+
+This condition skips the notification on scheduled and resource-triggered runs, where `Build.RequestedFor` resolves to the system identity rather than a real user.
 
 ::: moniker range="azure-devops"
 
