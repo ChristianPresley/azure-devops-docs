@@ -23,109 +23,161 @@ Predefined variables are available in three pipeline expression syntaxes:
 
 Each variable below lists the supported expression syntax in a **Property / Value** table. Rows marked **Not available** indicate a syntax that can't be used to reference that variable — for example, when you reference a template-only variable in a [template](../../process/templates.md), the expression doesn't render because the value isn't accessible within the template's scope. You can use agent variables as environment variables in scripts and as parameters in build tasks; you can't use them to customize the build number or to apply a version control label or tag.
 
-The following table is a quick reference of every predefined variable with an example value. Select a variable name to jump to its full description and expression-syntax details. Learn collapses long tables — choose **Expand table** to view the full list.
+The following sections group predefined variables by scenario. Each table provides a quick reference with an example value, and the detailed variable descriptions remain below.
+
+## Agent and workspace
 
 > [!div class="mx-tdBreakAll"]
 > | Variable | Example value |
 > | --- | --- |
 > | [Agent.BuildDirectory](#agentbuilddirectory) | `/home/vsts/work/1` |
-> | [Agent.ContainerMapping](#agentcontainermapping) | *See description* |
+> | [Agent.ContainerMapping](#agentcontainermapping) | `{"one_container":{"id":"bdbb357d73a0..."}}` |
 > | [Agent.HomeDirectory](#agenthomedirectory) | `c:\agent` |
 > | [Agent.Id](#agentid) | `2` |
-> | [Agent.JobName](#agentjobname) | *See description* |
-> | [Agent.JobStatus](#agentjobstatus) | *See description* |
+> | [Agent.JobName](#agentjobname) | `Job` |
+> | [Agent.JobStatus](#agentjobstatus) | `Succeeded` |
 > | [Agent.MachineName](#agentmachinename) | `fv-az200-123` |
 > | [Agent.Name](#agentname) | `Hosted Agent` |
-> | [Agent.OS](#agentos) | *See description* |
-> | [Agent.OSArchitecture](#agentosarchitecture) | *See description* |
+> | [Agent.OS](#agentos) | `Linux` |
+> | [Agent.OSArchitecture](#agentosarchitecture) | `X64` |
 > | [Agent.TempDirectory](#agenttempdirectory) | `/home/vsts/work/_temp` |
 > | [Agent.ToolsDirectory](#agenttoolsdirectory) | `/opt/hostedtoolcache` |
 > | [Agent.WorkFolder](#agentworkfolder) | `c:\agent_work` |
-> | [Build.ArtifactStagingDirectory](#buildartifactstagingdirectory) | `c:\agent_work\1\a` |
-> | [Build.BinariesDirectory](#buildbinariesdirectory) | `c:\agent_work\1\b` |
+> | [Common.TestResultsDirectory](#commontestresultsdirectory) | `c:\agent_work\1\TestResults` |
+> | [Pipeline.Workspace](#pipelineworkspace) | `/home/vsts/work/1` |
+> | [TF_BUILD](#tfbuild) | `True` |
+
+## Pipeline, job, and stage execution context
+
+> [!div class="mx-tdBreakAll"]
+> | Variable | Example value |
+> | --- | --- |
 > | [Build.BuildId](#buildbuildid) | `1764` |
 > | [Build.BuildNumber](#buildbuildnumber) | `20260511.1` |
 > | [Build.BuildUri](#buildbuilduri) | `vstfs:///Build/Build/1430` |
 > | [Build.ContainerId](#buildcontainerid) | `2713905` |
-> | [Build.CronSchedule.DisplayName](#buildcronscheduledisplayname) | `Nightly build` |
-> | [Build.DefinitionFolderPath](#builddefinitionfolderpath) | *See description* |
+> | [Build.DefinitionFolderPath](#builddefinitionfolderpath) | `\Infrastructure\Deploy` |
 > | [Build.DefinitionName](#builddefinitionname) | `MyApp-CI` |
 > | [Build.DefinitionVersion](#builddefinitionversion) | `1` |
-> | [Build.QueuedBy](#buildqueuedby) | `Jamal Hartnett` |
-> | [Build.QueuedById](#buildqueuedbyid) | `a1b2c3d4-0000-0000-0000-000000000000` |
-> | [Build.Reason](#buildreason) | *See description* |
+> | [Checks.StageAttempt](#checksstageattempt) | `1` |
+> | [System.DefinitionId](#systemdefinitionid) | `42` |
+> | [System.JobAttempt](#systemjobattempt) | `1` |
+> | [System.JobDisplayName](#systemjobdisplayname) | `Build` |
+> | [System.JobId](#systemjobid) | `12f1170f-0000-0000-0000-000000000000` |
+> | [System.JobIdentifier](#systemjobidentifier) | `Build.Build.__default` |
+> | [System.JobName](#systemjobname) | `Build` |
+> | [System.PhaseAttempt](#systemphaseattempt) | `1` |
+> | [System.PhaseDisplayName](#systemphasedisplayname) | `Build` |
+> | [System.PhaseName](#systemphasename) | `Phase_1` |
+> | [System.PlanId](#systemplanid) | `9e4ec8c3-0000-0000-0000-000000000000` |
+> | [System.StageAttempt](#systemstageattempt) | `1` |
+> | [System.StageDisplayName](#systemstagedisplayname) | `Build` |
+> | [System.StageName](#systemstagename) | `Stage_1` |
+> | [System.TimelineId](#systemtimelineid) | `33b55a2d-0000-0000-0000-000000000000` |
+
+## Source control
+
+> [!div class="mx-tdBreakAll"]
+> | Variable | Example value |
+> | --- | --- |
 > | [Build.Repository.Clean](#buildrepositoryclean) | `true` |
 > | [Build.Repository.Git.SubmoduleCheckout](#buildrepositorygitsubmodulecheckout) | `true` |
 > | [Build.Repository.ID](#buildrepositoryid) | `b3e7e7c4-0000-0000-0000-000000000000` |
 > | [Build.Repository.LocalPath](#buildrepositorylocalpath) | `c:\agent_work\1\s` |
 > | [Build.Repository.Name](#buildrepositoryname) | `Fabrikam-Scripts` |
-> | [Build.Repository.Provider](#buildrepositoryprovider) | *See description* |
-> | [Build.Repository.Tfvc.Workspace](#buildrepositorytfvcworkspace) | *See description* |
-> | [Build.Repository.Uri](#buildrepositoryuri) | *See description* |
-> | [Build.RequestedFor](#buildrequestedfor) | `Jamal Hartnett` |
-> | [Build.RequestedForEmail](#buildrequestedforemail) | `fabrikamfiber4@example.com` |
-> | [Build.RequestedForId](#buildrequestedforid) | `00000002-0000-8888-8000-000000000000` |
-> | [Build.SourceBranch](#buildsourcebranch) | *See description* |
-> | [Build.SourceBranchName](#buildsourcebranchname) | `Gated_2016-06-06_05.20.51.4369;username@live.com` |
+> | [Build.Repository.Provider](#buildrepositoryprovider) | `GitHub` |
+> | [Build.Repository.Tfvc.Workspace](#buildrepositorytfvcworkspace) | `ws_12_8` |
+> | [Build.Repository.Uri](#buildrepositoryuri) | `https://dev.azure.com/fabrikamfiber/_git/Scripts` |
+> | [Build.SourceBranch](#buildsourcebranch) | `refs/heads/main` |
+> | [Build.SourceBranchName](#buildsourcebranchname) | `main` |
 > | [Build.SourcesDirectory](#buildsourcesdirectory) | `c:\agent_work\1\s` |
-> | [Build.SourceTfvcShelveset](#buildsourcetfvcshelveset) | `Gated_2026-05-11_05.20.51.4369;user@example.com` |
+> | [Build.SourceTfvcShelveset](#buildsourcetfvcshelveset) | `myshelveset;user@example.com` |
 > | [Build.SourceVersion](#buildsourceversion) | `a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0` |
 > | [Build.SourceVersionAuthor](#buildsourceversionauthor) | `Jamal Hartnett` |
 > | [Build.SourceVersionMessage](#buildsourceversionmessage) | `Fix login bug` |
-> | [Build.StageRequestedBy](#buildstagerequestedby) | `Jamal Hartnett` |
-> | [Build.StageRequestedForId](#buildstagerequestedforid) | *See description* |
-> | [Build.StagingDirectory](#buildstagingdirectory) | `c:\agent_work\1\a` |
+> | [System.DefaultWorkingDirectory](#systemdefaultworkingdirectory) | `c:\agent_work\1\s` |
+> | [System.IsTriggeringRepository](#systemistriggeringrepository) | `True` |
+
+## Triggers and upstream builds
+
+> [!div class="mx-tdBreakAll"]
+> | Variable | Example value |
+> | --- | --- |
+> | [Build.CronSchedule.DisplayName](#buildcronscheduledisplayname) | `Nightly build` |
+> | [Build.Reason](#buildreason) | `Manual` |
 > | [Build.TriggeredBy.BuildId](#buildtriggeredbybuildid) | `1764` |
 > | [Build.TriggeredBy.BuildNumber](#buildtriggeredbybuildnumber) | `20260511.1` |
 > | [Build.TriggeredBy.DefinitionId](#buildtriggeredbydefinitionid) | `42` |
 > | [Build.TriggeredBy.DefinitionName](#buildtriggeredbydefinitionname) | `MyApp-CI` |
 > | [Build.TriggeredBy.ProjectID](#buildtriggeredbyprojectid) | `b3e7e7c4-0000-0000-0000-000000000000` |
-> | [Checks.StageAttempt](#checksstageattempt) | *See description* |
-> | [Common.TestResultsDirectory](#commontestresultsdirectory) | `c:\agent_work\1\TestResults` |
-> | [Environment.Id](#environmentid) | `10` |
-> | [Environment.Name](#environmentname) | `smarthotel-dev` |
-> | [Environment.ResourceId](#environmentresourceid) | `4` |
-> | [Environment.ResourceName](#environmentresourcename) | `bookings` |
-> | [Pipeline.Workspace](#pipelineworkspace) | `/home/vsts/work/1` |
-> | [Strategy.CycleName](#strategycyclename) | *See description* |
-> | [Strategy.Name](#strategyname) | *See description* |
-> | [System.AccessToken](#systemaccesstoken) | `(opaque OAuth bearer token)` |
-> | [System.AccessTokenRequestUri](#systemaccesstokenrequesturi) | `https://vstoken.dev.azure.com/...` |
-> | [System.CollectionId](#systemcollectionid) | `6c6f3423-0000-0000-0000-000000000000` |
-> | [System.CollectionUri](#systemcollectionuri) | `https://dev.azure.com/fabrikamfiber/` |
-> | [System.DefaultWorkingDirectory](#systemdefaultworkingdirectory) | *See description* |
-> | [System.DefinitionId](#systemdefinitionid) | `42` |
-> | [System.HostType](#systemhosttype) | *See description* |
-> | [System.IsTriggeringRepository](#systemistriggeringrepository) | *See description* |
-> | [System.JobAttempt](#systemjobattempt) | *See description* |
-> | [System.JobDisplayName](#systemjobdisplayname) | `Build` |
-> | [System.JobId](#systemjobid) | `12f1170f-0000-0000-0000-000000000000` |
-> | [System.JobIdentifier](#systemjobidentifier) | `Build.Build.__default` |
-> | [System.JobName](#systemjobname) | `Build` |
-> | [System.OidcRequestUri](#systemoidcrequesturi) | `https://vstoken.dev.azure.com/...` |
-> | [System.PhaseAttempt](#systemphaseattempt) | *See description* |
-> | [System.PhaseDisplayName](#systemphasedisplayname) | `Build` |
-> | [System.PhaseName](#systemphasename) | `Phase_1` |
-> | [System.PlanId](#systemplanid) | `9e4ec8c3-0000-0000-0000-000000000000` |
-> | [System.PullRequest.ForkSecretsRemoved](#systempullrequestforksecretsremoved) | *See description* |
-> | [System.PullRequest.IsFork](#systempullrequestisfork) | *See description* |
-> | [System.PullRequest.MergedAt](#systempullrequestmergedat) | *See description* |
+
+## Pull requests
+
+> [!div class="mx-tdBreakAll"]
+> | Variable | Example value |
+> | --- | --- |
+> | [System.PullRequest.ForkSecretsRemoved](#systempullrequestforksecretsremoved) | `True` |
+> | [System.PullRequest.IsFork](#systempullrequestisfork) | `True` |
+> | [System.PullRequest.MergedAt](#systempullrequestmergedat) | `2026-05-11T18:30:00Z` |
 > | [System.PullRequest.PullRequestId](#systempullrequestpullrequestid) | `17` |
-> | [System.PullRequest.PullRequestIteration](#systempullrequestpullrequestiteration) | *See description* |
+> | [System.PullRequest.PullRequestIteration](#systempullrequestpullrequestiteration) | `3` |
 > | [System.PullRequest.PullRequestNumber](#systempullrequestpullrequestnumber) | `42` |
 > | [System.PullRequest.SourceBranch](#systempullrequestsourcebranch) | `refs/heads/users/raisa/new-feature` |
 > | [System.PullRequest.SourceCommitId](#systempullrequestsourcecommitid) | `a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0` |
 > | [System.PullRequest.SourceRepositoryUri](#systempullrequestsourcerepositoryuri) | `https://dev.azure.com/ouraccount/_git/OurProject` |
 > | [System.PullRequest.TargetBranch](#systempullrequesttargetbranch) | `refs/heads/main` |
 > | [System.PullRequest.targetBranchName](#systempullrequesttargetbranchname) | `main` |
-> | [System.StageAttempt](#systemstageattempt) | *See description* |
-> | [System.StageDisplayName](#systemstagedisplayname) | `Build` |
-> | [System.StageName](#systemstagename) | `Stage_1` |
+
+## Identity and auditing
+
+> [!div class="mx-tdBreakAll"]
+> | Variable | Example value |
+> | --- | --- |
+> | [Build.QueuedBy](#buildqueuedby) | `Jamal Hartnett` |
+> | [Build.QueuedById](#buildqueuedbyid) | `a1b2c3d4-0000-0000-0000-000000000000` |
+> | [Build.RequestedFor](#buildrequestedfor) | `Jamal Hartnett` |
+> | [Build.RequestedForEmail](#buildrequestedforemail) | `fabrikamfiber4@example.com` |
+> | [Build.RequestedForId](#buildrequestedforid) | `00000002-0000-8888-8000-000000000000` |
+> | [Build.StageRequestedBy](#buildstagerequestedby) | `Jamal Hartnett` |
+> | [Build.StageRequestedForId](#buildstagerequestedforid) | `00000002-0000-8888-8000-000000000000` |
+
+## Artifacts and output directories
+
+> [!div class="mx-tdBreakAll"]
+> | Variable | Example value |
+> | --- | --- |
+> | [Build.ArtifactStagingDirectory](#buildartifactstagingdirectory) | `c:\agent_work\1\a` |
+> | [Build.BinariesDirectory](#buildbinariesdirectory) | `c:\agent_work\1\b` |
+> | [Build.StagingDirectory](#buildstagingdirectory) | `c:\agent_work\1\a` |
+
+## Organization, project, and security
+
+> [!div class="mx-tdBreakAll"]
+> | Variable | Example value |
+> | --- | --- |
+> | [System.AccessToken](#systemaccesstoken) | `(opaque OAuth bearer token)` |
+> | [System.AccessTokenRequestUri](#systemaccesstokenrequesturi) | `https://vstoken.dev.azure.com/...` |
+> | [System.CollectionId](#systemcollectionid) | `6c6f3423-0000-0000-0000-000000000000` |
+> | [System.CollectionUri](#systemcollectionuri) | `https://dev.azure.com/fabrikamfiber/` |
+> | [System.HostType](#systemhosttype) | `build` |
+> | [System.OidcRequestUri](#systemoidcrequesturi) | `https://vstoken.dev.azure.com/...` |
 > | [System.TeamFoundationCollectionUri](#systemteamfoundationcollectionuri) | `https://dev.azure.com/fabrikamfiber/` |
 > | [System.TeamProject](#systemteamproject) | `Fabrikam` |
 > | [System.TeamProjectId](#systemteamprojectid) | `b3e7e7c4-0000-0000-0000-000000000000` |
-> | [System.TimelineId](#systemtimelineid) | `33b55a2d-0000-0000-0000-000000000000` |
-> | [TF_BUILD](#tfbuild) | *See description* |
+
+## Deployment jobs (CD)
+
+> [!div class="mx-tdBreakAll"]
+> | Variable | Example value |
+> | --- | --- |
+> | [Environment.Id](#environmentid) | `10` |
+> | [Environment.Name](#environmentname) | `smarthotel-dev` |
+> | [Environment.ResourceId](#environmentresourceid) | `4` |
+> | [Environment.ResourceName](#environmentresourcename) | `bookings` |
+> | [Strategy.CycleName](#strategycyclename) | `Iteration` |
+> | [Strategy.Name](#strategyname) | `canary` |
+
+Detailed variable descriptions follow.
 
 ### Agent.BuildDirectory
 
