@@ -23,7 +23,7 @@ Predefined variables are available in three pipeline expression syntaxes:
 
 Each variable below lists the supported expression syntax in a **Property / Value** table. Rows marked **Not available** indicate a syntax that can't be used to reference that variable — for example, when you reference a template-only variable in a [template](../../process/templates.md), the expression doesn't render because the value isn't accessible within the template's scope. You can use agent variables as environment variables in scripts and as parameters in build tasks; you can't use them to customize the build number or to apply a version control label or tag.
 
-The following sections group predefined variables by scenario. Each table provides a quick reference with an example value, and the detailed variable descriptions remain below.
+The variable details below are organized into sections. Each section has a quick-reference table immediately above its detailed entries.
 
 ## Agent and workspace
 
@@ -43,141 +43,6 @@ The following sections group predefined variables by scenario. Each table provid
 > | [Agent.TempDirectory](#agenttempdirectory) | `/home/vsts/work/_temp` |
 > | [Agent.ToolsDirectory](#agenttoolsdirectory) | `/opt/hostedtoolcache` |
 > | [Agent.WorkFolder](#agentworkfolder) | `c:\agent_work` |
-> | [Common.TestResultsDirectory](#commontestresultsdirectory) | `c:\agent_work\1\TestResults` |
-> | [Pipeline.Workspace](#pipelineworkspace) | `/home/vsts/work/1` |
-> | [TF_BUILD](#tfbuild) | `True` |
-
-## Pipeline, job, and stage execution context
-
-> [!div class="mx-tdBreakAll"]
-> | Variable | Example value |
-> | --- | --- |
-> | [Build.BuildId](#buildbuildid) | `1764` |
-> | [Build.BuildNumber](#buildbuildnumber) | `20260511.1` |
-> | [Build.BuildUri](#buildbuilduri) | `vstfs:///Build/Build/1430` |
-> | [Build.ContainerId](#buildcontainerid) | `2713905` |
-> | [Build.DefinitionFolderPath](#builddefinitionfolderpath) | `\Infrastructure\Deploy` |
-> | [Build.DefinitionName](#builddefinitionname) | `MyApp-CI` |
-> | [Build.DefinitionVersion](#builddefinitionversion) | `1` |
-> | [Checks.StageAttempt](#checksstageattempt) | `1` |
-> | [System.DefinitionId](#systemdefinitionid) | `42` |
-> | [System.JobAttempt](#systemjobattempt) | `1` |
-> | [System.JobDisplayName](#systemjobdisplayname) | `Build` |
-> | [System.JobId](#systemjobid) | `12f1170f-0000-0000-0000-000000000000` |
-> | [System.JobIdentifier](#systemjobidentifier) | `Build.Build.__default` |
-> | [System.JobName](#systemjobname) | `Build` |
-> | [System.PhaseAttempt](#systemphaseattempt) | `1` |
-> | [System.PhaseDisplayName](#systemphasedisplayname) | `Build` |
-> | [System.PhaseName](#systemphasename) | `Phase_1` |
-> | [System.PlanId](#systemplanid) | `9e4ec8c3-0000-0000-0000-000000000000` |
-> | [System.StageAttempt](#systemstageattempt) | `1` |
-> | [System.StageDisplayName](#systemstagedisplayname) | `Build` |
-> | [System.StageName](#systemstagename) | `Stage_1` |
-> | [System.TimelineId](#systemtimelineid) | `33b55a2d-0000-0000-0000-000000000000` |
-
-## Source control
-
-> [!div class="mx-tdBreakAll"]
-> | Variable | Example value |
-> | --- | --- |
-> | [Build.Repository.Clean](#buildrepositoryclean) | `true` |
-> | [Build.Repository.Git.SubmoduleCheckout](#buildrepositorygitsubmodulecheckout) | `true` |
-> | [Build.Repository.ID](#buildrepositoryid) | `b3e7e7c4-0000-0000-0000-000000000000` |
-> | [Build.Repository.LocalPath](#buildrepositorylocalpath) | `c:\agent_work\1\s` |
-> | [Build.Repository.Name](#buildrepositoryname) | `Fabrikam-Scripts` |
-> | [Build.Repository.Provider](#buildrepositoryprovider) | `GitHub` |
-> | [Build.Repository.Tfvc.Workspace](#buildrepositorytfvcworkspace) | `ws_12_8` |
-> | [Build.Repository.Uri](#buildrepositoryuri) | `https://dev.azure.com/fabrikamfiber/_git/Scripts` |
-> | [Build.SourceBranch](#buildsourcebranch) | `refs/heads/main` |
-> | [Build.SourceBranchName](#buildsourcebranchname) | `main` |
-> | [Build.SourcesDirectory](#buildsourcesdirectory) | `c:\agent_work\1\s` |
-> | [Build.SourceTfvcShelveset](#buildsourcetfvcshelveset) | `myshelveset;user@example.com` |
-> | [Build.SourceVersion](#buildsourceversion) | `a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0` |
-> | [Build.SourceVersionAuthor](#buildsourceversionauthor) | `Jamal Hartnett` |
-> | [Build.SourceVersionMessage](#buildsourceversionmessage) | `Fix login bug` |
-> | [System.DefaultWorkingDirectory](#systemdefaultworkingdirectory) | `c:\agent_work\1\s` |
-> | [System.IsTriggeringRepository](#systemistriggeringrepository) | `True` |
-
-## Triggers and upstream builds
-
-> [!div class="mx-tdBreakAll"]
-> | Variable | Example value |
-> | --- | --- |
-> | [Build.CronSchedule.DisplayName](#buildcronscheduledisplayname) | `Nightly build` |
-> | [Build.Reason](#buildreason) | `Manual` |
-> | [Build.TriggeredBy.BuildId](#buildtriggeredbybuildid) | `1764` |
-> | [Build.TriggeredBy.BuildNumber](#buildtriggeredbybuildnumber) | `20260511.1` |
-> | [Build.TriggeredBy.DefinitionId](#buildtriggeredbydefinitionid) | `42` |
-> | [Build.TriggeredBy.DefinitionName](#buildtriggeredbydefinitionname) | `MyApp-CI` |
-> | [Build.TriggeredBy.ProjectID](#buildtriggeredbyprojectid) | `b3e7e7c4-0000-0000-0000-000000000000` |
-
-## Pull requests
-
-> [!div class="mx-tdBreakAll"]
-> | Variable | Example value |
-> | --- | --- |
-> | [System.PullRequest.ForkSecretsRemoved](#systempullrequestforksecretsremoved) | `True` |
-> | [System.PullRequest.IsFork](#systempullrequestisfork) | `True` |
-> | [System.PullRequest.MergedAt](#systempullrequestmergedat) | `2026-05-11T18:30:00Z` |
-> | [System.PullRequest.PullRequestId](#systempullrequestpullrequestid) | `17` |
-> | [System.PullRequest.PullRequestIteration](#systempullrequestpullrequestiteration) | `3` |
-> | [System.PullRequest.PullRequestNumber](#systempullrequestpullrequestnumber) | `42` |
-> | [System.PullRequest.SourceBranch](#systempullrequestsourcebranch) | `refs/heads/users/raisa/new-feature` |
-> | [System.PullRequest.SourceCommitId](#systempullrequestsourcecommitid) | `a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0` |
-> | [System.PullRequest.SourceRepositoryUri](#systempullrequestsourcerepositoryuri) | `https://dev.azure.com/ouraccount/_git/OurProject` |
-> | [System.PullRequest.TargetBranch](#systempullrequesttargetbranch) | `refs/heads/main` |
-> | [System.PullRequest.targetBranchName](#systempullrequesttargetbranchname) | `main` |
-
-## Identity and auditing
-
-> [!div class="mx-tdBreakAll"]
-> | Variable | Example value |
-> | --- | --- |
-> | [Build.QueuedBy](#buildqueuedby) | `Jamal Hartnett` |
-> | [Build.QueuedById](#buildqueuedbyid) | `a1b2c3d4-0000-0000-0000-000000000000` |
-> | [Build.RequestedFor](#buildrequestedfor) | `Jamal Hartnett` |
-> | [Build.RequestedForEmail](#buildrequestedforemail) | `fabrikamfiber4@example.com` |
-> | [Build.RequestedForId](#buildrequestedforid) | `00000002-0000-8888-8000-000000000000` |
-> | [Build.StageRequestedBy](#buildstagerequestedby) | `Jamal Hartnett` |
-> | [Build.StageRequestedForId](#buildstagerequestedforid) | `00000002-0000-8888-8000-000000000000` |
-
-## Artifacts and output directories
-
-> [!div class="mx-tdBreakAll"]
-> | Variable | Example value |
-> | --- | --- |
-> | [Build.ArtifactStagingDirectory](#buildartifactstagingdirectory) | `c:\agent_work\1\a` |
-> | [Build.BinariesDirectory](#buildbinariesdirectory) | `c:\agent_work\1\b` |
-> | [Build.StagingDirectory](#buildstagingdirectory) | `c:\agent_work\1\a` |
-
-## Organization, project, and security
-
-> [!div class="mx-tdBreakAll"]
-> | Variable | Example value |
-> | --- | --- |
-> | [System.AccessToken](#systemaccesstoken) | `(opaque OAuth bearer token)` |
-> | [System.AccessTokenRequestUri](#systemaccesstokenrequesturi) | `https://vstoken.dev.azure.com/...` |
-> | [System.CollectionId](#systemcollectionid) | `6c6f3423-0000-0000-0000-000000000000` |
-> | [System.CollectionUri](#systemcollectionuri) | `https://dev.azure.com/fabrikamfiber/` |
-> | [System.HostType](#systemhosttype) | `build` |
-> | [System.OidcRequestUri](#systemoidcrequesturi) | `https://vstoken.dev.azure.com/...` |
-> | [System.TeamFoundationCollectionUri](#systemteamfoundationcollectionuri) | `https://dev.azure.com/fabrikamfiber/` |
-> | [System.TeamProject](#systemteamproject) | `Fabrikam` |
-> | [System.TeamProjectId](#systemteamprojectid) | `b3e7e7c4-0000-0000-0000-000000000000` |
-
-## Deployment jobs (CD)
-
-> [!div class="mx-tdBreakAll"]
-> | Variable | Example value |
-> | --- | --- |
-> | [Environment.Id](#environmentid) | `10` |
-> | [Environment.Name](#environmentname) | `smarthotel-dev` |
-> | [Environment.ResourceId](#environmentresourceid) | `4` |
-> | [Environment.ResourceName](#environmentresourcename) | `bookings` |
-> | [Strategy.CycleName](#strategycyclename) | `Iteration` |
-> | [Strategy.Name](#strategyname) | `canary` |
-
-Detailed variable descriptions follow.
 
 ### Agent.BuildDirectory
 
@@ -324,6 +189,15 @@ The working directory for this agent.<br><br>For example: `c:\agent_work`.<br><b
 | Runtime syntax | `$[ variables['Agent.WorkFolder'] ]` |
 | Template syntax | Not available |
 
+## Artifacts and output directories
+
+> [!div class="mx-tdBreakAll"]
+> | Variable | Example value |
+> | --- | --- |
+> | [Build.ArtifactStagingDirectory](#buildartifactstagingdirectory) | `c:\agent_work\1\a` |
+> | [Build.BinariesDirectory](#buildbinariesdirectory) | `c:\agent_work\1\b` |
+> | [Build.StagingDirectory](#buildstagingdirectory) | `c:\agent_work\1\a` |
+
 ### Build.ArtifactStagingDirectory
 
 The local path on the agent where any artifacts are copied to before being pushed to their destination. For example: `c:\agent_work\1\a`.<br><br>A typical way to use this folder is to publish your build artifacts with the [Copy files](/azure/devops/pipelines/tasks/reference/copy-files-v2) and [Publish build artifacts](/azure/devops/pipelines/tasks/reference/publish-build-artifacts-v1) tasks.<br><br>Note: Build.ArtifactStagingDirectory and Build.StagingDirectory are interchangeable. This directory is purged before each new build, so you don't have to clean it up yourself.<br><br>See [Artifacts in Azure Pipelines](../../artifacts/artifacts-overview.md). For more information about the agent directory structure, see [Agent directory structure](../../agents/agents.md#agent-directory-structure). <br><br>This variable is agent-scoped, and can be used as an environment variable in a script and as a parameter in a build task. It can't be used as part of the build number or as a version control tag.
@@ -343,6 +217,34 @@ The local path on the agent you can use as an output folder for compiled binarie
 | Macro syntax | `$(Build.BinariesDirectory)` |
 | Runtime syntax | `$[ variables['Build.BinariesDirectory'] ]` |
 | Template syntax | Not available |
+
+## Pipeline, job, and stage execution context
+
+> [!div class="mx-tdBreakAll"]
+> | Variable | Example value |
+> | --- | --- |
+> | [Build.BuildId](#buildbuildid) | `1764` |
+> | [Build.BuildNumber](#buildbuildnumber) | `20260511.1` |
+> | [Build.BuildUri](#buildbuilduri) | `vstfs:///Build/Build/1430` |
+> | [Build.ContainerId](#buildcontainerid) | `2713905` |
+> | [Build.DefinitionFolderPath](#builddefinitionfolderpath) | `\Infrastructure\Deploy` |
+> | [Build.DefinitionName](#builddefinitionname) | `MyApp-CI` |
+> | [Build.DefinitionVersion](#builddefinitionversion) | `1` |
+> | [Checks.StageAttempt](#checksstageattempt) | `1` |
+> | [System.DefinitionId](#systemdefinitionid) | `42` |
+> | [System.JobAttempt](#systemjobattempt) | `1` |
+> | [System.JobDisplayName](#systemjobdisplayname) | `Build` |
+> | [System.JobId](#systemjobid) | `12f1170f-0000-0000-0000-000000000000` |
+> | [System.JobIdentifier](#systemjobidentifier) | `Build.Build.__default` |
+> | [System.JobName](#systemjobname) | `Build` |
+> | [System.PhaseAttempt](#systemphaseattempt) | `1` |
+> | [System.PhaseDisplayName](#systemphasedisplayname) | `Build` |
+> | [System.PhaseName](#systemphasename) | `Phase_1` |
+> | [System.PlanId](#systemplanid) | `9e4ec8c3-0000-0000-0000-000000000000` |
+> | [System.StageAttempt](#systemstageattempt) | `1` |
+> | [System.StageDisplayName](#systemstagedisplayname) | `Build` |
+> | [System.StageName](#systemstagename) | `Stage_1` |
+> | [System.TimelineId](#systemtimelineid) | `33b55a2d-0000-0000-0000-000000000000` |
 
 ### Build.BuildId
 
@@ -387,6 +289,19 @@ The ID of the container for your artifact. When you upload an artifact in your p
 | Runtime syntax | `$[ variables['Build.ContainerId'] ]` |
 | Template syntax | Not available |
 
+## Triggers and upstream builds
+
+> [!div class="mx-tdBreakAll"]
+> | Variable | Example value |
+> | --- | --- |
+> | [Build.CronSchedule.DisplayName](#buildcronscheduledisplayname) | `Nightly build` |
+> | [Build.Reason](#buildreason) | `Manual` |
+> | [Build.TriggeredBy.BuildId](#buildtriggeredbybuildid) | `1764` |
+> | [Build.TriggeredBy.BuildNumber](#buildtriggeredbybuildnumber) | `20260511.1` |
+> | [Build.TriggeredBy.DefinitionId](#buildtriggeredbydefinitionid) | `42` |
+> | [Build.TriggeredBy.DefinitionName](#buildtriggeredbydefinitionname) | `MyApp-CI` |
+> | [Build.TriggeredBy.ProjectID](#buildtriggeredbyprojectid) | `b3e7e7c4-0000-0000-0000-000000000000` |
+
 ### Build.CronSchedule.DisplayName
 
 The `displayName` of the cron schedule that triggered the pipeline run. This variable is only set if a YAML scheduled trigger triggers the pipeline run. For more information, see [schedules.cron definition - Build.CronSchedule.DisplayName variable](/azure/devops/pipelines/yaml-schema/schedules-cron#buildcronscheduledisplayname-variable)
@@ -429,6 +344,19 @@ The version of the build pipeline.
 | Macro syntax | `$(Build.DefinitionVersion)` |
 | Runtime syntax | `$[ variables['Build.DefinitionVersion'] ]` |
 | Template syntax | `${{ variables['Build.DefinitionVersion'] }}` |
+
+## Identity and auditing
+
+> [!div class="mx-tdBreakAll"]
+> | Variable | Example value |
+> | --- | --- |
+> | [Build.QueuedBy](#buildqueuedby) | `Jamal Hartnett` |
+> | [Build.QueuedById](#buildqueuedbyid) | `a1b2c3d4-0000-0000-0000-000000000000` |
+> | [Build.RequestedFor](#buildrequestedfor) | `Jamal Hartnett` |
+> | [Build.RequestedForEmail](#buildrequestedforemail) | `fabrikamfiber4@example.com` |
+> | [Build.RequestedForId](#buildrequestedforid) | `00000002-0000-8888-8000-000000000000` |
+> | [Build.StageRequestedBy](#buildstagerequestedby) | `Jamal Hartnett` |
+> | [Build.StageRequestedForId](#buildstagerequestedforid) | `00000002-0000-8888-8000-000000000000` |
 
 ### Build.QueuedBy
 
@@ -475,6 +403,29 @@ The event that caused the build to run. Example: `Manual`
 | Macro syntax | `$(Build.Reason)` |
 | Runtime syntax | `$[ variables['Build.Reason'] ]` |
 | Template syntax | `${{ variables['Build.Reason'] }}` |
+
+## Source control
+
+> [!div class="mx-tdBreakAll"]
+> | Variable | Example value |
+> | --- | --- |
+> | [Build.Repository.Clean](#buildrepositoryclean) | `true` |
+> | [Build.Repository.Git.SubmoduleCheckout](#buildrepositorygitsubmodulecheckout) | `true` |
+> | [Build.Repository.ID](#buildrepositoryid) | `b3e7e7c4-0000-0000-0000-000000000000` |
+> | [Build.Repository.LocalPath](#buildrepositorylocalpath) | `c:\agent_work\1\s` |
+> | [Build.Repository.Name](#buildrepositoryname) | `Fabrikam-Scripts` |
+> | [Build.Repository.Provider](#buildrepositoryprovider) | `GitHub` |
+> | [Build.Repository.Tfvc.Workspace](#buildrepositorytfvcworkspace) | `ws_12_8` |
+> | [Build.Repository.Uri](#buildrepositoryuri) | `https://dev.azure.com/fabrikamfiber/_git/Scripts` |
+> | [Build.SourceBranch](#buildsourcebranch) | `refs/heads/main` |
+> | [Build.SourceBranchName](#buildsourcebranchname) | `main` |
+> | [Build.SourcesDirectory](#buildsourcesdirectory) | `c:\agent_work\1\s` |
+> | [Build.SourceTfvcShelveset](#buildsourcetfvcshelveset) | `myshelveset;user@example.com` |
+> | [Build.SourceVersion](#buildsourceversion) | `a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0` |
+> | [Build.SourceVersionAuthor](#buildsourceversionauthor) | `Jamal Hartnett` |
+> | [Build.SourceVersionMessage](#buildsourceversionmessage) | `Fix login bug` |
+> | [System.DefaultWorkingDirectory](#systemdefaultworkingdirectory) | `c:\agent_work\1\s` |
+> | [System.IsTriggeringRepository](#systemistriggeringrepository) | `True` |
 
 ### Build.Repository.Clean
 
@@ -753,6 +704,15 @@ If [another build triggers](../../process/pipeline-triggers.md) the build, then 
 | Runtime syntax | `$[ variables['Build.TriggeredBy.ProjectID'] ]` |
 | Template syntax | Not available |
 
+### Additional agent and workspace variables
+
+> [!div class="mx-tdBreakAll"]
+> | Variable | Example value |
+> | --- | --- |
+> | [Common.TestResultsDirectory](#commontestresultsdirectory) | `c:\agent_work\1\TestResults` |
+> | [Pipeline.Workspace](#pipelineworkspace) | `/home/vsts/work/1` |
+> | [TF_BUILD](#tfbuild) | `True` |
+
 ### Checks.StageAttempt
 
 Set to 1 the first time this stage is attempted, and increments every time the stage is retried.<br><br>This variable can only be used within an [approval or check](../../process/approvals.md) for an environment. For example, you could use `$(Checks.StageAttempt)` within an [Invoke REST API check](../../process/approvals.md#invoke-rest-api).<br><br>:::image type="content" source="../media/checks-stageattempt-var.png" alt-text="Add the stage attempt as a parameter.":::
@@ -772,6 +732,18 @@ The local path on the agent where the test results are created. For example: `c:
 | Macro syntax | `$(Common.TestResultsDirectory)` |
 | Runtime syntax | `$[ variables['Common.TestResultsDirectory'] ]` |
 | Template syntax | Not available |
+
+## Deployment jobs (CD)
+
+> [!div class="mx-tdBreakAll"]
+> | Variable | Example value |
+> | --- | --- |
+> | [Environment.Id](#environmentid) | `10` |
+> | [Environment.Name](#environmentname) | `smarthotel-dev` |
+> | [Environment.ResourceId](#environmentresourceid) | `4` |
+> | [Environment.ResourceName](#environmentresourcename) | `bookings` |
+> | [Strategy.CycleName](#strategycyclename) | `Iteration` |
+> | [Strategy.Name](#strategyname) | `canary` |
 
 ### Environment.Id
 
@@ -842,6 +814,21 @@ The name of the deployment strategy: `canary`, `runOnce`, or `rolling`.
 | Macro syntax | `$(Strategy.Name)` |
 | Runtime syntax | `$[ variables['Strategy.Name'] ]` |
 | Template syntax | Not available |
+
+## Organization, project, and security
+
+> [!div class="mx-tdBreakAll"]
+> | Variable | Example value |
+> | --- | --- |
+> | [System.AccessToken](#systemaccesstoken) | `(opaque OAuth bearer token)` |
+> | [System.AccessTokenRequestUri](#systemaccesstokenrequesturi) | `https://vstoken.dev.azure.com/...` |
+> | [System.CollectionId](#systemcollectionid) | `6c6f3423-0000-0000-0000-000000000000` |
+> | [System.CollectionUri](#systemcollectionuri) | `https://dev.azure.com/fabrikamfiber/` |
+> | [System.HostType](#systemhosttype) | `build` |
+> | [System.OidcRequestUri](#systemoidcrequesturi) | `https://vstoken.dev.azure.com/...` |
+> | [System.TeamFoundationCollectionUri](#systemteamfoundationcollectionuri) | `https://dev.azure.com/fabrikamfiber/` |
+> | [System.TeamProject](#systemteamproject) | `Fabrikam` |
+> | [System.TeamProjectId](#systemteamprojectid) | `b3e7e7c4-0000-0000-0000-000000000000` |
 
 ### System.AccessToken
 
@@ -1035,6 +1022,23 @@ A string-based identifier for a single pipeline run.
 | Macro syntax | `$(System.PlanId)` |
 | Runtime syntax | `$[ variables['System.PlanId'] ]` |
 | Template syntax | Not available |
+
+## Pull requests
+
+> [!div class="mx-tdBreakAll"]
+> | Variable | Example value |
+> | --- | --- |
+> | [System.PullRequest.ForkSecretsRemoved](#systempullrequestforksecretsremoved) | `True` |
+> | [System.PullRequest.IsFork](#systempullrequestisfork) | `True` |
+> | [System.PullRequest.MergedAt](#systempullrequestmergedat) | `2026-05-11T18:30:00Z` |
+> | [System.PullRequest.PullRequestId](#systempullrequestpullrequestid) | `17` |
+> | [System.PullRequest.PullRequestIteration](#systempullrequestpullrequestiteration) | `3` |
+> | [System.PullRequest.PullRequestNumber](#systempullrequestpullrequestnumber) | `42` |
+> | [System.PullRequest.SourceBranch](#systempullrequestsourcebranch) | `refs/heads/users/raisa/new-feature` |
+> | [System.PullRequest.SourceCommitId](#systempullrequestsourcecommitid) | `a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0` |
+> | [System.PullRequest.SourceRepositoryUri](#systempullrequestsourcerepositoryuri) | `https://dev.azure.com/ouraccount/_git/OurProject` |
+> | [System.PullRequest.TargetBranch](#systempullrequesttargetbranch) | `refs/heads/main` |
+> | [System.PullRequest.targetBranchName](#systempullrequesttargetbranchname) | `main` |
 
 ### System.PullRequest.ForkSecretsRemoved
 
