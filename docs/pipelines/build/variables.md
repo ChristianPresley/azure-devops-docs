@@ -38,8 +38,7 @@ Learn more about [working with variables](../process/variables.md).
 
 ## Build.Clean
 
-`Build.Clean` is deprecated. Setting it on a pipeline has no effect.
-To control how the agent cleans source between runs, use the `clean` setting on the `checkout` step or, for Classic build pipelines, the **Clean** options on the **Get sources** task. See [Clean the local repo on the agent](../repos/pipeline-options-for-git.md#clean-the-local-repo-on-the-agent).
+`Build.Clean` is deprecated. The agent still honors this legacy cleanup variable, but new pipelines should use the `clean` setting on the `checkout` step or, for Classic build pipelines, the **Clean** options on the **Get sources** task. See [Clean the local repo on the agent](../repos/pipeline-options-for-git.md#clean-the-local-repo-on-the-agent).
 
 <h2 id="systemaccesstoken">System.AccessToken</h2>
 
@@ -153,16 +152,16 @@ The value depends on what caused the build and are specific to Azure Repos repos
 | In Git or TFVC by the [Scheduled triggers](triggers.md) | The system identity, for example: `[DefaultCollection]\Project Collection Service Accounts` | The system identity, for example: `[DefaultCollection]\Project Collection Service Accounts` |
 | Because you clicked the **Queue build** button | You | You |
 
-For example, to skip a step that should only run on user-initiated CI builds (not scheduled or service-triggered runs), check `Build.RequestedFor` against the system identity:
+For example, to run a step only on CI or pull request validation runs, check `Build.Reason` instead of comparing an identity variable to a system account name:
 
 ```yaml
 steps:
 - script: ./notify-author.sh
   displayName: Notify the commit author
-  condition: and(succeeded(), ne(variables['Build.RequestedFor'], 'Microsoft.VisualStudio.Services.TFS'))
+  condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'BatchedCI', 'PullRequest'))
 ```
 
-This condition skips the notification on scheduled and resource-triggered runs, where `Build.RequestedFor` resolves to the system identity rather than a real user.
+This condition skips the notification on scheduled, manual, and resource-triggered runs.
 
 ::: moniker range="azure-devops"
 

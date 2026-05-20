@@ -67,7 +67,6 @@ Some of the most significant variables are described in the following tables. To
 > | **Release.Deployment.RequestedFor**    | The display name of the identity that triggered (started) the deployment currently in progress.<br/><br />Example: `Mateo Escobedo`                        |
 > | **Release.Deployment.RequestedForEmail** | The email address of the identity that triggered (started) the deployment currently in progress.<br/><br />Example: `mateo@fabrikam.com`                 |
 > | **Release.Deployment.RequestedForId**  | The ID of the identity that triggered (started) the deployment currently in progress.<br/><br />Example: `2f435d07-769f-4e46-849d-10d1ab9ba6ab`            |
-> | **Release.Deployment.StartTime**       | The timestamp when the deployment in the current stage started. Useful for measuring deployment duration in scripts.<br/><br />Example: `2024-08-15T14:30:00Z` |
 > | **Release.DeploymentID**               | The ID of the deployment. Unique per job.<br/><br />Example: `254`                                                                                         |
 > | **Release.DeployPhaseID**              | The ID of the phase where deployment is running.<br/><br />Example: `127`                                                                                  |
 > | **Release.EnvironmentId**              | The ID of the stage instance in a release to which the deployment is currently in progress.<br/><br />Example: `276`                                       |

@@ -360,7 +360,7 @@ While executing deployment strategies, you can access output variables across jo
 - For **rolling** strategy: `$[dependencies.<job-name>.outputs['<lifecycle-hookname>_<resource-name>.<step-name>.<variable-name>']]`
 
 > [!NOTE]
-> **Within-stage vs cross-stage references**: Output variables must be set with `isOutput=true` on the `##vso[task.setvariable]` logging command. Use `dependencies.<job>.outputs['<job>.<step>.<var>']` to consume outputs from another job in the **same** stage. Use `stageDependencies.<stage>.<job>.outputs['<step>.<var>']` (note: no inner `<job>.` segment) to consume outputs from a job in a **previous** stage.
+> **Within-stage vs cross-stage references**: Output variables must be set with `isOutput=true` on the `##vso[task.setvariable]` logging command. To consume a deployment job output in the same stage, use `dependencies.<job-name>.outputs[...]`. To consume it from another stage, use `stageDependencies.<stage-name>.<job-name>.outputs[...]`. Keep the same deployment strategy key inside `outputs[...]`, such as `<job-name>.<step-name>.<variable-name>`, `Deploy_<resource-name>.<step-name>.<variable-name>`, `<lifecycle-hookname>_<increment-value>.<step-name>.<variable-name>`, or `<lifecycle-hookname>_<resource-name>.<step-name>.<variable-name>`.
 
 ```yaml
 # Set an output variable in a lifecycle hook of a deployment job executing canary strategy.

@@ -61,7 +61,7 @@ System variables are read-only.
 
 ### Identity variables and PII scrubbing
 
-Identity-related system variables are treated as personally identifiable information (PII) and are automatically scrubbed from agent diagnostic logs. This applies to `Build.RequestedFor`, `Build.RequestedForEmail`, `Build.QueuedBy`, `Build.SourceVersionAuthor`, `Build.SourceVersionMessage`, and the `Release.RequestedFor*` family. You can still pass them to tasks and scripts, but the values won't appear in the verbose diagnostic logs collected when `System.Debug` is `true`.
+Identity-related system variables are treated as personally identifiable information (PII) and are automatically scrubbed from agent diagnostic logs. This includes variables such as `Build.RequestedFor`, `Build.RequestedForEmail`, `Build.QueuedBy`, `Build.SourceVersionAuthor`, `Release.RequestedFor`, `Release.RequestedForEmail`, `Release.Deployment.RequestedFor`, and `Release.Deployment.RequestedForEmail`. You can still pass them to tasks and scripts, but the values won't appear in the verbose diagnostic logs collected when `System.Debug` is `true`.
 
 ## Environment variables
 

@@ -652,9 +652,9 @@ The syntax of referencing output variables with dependencies varies depending on
     [stage to stage dependency](#stage-to-stage-dependencies) (different stages)
    :::column-end:::
    :::column span="2":::
-    Reference an output variable from a previous stage in a job in a different stage in a condition in `stages`.
-    - Syntax: `and(succeeded(), eq(stageDependencies.<stage-name>.outputs['<job-name>.<step-name>.<variable-name>'], 'true'))`
-    - Example: `and(succeeded(), eq(stageDependencies.A.outputs['A1.printvar.shouldrun'], 'true'))`
+    Reference an output variable from a previous stage in a condition in `stages`.
+    - Syntax: `and(succeeded(), eq(dependencies.<stage-name>.outputs['<job-name>.<step-name>.<variable-name>'], 'true'))`
+    - Example: `and(succeeded(), eq(dependencies.A.outputs['A1.printvar.shouldrun'], 'true'))`
    :::column-end:::
 :::row-end:::
 :::row:::
