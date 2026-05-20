@@ -12,5 +12,11 @@
 .env.example
 requirements.txt
 
+# Local dependent repository checkouts and worktrees
+_themes/
+_themes.pdf/
+_themes.worktrees/
+docs/reusable-content/
+
 # Doc-Kit overrides
 !.github/instructions/azure-devops-product.instructions.md
